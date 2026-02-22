@@ -1,26 +1,28 @@
 # 名片快手 (Business Card Express)
 
-[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，快速將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件。
+[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件。
 
 ## ✨ 核心特色
 
 - **📄 智慧 OCR 與結構化分析**：上傳名片照片，自動辨識並分類至對應欄位（姓名、職稱、公司、電話、Email、地址等）。
-- **🔍 深度背景調查**：不僅分析名片字面資訊，AI 還會主動連網搜尋該公司背景與名片主人的專業經歷，並彙整出摘要。
-- **✉️ 一鍵產出致謝郵件**：根據名片資訊與背景調查結果，自動草擬專業的拜訪後致謝郵件。
+- **🔍 深度背景調查**：不僅分析名片字面資訊，AI 還會主動上網搜尋該公司背景與名片主人的專業經歷，並彙整出摘要。
+- **✉️ 一鍵產生致謝郵件**：根據名片資訊與背景調查結果，自動草擬專業的拜訪後致謝郵件。
 - **📱 掃碼即存 (vCard QR Code)**：自動產生符合 vCard 3.0 標準的 QR Code，用手機一掃即可快速加入通訊錄。
 - **📥 vCard 匯出與複製**：支援下載 `.vcf` 檔案或直接複製 vCard 內容（若是使用手機瀏覽器點擊下載，將自動觸發手機的「新增聯絡人」機制），亦強制標註分類為「名片快手」方便您未來整理。
 - **🕒 歷史紀錄本機儲存**：自動保存最近辨識的名片紀錄於瀏覽器，方便隨時查閱。
 
 ## 🛠️ 第三方元件
 
-- **前端核心**：純 HTML / Vanilla JavaScript (無框架依賴)
+- **前端核心**：純 HTML / Vanilla JavaScript (未使用任何框架)
+- **AI 引擎**：[Google Gemini API](https://ai.google.dev/) (使用 Gemini 2.0 Flash 進行 OCR、資料正規化、上網搜尋與郵件生成)
+- **QR Code 引擎**：[QRious](https://github.com/neocotic/qrious) (輕量級並能支援 UTF-8 編碼字串)
+- **字體**：[Google Fonts](https://fonts.google.com/) (載入 Noto Sans TC 提供美觀的中文閱讀體驗)
 - **視覺與樣式**：[Tailwind CSS](https://tailwindcss.com/) (經由 CDN 載入)
 - **圖示庫**：[Lucide Icons](https://lucide.dev/) (輕量級 SVG 圖示)
-- **AI 引擎**：[Google Gemini API](https://ai.google.dev/) (使用 Gemini 2.0 Flash 進行 OCR、資料正規化、連網搜尋與郵件生成)
 
 ## 🚀 快速開始
 
-這是一個完全由前端驅動的單頁應用程式 (SPA)，無須任何後端伺服器建置步驟！
+這是一個完全由前端驅動的單頁式應用程式 (SPA)，無須任何後端伺服器建置步驟！
 
 1. **取得專案**
 
@@ -30,7 +32,7 @@
 
    - **方式 B: Clone 整個專案**
 
-     您可以將此專案 clone 至本地端：
+     您可以將此專案 clone 至本機端：
 
      ```bash
      git clone https://github.com/mfhsieh/business-card-express.git
@@ -46,7 +48,7 @@
 
    > ⚠️ **安全性警告**：
    >
-   > 若您要將此專案部署至公開環境（如 GitHub Pages, Vercel 或 Netlify），前端的程式碼會暴露您的 API 金鑰。強烈建議在生產環境中，將呼叫 Gemini API 的邏輯移至後端 proxy 伺服器，或使用帶有金鑰保護機制的部屬方式。
+   > 若您要將此專案部署至公開環境（如 GitHub Pages, Vercel 或 Netlify），前端的程式碼會暴露您的 API 金鑰。強烈建議在正式環境中，將呼叫 Gemini API 的邏輯移至後端 proxy 伺服器，或使用帶有金鑰保護機制的部署方式。
 
 3. **直接執行 (本機開發)**
 
@@ -54,14 +56,14 @@
 
 4. **透過 Gemini Canvas 快速執行 (免設定 API 金鑰)**
 
-   如果您不想在本地端設定環境與 API 金鑰，您可以直接在 Gemini 的 Canvas 中執行此應用程式（在 Canvas 中執行會自動帶入驗證資源，無須您手動提供 apiKey）：
-   - 設定 Gemini 為 Canvas 模式，並輸入指令：「建立一個空白的網頁」，接著把 `app.html` 的程式碼貼到 Canvas 的編輯視窗中，替代原本的內容。
+   如果您不想在本機端設定環境與 API 金鑰，您可以直接在 Gemini 的 Canvas 中執行此應用程式（在 Canvas 中執行會自動帶入驗證資源，無須您手動提供 apiKey）：
+   - 設定 Gemini 為 Canvas 模式，並輸入指令：「建立一個空白的網頁」，接著把 `app.html` 的原始碼貼到 Canvas 的編輯視窗中，取代原本的內容。
    - Gemini 會幫您渲染出完整的網頁介面，您可以在右側預覽畫面中直接操作名片快手。
 
 ## 💡 使用說明
 
 1. 將名片圖片 (支援 JPG, PNG) 拖曳或是點擊上傳至「上傳與辨識」區塊。
-2. 點擊「啟動 AI 連網辨識」。
+2. 點擊「啟動 AI 上網辨識」。
 3. 等待幾秒鐘，AI 會自動將名片上的文字提取出來，並填補至右側的表單中。
 4. 在左下角「AI 智慧分析」區塊查看公司/個人背景摘要，或點擊「後續追蹤」讓 AI 撰寫一封感謝信。
 5. 下方會即時產生 QR Code，可以直接用手機相機掃描加入聯絡人，或是使用右下角的「下載 vCard」按鈕將檔案存入電腦。
@@ -85,4 +87,4 @@
 
 ## 📦 Release Notes
 
-- 2026-02-22: 1.0 版發佈。
+- 2026-02-22: 1.01 版發佈。
