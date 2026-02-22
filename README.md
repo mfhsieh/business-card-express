@@ -1,6 +1,6 @@
 # 名片快手 (Business Card Express)
 
-[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁應用程式（Single Page Application, SPA），利用 Google Gemini API 強大的視覺辨識與自然語言處理能力，快速將實體名片轉換為數位聯絡人資訊，並提供深度的背景調查與後續追蹤郵件。
+[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，快速將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件。
 
 ## ✨ 核心特色
 
@@ -11,7 +11,7 @@
 - **📥 vCard 匯出與複製**：支援下載 `.vcf` 檔案或直接複製 vCard 內容（若是使用手機瀏覽器點擊下載，將自動觸發手機的「新增聯絡人」機制），亦強制標註分類為「名片快手」方便您未來整理。
 - **🕒 歷史紀錄本機儲存**：自動保存最近辨識的名片紀錄於瀏覽器，方便隨時查閱。
 
-## 🛠️ 第三方元件細節
+## 🛠️ 第三方元件
 
 - **前端核心**：純 HTML / Vanilla JavaScript (無框架依賴)
 - **視覺與樣式**：[Tailwind CSS](https://tailwindcss.com/) (經由 CDN 載入)
@@ -22,7 +22,7 @@
 
 這是一個完全由前端驅動的 SPA，無須任何後端伺服器建置步驟！
 
-1. **取得專案 (兩種方式擇一)**
+1. **取得專案**
 
    - **方式 A: 直接複製原始碼 (最簡單)**
      專案只有一個 `app.html` 檔案。您可以直接在 GitHub 上打開 [`app.html`](app.html) 檔案，點擊右上角的「Copy raw file」圖示（或 Raw 按鈕後複製全部），然後在您的電腦上建立一個 `app.html`，並將程式碼貼上、存檔即可使用。
@@ -71,3 +71,11 @@
 本專案採用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW) 授權 (姓名標示-非商業性-相同方式分享 4.0 國際)。
 
 您可以自由重製、散布、傳輸以及修改本創作，但不得為商業目的之使用，且若您修改本作品，您必須採用與本授權條款相同之授權條款來散布您的貢獻。
+
+## 訊息揭露
+
+本應用程式以 vibe coding 方式，於 Gemini Canvas 完成雛形開發，後移至 Antigravity 完成。
+
+## Release Notes
+
+- 2026-02-22: 1.0 版發佈。
