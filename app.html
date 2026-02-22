@@ -12,6 +12,7 @@
         type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
         rel="stylesheet">
     <style>
@@ -91,7 +92,7 @@
                     <button id="identifyBtn" disabled
                         class="w-full mt-6 py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all bg-slate-100 text-slate-400 shadow-indigo-600/10">
                         <i data-lucide="sparkles" id="btnIcon" class="w-5 h-5"></i>
-                        <span id="btnText">啟動 AI 連網辨識</span>
+                        <span id="btnText">啟動 AI 智慧辨識</span>
                     </button>
 
                     <div id="errorMessage"
@@ -172,7 +173,7 @@
                                 class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-50 transition-all">
                                 <textarea id="field-companySummary" rows="1"
                                     class="w-full bg-transparent outline-none text-sm text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-indigo-300"
-                                    placeholder="AI 將連網搜尋公司背景並摘要..."></textarea>
+                                    placeholder="AI 將上網搜尋公司背景並摘要..."></textarea>
                             </div>
                         </div>
                         <!-- 個人摘要 -->
@@ -190,7 +191,7 @@
                                 class="bg-purple-50/50 p-4 rounded-xl border border-purple-50 transition-all">
                                 <textarea id="field-personalSummary" rows="1"
                                     class="w-full bg-transparent outline-none text-sm text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-purple-300"
-                                    placeholder="AI 將連網搜尋個人背景並摘要..."></textarea>
+                                    placeholder="AI 將上網搜尋個人背景並摘要..."></textarea>
                             </div>
                         </div>
 
@@ -254,6 +255,7 @@
                                 class="w-48 h-48 flex items-center justify-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
                                 <i data-lucide="scan" class="w-16 h-16 text-slate-300"></i>
                             </div>
+                            <!-- QR Code 圖片 -->
                             <img id="qrImage" class="hidden w-48 h-48" alt="vCard QR Code" />
                         </div>
                         <p id="qrStatus" class="text-sm font-black text-slate-400 uppercase tracking-widest">等待資料輸入...
@@ -469,9 +471,9 @@
                 <!-- 除錯區 -->
                 <div class="mt-8 pt-4 border-t border-dashed border-slate-300 space-y-4">
                     <div>
-                        <button onclick="UXManager.toggleDebug('debugPanel1', 'debugToggleText1', 'OCR與連網搜尋')"
+                        <button onclick="UXManager.toggleDebug('debugPanel1', 'debugToggleText1', 'OCR與上網搜尋')"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText1">顯示 OCR與連網搜尋 原始回應
+                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText1">顯示 OCR與上網搜尋 原始回應
                                 (Debug)</span>
                         </button>
                         <pre id="debugPanel1"
@@ -529,7 +531,7 @@
 
     <script>
         /**
-         * 名片快手 1.0
+         * 名片快手 1.01
          */
 
         /**
@@ -539,7 +541,7 @@
         const MODEL_NAME = "gemini-2.0-flash";
         const DEBOUNCE_DELAY_MS = 1000; // QR Code 與 UI 更新的防抖延遲 (毫秒)
 
-        /** [提示詞] 名片 OCR、規格化與連網深度搜尋 */
+        /** [提示詞] 名片 OCR、規格化與上網深度搜尋 */
         const PROMPT_OCR = `
 你精通光學字元辨識 (OCR)、vCard 3.0 (RFC 2426) 規格，且擅長網路搜尋。
 你的任務是從名片影像提取聯絡人資訊，搜尋該聯絡人的組織與該人的背景，最後合併輸出為 JSON 格式。
@@ -553,12 +555,13 @@
    - 組織 (ORG): 對應 json 的 orgName 與 orgUnit，拆解為組織名稱與部門。
    - 職稱 (TITLE): 對應 json 的 title。
    - 地址 (ADR): 依序對應 json 的 poBox, extendedAddress, streetAddress, locality, region, postalCode, country。
-     - 台灣地址規則:
+     - 務必遵守以下台灣地址規則:
        - "縣市" (如: 台北市、新竹縣) 對應 region。
-       - "鄉鎮市區" (如: 大安區、竹北市) 對應 locality。
+       - "鄉鎮市區" (如: 大安區、竹北市) 對應 locality。對台灣的直轄市 (台北市、高雄市、台中市、台南市、桃園市、新北市) ，可不填入 locality。
        - "路街段巷弄號樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
        - "台灣" 為 country 的預設值。
-       - "段" 前的數字使用中文，如: "二段"；"巷弄號樓" 前的數字使用阿拉伯數字。
+       - "段" 前的數字使用中文，如: "延平北路二段" 而不是 "延平北路2段"。
+       - "巷弄號樓" 前的數字使用阿拉伯數字，如: "12巷3弄4號5樓"。
        - 務必儘可能拆解。
    - 電話 (TEL):
      - 對應 json 的 phones: [{"type":"work"|"cell"|"home", "value":"...", "ext":"..."}]。公司電話、手機、住家電話分別對應 work、cell、home。
@@ -575,8 +578,8 @@
 
 【任務二: 網路深度搜尋】
 1. 根據 "任務一" 取得的 "組織名稱 (orgName)"、"人員全名 (fn)" 及 "職稱 (title)"，啟動 Google Search:
-   - 搜尋該組織的產業背景、主要業務。
-   - 搜尋該人員的專業經歷。
+   - 搜尋該組織的網站、產業背景、主要業務、新聞等公開資訊。
+   - 搜尋該人員的經歷、新聞、演講、著作等公開資訊。
 2. 將搜尋結果彙整為兩個欄位 (嚴禁任何形式的開場白、結語):
    - "companySummary": 約200字，該組織背景摘要
    - "personalSummary": 約200字，該人員專業摘要
@@ -598,7 +601,7 @@
 - 提及客戶的專業能力。
 - 提及未來保持聯繫及合作的意願。
 
-語氣需專業、誠懇、熱情，文字流暢，並符合台灣商務禮儀。`;
+語氣需專業、誠懇、熱情，並符合台灣商務禮儀。文字流暢即可，不要過於生硬、不要使用過於制式的問候語。`;
 
         /** [資料結構] 預設名片資料內容 */
         const DEFAULT_CARD_DATA = {
@@ -1386,7 +1389,7 @@
 
         /**
          * [核心邏輯] AI 辨識主程序
-         * 包含影像 OCR 辨識與連網深度搜尋。
+         * 包含影像 OCR 辨識與上網深度搜尋。
          * - 依賴 `state.base64Image` 作為分析來源
          * - 呼叫 Gemini API 取得結構化 JSON 聯絡人資料
          * - 處理容錯機制與清單資料初始化
@@ -1397,13 +1400,13 @@
         async function identifyCard() {
             if (!state.base64Image) return;
             resetEmailDraft();
-            UXManager.setLoading(true, "AI 影像辨識與連網搜尋中...");
+            UXManager.setLoading(true, "AI 影像辨識與上網搜尋中...");
 
             // 清空舊的 Debug 資訊
             document.getElementById('debugPanel1').textContent = "";
 
             try {
-                // 執行 OCR 與連網搜尋
+                // 執行 OCR 與上網搜尋
                 const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
                 document.getElementById('debugPanel1').textContent = JSON.stringify(result1, null, 2);
 
@@ -1439,7 +1442,7 @@
                     })
                     .catch(err => console.warn("歷史紀錄存檔失敗", err));
 
-                UXManager.toast("影像辨識與連網搜尋完成！");
+                UXManager.toast("影像辨識與上網搜尋完成！");
             } catch (err) { UXManager.showError("處理失敗：" + err.message); }
             finally { UXManager.setLoading(false); }
         }
@@ -1702,10 +1705,26 @@
             state.vCardString = vcf;
             const hasContent = isValid(d.fn) || isValid(d.lastName) || isValid(d.orgName);
             const qrImage = document.getElementById('qrImage');
+
             if (hasContent) {
-                qrImage.src = `https://quickchart.io/qr?size=300&text=${encodeURIComponent(vcf)}`;
-                qrImage.classList.remove('hidden'); document.getElementById('qrPlaceholder').classList.add('hidden');
-                document.getElementById('qrStatus').textContent = "掃描加入聯絡人";
+                try {
+                    // QRious 需要我們先將 UTF-8 中文手動轉成正確的 Latin-1 / Byte 序列才不會變成亂碼
+                    const utf8EncodedVcf = unescape(encodeURIComponent(vcf));
+
+                    const qr = new QRious({
+                        value: utf8EncodedVcf,
+                        size: 600, // 給大一點的基礎大小以容納更多備註文字的細節度
+                        level: 'L' // 稍微提高容錯或是降低，L=最低 M=中等 Q=高 H=極高
+                    });
+
+                    qrImage.src = qr.toDataURL();
+                    qrImage.classList.remove('hidden'); document.getElementById('qrPlaceholder').classList.add('hidden');
+                    document.getElementById('qrStatus').textContent = "掃描加入聯絡人";
+                } catch (err) {
+                    console.error('QR 產生錯誤:', err);
+                    document.getElementById('qrStatus').textContent = "太多資料無法產生 QR Code";
+                    qrImage.classList.add('hidden'); document.getElementById('qrPlaceholder').classList.remove('hidden');
+                }
             } else {
                 qrImage.classList.add('hidden'); document.getElementById('qrPlaceholder').classList.remove('hidden');
                 document.getElementById('qrStatus').textContent = "等待資料輸入...";
