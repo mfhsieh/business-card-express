@@ -13,12 +13,12 @@
 
 ## 🛠️ 第三方元件
 
-- **前端核心**：純 HTML / Vanilla JavaScript (未使用任何框架)
-- **AI 引擎**：[Google Gemini API](https://ai.google.dev/) (使用 Gemini 2.0 Flash 進行 OCR、資料正規化、上網搜尋與郵件生成)
-- **QR Code 引擎**：[QRious](https://github.com/neocotic/qrious) (輕量級並能支援 UTF-8 編碼字串)
-- **字體**：[Google Fonts](https://fonts.google.com/) (載入 Noto Sans TC 提供美觀的中文閱讀體驗)
-- **視覺與樣式**：[Tailwind CSS](https://tailwindcss.com/) (經由 CDN 載入)
-- **圖示庫**：[Lucide Icons](https://lucide.dev/) (輕量級 SVG 圖示)
+- **前端核心**：HTML / Vanilla JavaScript (未使用任何框架)
+- **AI 引擎**：[Google Gemini API](https://ai.google.dev/) (OCR、資料正規化、上網搜尋與郵件生成)
+- **QR Code**：[QRious](https://github.com/neocotic/qrious)
+- **字體**：[Google Fonts](https://fonts.google.com/) (Noto Sans TC)
+- **視覺與樣式**：[Tailwind CSS](https://tailwindcss.com/)
+- **圖示庫**：[Lucide Icons](https://lucide.dev/)
 
 ## 🚀 快速開始
 
