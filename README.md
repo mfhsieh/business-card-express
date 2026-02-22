@@ -54,9 +54,8 @@
 
 4. **透過 Gemini Canvas 快速執行 (免設定 API 金鑰)**
 
-   如果您不想在本地端設定環境與 API 金鑰，您可以利用 Gemini 的 Canvas 功能直接執行此應用程式（在 Canvas 中執行會自動帶入驗證資源，無須您手動提供 apiKey）：
-   - 將 `app.html` 的程式碼貼上到 Gemini 聊天視窗中。
-   - 設定為 Canvas 模式，告訴 Gemini：「請在 Canvas 裡面執行這段網頁程式碼，嚴禁調整任何一個字元」。
+   如果您不想在本地端設定環境與 API 金鑰，您可以直接在 Gemini 的 Canvas 中執行此應用程式（在 Canvas 中執行會自動帶入驗證資源，無須您手動提供 apiKey）：
+   - 設定 Gemini 為 Canvas 模式，並輸入指令：「建立一個空白的網頁」，接著把 `app.html` 的程式碼貼到 Canvas 的編輯視窗中，替代原本的內容。
    - Gemini 會幫您渲染出完整的網頁介面，您可以在右側預覽畫面中直接操作名片快手。
 
 ## 💡 使用說明
@@ -80,10 +79,10 @@
 
 作者：[mfhsieh](https://github.com/mfhsieh)
 
-## 訊息揭露
+## 📢 訊息揭露
 
 本應用程式以 vibe coding 方式，於 Gemini Canvas 完成雛形開發，後移至 Antigravity 完成。
 
-## Release Notes
+## 📦 Release Notes
 
 - 2026-02-22: 1.0 版發佈。
