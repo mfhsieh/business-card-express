@@ -79,7 +79,7 @@
 
 您可以自由重製、散布、傳輸以及修改本創作，但不得為商業目的之使用，且若您修改本作品，您必須採用與本授權條款相同之授權條款來散布您的貢獻。
 
-作者：[mfhsieh](https://github.com/mfhsieh)
+作者：[mfhsieh at github](https://github.com/mfhsieh)
 
 ## 📢 訊息揭露
 
