@@ -31,7 +31,7 @@
      您可以將此專案 clone 至本地端：
 
      ```bash
-     git clone <YOUR_REPO_URL>
+     git clone https://github.com/mfhsieh/business-card-express.git
      cd ncs
      ```
 
