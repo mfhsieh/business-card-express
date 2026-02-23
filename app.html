@@ -103,55 +103,13 @@
                     </div>
                 </div>
 
-                <!-- 歷史紀錄按鈕 (FAB) -->
-                <button id="toggleHistoryBtn"
-                    class="fixed top-6 right-6 bg-white shrink-0 p-3 rounded-full shadow-lg border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-300 hover:shadow-xl transition-all z-40 group">
-                    <i data-lucide="history" class="w-6 h-6 group-hover:-rotate-12 transition-transform"></i>
-                </button>
-
-                <!-- 歷史紀錄側邊面版 -->
-                <div id="historyOverlay"
-                    class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300">
-                </div>
-                <div id="historyPanel"
-                    class="fixed top-0 right-0 h-full w-80 bg-slate-50 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
-                    <div class="p-4 border-b border-slate-200 bg-white flex items-center justify-between shrink-0">
-                        <div class="flex items-center gap-2 text-indigo-900">
-                            <i data-lucide="history" class="w-5 h-5"></i>
-                            <h3 class="font-bold">歷史紀錄</h3>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <button onclick="clearAllHistory()" title="清空全部"
-                                class="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-lg transition-colors">
-                                <i data-lucide="trash" class="w-4 h-4"></i>
-                            </button>
-                            <button id="closeHistoryBtn"
-                                class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
-                                <i data-lucide="x" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 歷史紀錄列表區 -->
-                    <div id="historyListContainer" class="flex-1 overflow-y-auto p-4 space-y-3">
-                        <div id="historyEmptyState"
-                            class="hidden h-full flex flex-col items-center justify-center text-slate-400">
-                            <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
-                            <p class="text-sm">尚無任何紀錄</p>
-                        </div>
-                        <div id="historyListContent" class="space-y-3">
-                            <!-- 項目由 JS 渲染 -->
-                        </div>
-                    </div>
-                </div>
-
                 <!-- AI 智慧摘要區塊 -->
                 <div id="summaryContainer"
                     class="hidden bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold flex items-center gap-2 text-indigo-700">
-                            <i data-lucide="sparkles" class="w-5 h-5"></i> AI 智慧分析
+                            <i data-lucide="sparkles" class="w-5 h-5"></i> AI 洞察 (AI Insights)
                         </h2>
                         <button id="generateEmailBtn"
                             class="text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors shadow-sm active:scale-95">
@@ -236,7 +194,7 @@
                                     <i data-lucide="loader-2" class="w-6 h-6 text-indigo-600 animate-spin mb-2"></i>
                                     <span class="text-sm font-bold text-indigo-600">AI 撰寫中...</span>
                                 </div>
-                                <textarea id="emailDraftText" rows="1"
+                                <textarea id="field-emailDraft" rows="1"
                                     class="w-full text-sm text-slate-700 outline-none resize-none overflow-hidden bg-transparent"
                                     placeholder="AI 將在此生成郵件草稿..."></textarea>
                             </div>
@@ -498,7 +456,7 @@
                 </div>
 
                 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW" target="_blank"
-                    class="mt-3 flex items-center gap-3 bg-white px-5 py-2 rounded-full border border-slate-200 shadow-sm hover:border-indigo-200 hover:shadow-md transition-all group">
+                    class="mt-1 flex items-center gap-3 bg-white px-5 py-2 rounded-full border border-slate-200 shadow-sm hover:border-indigo-200 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-1 text-indigo-600 group-hover:text-indigo-700 transition-colors">
                         <i data-lucide="creative-commons" class="w-5 h-5"></i>
                         <i data-lucide="user" class="w-4 h-4"></i>
@@ -533,9 +491,50 @@
         </div>
     </div>
 
+    <!-- 歷史紀錄按鈕 (FAB) -->
+    <button id="toggleHistoryBtn"
+        class="fixed top-6 right-6 bg-white shrink-0 p-3 rounded-full shadow-lg border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-300 hover:shadow-xl transition-all z-40 group">
+        <i data-lucide="history" class="w-6 h-6 group-hover:-rotate-12 transition-transform"></i>
+    </button>
+
+    <!-- 歷史紀錄側邊面版 -->
+    <div id="historyOverlay"
+        class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300">
+    </div>
+    <div id="historyPanel"
+        class="fixed top-0 right-0 h-full w-80 bg-slate-50 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
+        <div class="p-4 border-b border-slate-200 bg-white flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2 text-indigo-900">
+                <i data-lucide="history" class="w-5 h-5"></i>
+                <h3 class="font-bold">歷史紀錄</h3>
+            </div>
+            <div class="flex items-center gap-1">
+                <button onclick="clearAllHistory()" title="清空全部"
+                    class="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-lg transition-colors">
+                    <i data-lucide="trash" class="w-4 h-4"></i>
+                </button>
+                <button id="closeHistoryBtn"
+                    class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 歷史紀錄列表區 -->
+        <div id="historyListContainer" class="flex-1 overflow-y-auto p-4 space-y-3">
+            <div id="historyEmptyState" class="hidden h-full flex flex-col items-center justify-center text-slate-400">
+                <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
+                <p class="text-sm">尚無任何紀錄</p>
+            </div>
+            <div id="historyListContent" class="space-y-3">
+                <!-- 項目由 JS 渲染 -->
+            </div>
+        </div>
+    </div>
+
     <script>
         /**
-         * 名片快手 1.01
+         * 名片快手 1.02
          */
 
         /**
@@ -559,14 +558,13 @@
    - 組織 (ORG): 對應 json 的 orgName 與 orgUnit，拆解為組織名稱與部門。
    - 職稱 (TITLE): 對應 json 的 title。
    - 地址 (ADR): 依序對應 json 的 poBox, extendedAddress, streetAddress, locality, region, postalCode, country。
-     - 務必遵守以下台灣地址規則:
-       - "縣市" (如: 台北市、新竹縣) 對應 region。
-       - "鄉鎮市區" (如: 大安區、竹北市) 對應 locality。對台灣的直轄市 (台北市、高雄市、台中市、台南市、桃園市、新北市) ，可不填入 locality。
-       - "路街段巷弄號樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
+     - 台灣地址 **務必** 遵守以下規則:
+       - "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共6個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共3個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
+       - "鄉、鎮、市、區" (如: 湖口鄉、苑裡鎮、竹北市、大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
+       - "路、街、段、巷、弄、號、樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
        - "台灣" 為 country 的預設值。
-       - "段" 前的數字使用中文，如: "延平北路二段" 而不是 "延平北路2段"。
-       - "巷弄號樓" 前的數字使用阿拉伯數字，如: "12巷3弄4號5樓"。
-       - 務必儘可能拆解。
+       - streetAddress 中，"段" 前的數字使用中文，如: "○○路二段" 而不是 "○○路2段"。
+       - streetAddress 中，"巷、弄、號、樓" 前的數字使用阿拉伯數字，如: "12巷3弄4號5樓"。
    - 電話 (TEL):
      - 對應 json 的 phones: [{"type":"work"|"cell"|"home", "value":"...", "ext":"..."}]。公司電話、手機、住家電話分別對應 work、cell、home。
      - 對應 json 的 faxes: [{"type":"work"|"home", "value":"...", "ext":"..."}]。公司傳真、住家傳真分別對應 work、home。
@@ -579,6 +577,10 @@
    - 網站 (URL):
      - 對應 json 的 urls: [{"type":"work"|"home", "value":"..."}]。公司網站、個人網站分別對應 work、home。
      - 務必將所有網站都納入。
+4. 檢查
+   - locality 中，"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，嚴禁猜測。
+   - streetAddress 中，"段" 前的數字嚴禁使用阿拉伯數字，務必使用中文。
+   - streetAddress 中，"巷、弄、號、樓" 前的數字嚴禁使用中文，務必使用阿拉伯數字。
 
 【任務二: 網路深度搜尋】
 1. 根據 "任務一" 取得的 "組織名稱 (orgName)"、"人員全名 (fn)" 及 "職稱 (title)"，啟動 Google Search:
@@ -612,7 +614,7 @@
             fn: "", lastName: "", firstName: "", middleName: "", prefix: "", suffix: "",
             orgName: "", orgUnit: "", title: "",
             region: "", locality: "", streetAddress: "", extendedAddress: "", poBox: "", postalCode: "", country: "台灣",
-            note: "", companySummary: "", personalSummary: "",
+            note: "", companySummary: "", personalSummary: "", emailDraft: "",
             phones: [], faxes: [], emails: [], urls: [],
             sources: []
         };
@@ -622,7 +624,7 @@
             'fn', 'lastName', 'firstName', 'middleName', 'prefix', 'suffix',
             'orgName', 'orgUnit', 'title',
             'country', 'postalCode', 'region', 'locality', 'poBox', 'extendedAddress', 'streetAddress',
-            'note', 'companySummary', 'personalSummary'
+            'note', 'companySummary', 'personalSummary', 'emailDraft'
         ];
 
         /**
@@ -801,6 +803,9 @@
             },
             /**
              * 將 DataURL 字串轉換為壓縮後的 Base64
+             * @param {string} dataUrl - 原始資料的 DataURL
+             * @param {number} [maxSide=1200] - 最大邊長像素值
+             * @returns {Promise<string>} 壓縮後的 Base64 字串
              */
             async compressDataURL(dataUrl, maxSide = 1200) {
                 return new Promise((resolve, reject) => {
@@ -810,7 +815,12 @@
                     img.onerror = () => reject(new Error("影像載入失敗"));
                 });
             },
-            /** [核心邏輯] 利用 Canvas 畫布進行縮放與降質 */
+            /** 
+             * [核心邏輯] 利用 Canvas 畫布進行縮放與降質 
+             * @param {HTMLImageElement} img - 載入完成的圖片元素
+             * @param {number} [maxSide=1200] - 最大邊長像素值
+             * @returns {string} 壓縮後的 Base64 字串
+             */
             compressImage(img, maxSide = 1200) {
                 const canvas = document.createElement('canvas');
                 let { width, height } = img;
@@ -874,7 +884,10 @@
                 return cleaned;
             },
 
-            /** 生成 vCard 的修訂時間戳記 (REV) */
+            /** 
+             * 生成 vCard 的修訂時間戳記 (REV) 
+             * @returns {string} 格式化後的時間戳記字串
+             */
             formatREV() {
                 return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
             },
@@ -966,7 +979,10 @@
          * 負責 UI 反饋、Loading 顯示、錯誤提示與區塊展開/收合。
          */
         const UXManager = {
-            /** 初始化模組，綁定 textarea 自動調整高度事件 */
+            /** 
+             * 初始化模組，綁定 textarea 自動調整高度事件 
+             * @returns {void}
+             */
             init() {
                 const textareas = ['field-companySummary', 'field-personalSummary', 'emailDraftText', 'field-note'];
                 textareas.forEach(id => {
@@ -974,14 +990,23 @@
                     if (el) el.addEventListener('input', () => this.autoResize(el));
                 });
             },
-            /** 顯示 Toast 訊息 */
+            /** 
+             * 顯示 Toast 訊息 
+             * @param {string} msg - 要顯示的訊息內容
+             * @returns {void}
+             */
             toast(msg) {
                 const toast = document.getElementById('toast');
                 toast.textContent = msg;
                 toast.classList.remove('opacity-0', 'pointer-events-none');
                 setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
             },
-            /** 設定按鈕的全域載入遮罩狀態 */
+            /** 
+             * 設定按鈕的全域載入遮罩狀態 
+             * @param {boolean} isLoading - 是否處於載入狀態
+             * @param {string} [text="AI 處理中..."] - 載入時欲顯示的文字
+             * @returns {void}
+             */
             setLoading(isLoading, text = "AI 處理中...") {
                 const btn = document.getElementById('identifyBtn');
                 if (btn) btn.disabled = isLoading;
@@ -1001,7 +1026,11 @@
                     }
                 }
             },
-            /** 顯示錯誤訊息區塊 */
+            /** 
+             * 顯示錯誤訊息區塊 
+             * @param {string} msg - 錯誤訊息內容
+             * @returns {void}
+             */
             showError(msg) {
                 const err = document.getElementById('errorMessage');
                 const text = document.getElementById('errorText');
@@ -1009,19 +1038,34 @@
                 if (err) err.classList.remove('hidden');
                 document.getElementById('debugPanel1').classList.remove('hidden');
             },
-            /** 文字框自動依內容調整高度 */
+            /** 
+             * 文字框自動依內容調整高度 
+             * @param {HTMLElement} el - 需要被調整高度的 textarea 元素
+             * @returns {void}
+             */
             autoResize(el) {
                 if (!el) return;
                 el.style.height = 'auto';
                 el.style.height = (el.scrollHeight) + 'px';
             },
-            /** 切換除錯面版顯示 */
+            /** 
+             * 切換除錯面版顯示 
+             * @param {string} panelId - 面板 DOM ID
+             * @param {string} textId - 按鈕文字 DOM ID
+             * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
+             * @returns {void}
+             */
             toggleDebug(panelId, textId, phaseName) {
                 const panel = document.getElementById(panelId);
                 const isHidden = panel.classList.toggle('hidden');
                 document.getElementById(textId).textContent = isHidden ? `顯示 ${phaseName} 原始回應 (Debug)` : `隱藏 ${phaseName} 原始回應`;
             },
-            /** 切換 UI 區塊展開或收合狀態 */
+            /** 
+             * 切換 UI 區塊展開或收合狀態 
+             * @param {string} contentId - 內容區塊 DOM ID
+             * @param {string} iconId - 圖示 DOM ID
+             * @returns {void}
+             */
             toggleSection(contentId, iconId) {
                 const content = document.getElementById(contentId);
                 const isHidden = content.classList.toggle('hidden');
@@ -1081,7 +1125,11 @@
                 if (!fullAddress) return "";
                 return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
             },
-            /** 開啟地圖頁面 */
+            /** 
+             * 開啟地圖頁面
+             * @param {Object} d - 聯絡人資料物件
+             * @returns {void} 
+             */
             openGoogleMaps(d) {
                 const url = this.getGoogleMapsUrl(d);
                 if (url) window.open(url, '_blank');
@@ -1248,14 +1296,184 @@
         };
 
         /**
-         * 模組 9：表單驗證模組 (Validator Service)
+         * 模組 9：歷史紀錄介面模組 (History Manager)
+         * 負責處理歷史紀錄選單的開關、渲染、載入、刪除等與 UI 之互動邏輯。
+         */
+        const HistoryManager = {
+            /**
+             * 初始化歷史紀錄面板的事件監聽
+             * @returns {void}
+             */
+            init() {
+                // 歷史紀錄面版開關事件
+                const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
+                const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+                const historyOverlay = document.getElementById('historyOverlay');
+                const historyPanel = document.getElementById('historyPanel');
+
+                this.toggleHistoryPanel = () => {
+                    const isHidden = historyOverlay.classList.contains('hidden');
+                    if (isHidden) {
+                        historyOverlay.classList.remove('hidden');
+                        // 確保 display block生效後才觸發動畫
+                        setTimeout(() => {
+                            historyOverlay.classList.remove('opacity-0');
+                            historyPanel.classList.remove('translate-x-full');
+                        }, 10);
+                    } else {
+                        historyOverlay.classList.add('opacity-0');
+                        historyPanel.classList.add('translate-x-full');
+                        setTimeout(() => historyOverlay.classList.add('hidden'), 300);
+                    }
+                };
+
+                if (toggleHistoryBtn) toggleHistoryBtn.onclick = this.toggleHistoryPanel;
+                if (closeHistoryBtn) closeHistoryBtn.onclick = this.toggleHistoryPanel;
+                if (historyOverlay) historyOverlay.onclick = this.toggleHistoryPanel;
+            },
+
+            /**
+             * 渲染歷史紀錄清單至 UI 畫面
+             * @returns {Promise<void>}
+             */
+            async render() {
+                const listEl = document.getElementById('historyListContent');
+                const emptyEl = document.getElementById('historyEmptyState');
+                if (!listEl || !emptyEl) return;
+
+                try {
+                    const cards = await DatabaseService.getAllCards();
+
+                    if (cards.length === 0) {
+                        listEl.classList.add('hidden');
+                        emptyEl.classList.remove('hidden');
+                        return;
+                    }
+
+                    emptyEl.classList.add('hidden');
+                    listEl.classList.remove('hidden');
+
+                    listEl.innerHTML = cards.map(c => {
+                        const date = new Date(c.timestamp).toLocaleString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                        const name = c.cardData.fn || '未命名聯絡人';
+                        const org = c.cardData.orgName || '無公司資訊';
+                        const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><i data-lucide="image" class="w-4 h-4 text-slate-400"></i></div>`;
+
+                        return `
+                            <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group flex items-center gap-3 cursor-pointer" onclick="HistoryManager.loadItem(${c.id})">
+                                ${imgPreview}
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
+                                    <p class="text-xs text-slate-500 truncate">${org}</p>
+                                    <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
+                                </div>
+                                <button onclick="event.stopPropagation(); HistoryManager.deleteItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                    lucide.createIcons();
+                } catch (err) {
+                    console.error("讀取歷史紀錄失敗:", err);
+                }
+            },
+
+            /**
+             * 載入單筆歷史紀錄至目前畫面狀態中
+             * @param {number} id - 紀錄 ID
+             * @returns {Promise<void>}
+             */
+            async loadItem(id) {
+                try {
+                    const cards = await DatabaseService.getAllCards();
+                    const target = cards.find(c => c.id === id);
+                    if (target) {
+                        state.cardData = JSON.parse(JSON.stringify(target.cardData));
+                        state.base64Image = target.base64Image;
+                        state.currentHistoryId = id;
+
+                        // 關閉歷史面版
+                        if (this.toggleHistoryPanel) {
+                            const overlay = document.getElementById('historyOverlay');
+                            if (!overlay.classList.contains('hidden')) {
+                                this.toggleHistoryPanel();
+                            }
+                        }
+
+                        // 恢復圖片預覽
+                        if (state.base64Image) {
+                            const preview = document.getElementById('previewImage');
+                            preview.src = `data:image/png;base64,${state.base64Image}`;
+                            preview.classList.remove('hidden');
+                            document.getElementById('uploadPlaceholder').classList.add('hidden');
+
+                            const btn = document.getElementById('identifyBtn');
+                            btn.disabled = false;
+                            btn.classList.replace('bg-slate-100', 'bg-indigo-600');
+                            btn.classList.replace('text-slate-400', 'text-white');
+                            btn.classList.add('shadow-xl', 'hover:bg-indigo-700');
+                        }
+
+                        syncDataToUI();
+                        UXManager.toast("已從歷史紀錄載入");
+                    }
+                } catch (err) {
+                    UXManager.toast("載入失敗: " + err.message);
+                }
+            },
+
+            /**
+             * 刪除指定歷史紀錄
+             * @param {number} id - 紀錄 ID
+             * @returns {Promise<void>}
+             */
+            async deleteItem(id) {
+                if (!confirm("確定要刪除這筆紀錄嗎？")) return;
+                try {
+                    await DatabaseService.deleteCard(id);
+                    this.render();
+                    UXManager.toast("紀錄已刪除");
+                } catch (err) {
+                    UXManager.toast("刪除失敗: " + err.message);
+                }
+            },
+
+            /**
+             * 清空所有歷史紀錄
+             * @returns {Promise<void>}
+             */
+            async clearAll() {
+                if (!confirm("警告：這將會永久刪除所有保留在瀏覽器內的歷史紀錄，確定嗎？")) return;
+                try {
+                    await DatabaseService.clearAll();
+                    this.render();
+                    UXManager.toast("所有歷史紀錄已清空");
+                } catch (err) {
+                    UXManager.toast("清空失敗: " + err.message);
+                }
+            }
+        };
+
+        /**
+         * 模組 10：表單驗證模組 (Validator Service)
          * 負責檢查 Email、網址是否符合基本格式。
          */
         const Validator = {
+            /**
+             * 檢查電子郵件格式是否有效
+             * @param {string} email - 電子郵件字串
+             * @returns {boolean} 是否為有效格式
+             */
             isValidEmail(email) {
                 if (!email) return true; // 允許空白
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             },
+            /**
+             * 檢查網址格式是否有效
+             * @param {string} url - 網址字串
+             * @returns {boolean} 是否為有效網址
+             */
             isValidURL(url) {
                 if (!url) return true; // 允許空白
                 try {
@@ -1275,7 +1493,8 @@
             // 初始化本地資料庫並載入歷史清單
             try {
                 await DatabaseService.init();
-                renderHistoryList();
+                HistoryManager.init();
+                HistoryManager.render();
             } catch (err) {
                 console.warn("無法啟動本地歷史紀錄功能:", err);
             }
@@ -1290,31 +1509,7 @@
             document.getElementById('copyVcfBtn').onclick = copyVCardContent;
             document.getElementById('generateEmailBtn').onclick = generateEmailDraft;
 
-            // 歷史紀錄面版開關事件
-            const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
-            const closeHistoryBtn = document.getElementById('closeHistoryBtn');
-            const historyOverlay = document.getElementById('historyOverlay');
-            const historyPanel = document.getElementById('historyPanel');
-
-            const toggleHistoryPanel = () => {
-                const isHidden = historyOverlay.classList.contains('hidden');
-                if (isHidden) {
-                    historyOverlay.classList.remove('hidden');
-                    // 確保 display block生效後才觸發動畫
-                    setTimeout(() => {
-                        historyOverlay.classList.remove('opacity-0');
-                        historyPanel.classList.remove('translate-x-full');
-                    }, 10);
-                } else {
-                    historyOverlay.classList.add('opacity-0');
-                    historyPanel.classList.add('translate-x-full');
-                    setTimeout(() => historyOverlay.classList.add('hidden'), 300);
-                }
-            };
-
-            toggleHistoryBtn.onclick = toggleHistoryPanel;
-            closeHistoryBtn.onclick = toggleHistoryPanel;
-            historyOverlay.onclick = toggleHistoryPanel;
+            window.clearAllHistory = () => HistoryManager.clearAll();
         };
 
         /**
@@ -1442,7 +1637,7 @@
                 DatabaseService.saveCard(state.cardData, state.base64Image)
                     .then(id => {
                         state.currentHistoryId = id;
-                        renderHistoryList();
+                        HistoryManager.render();
                     })
                     .catch(err => console.warn("歷史紀錄存檔失敗", err));
 
@@ -1455,9 +1650,10 @@
          * [功能] 重置郵件草稿區域並隱藏
          */
         function resetEmailDraft() {
+            state.cardData.emailDraft = "";
             const draftContainer = document.getElementById('emailDraftContainer');
             if (draftContainer) draftContainer.classList.add('hidden');
-            const textArea = document.getElementById('emailDraftText');
+            const textArea = document.getElementById('field-emailDraft');
             if (textArea) { textArea.value = ""; textArea.style.height = 'auto'; }
         }
 
@@ -1473,7 +1669,7 @@
             if (!isValid(d.fn) && !isValid(d.orgName)) { UXManager.toast("請先辨識資訊"); return; }
             const draftContainer = document.getElementById('emailDraftContainer');
             const loadingOverlay = document.getElementById('emailLoading');
-            const textArea = document.getElementById('emailDraftText');
+            const textArea = document.getElementById('field-emailDraft');
 
             // 1. 確保區塊顯示並打開收合
             draftContainer.classList.remove('hidden');
@@ -1496,8 +1692,17 @@
                 const result = await GeminiService.ask(prompt);
                 const text = GeminiService.extractText(result);
                 textArea.value = text ? text.trim() : "生成失敗";
+                state.cardData.emailDraft = textArea.value;
                 UXManager.autoResize(textArea);
-            } catch (err) { textArea.value = "發生錯誤：" + err.message; }
+
+                // 自動儲存信件草稿到歷史紀錄中
+                if (state.currentHistoryId) {
+                    DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
+                        .then(() => HistoryManager.render())
+                        .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
+                }
+
+            } catch (err) { textArea.value = "發生錯誤：" + err.message; state.cardData.emailDraft = ""; }
             finally { loadingOverlay.classList.add('hidden'); }
         }
 
@@ -1505,7 +1710,7 @@
          * [功能] 複製郵件草稿至剪貼簿
          */
         window.copyEmailDraft = () => {
-            const text = document.getElementById('emailDraftText').value;
+            const text = document.getElementById('field-emailDraft').value;
             if (ExportService.copyToClipboard(text)) {
                 UXManager.toast("草稿已複製！");
             }
@@ -1525,14 +1730,32 @@
             // 2. 處理摘要顯示邏輯
             const hasCompany = isValid(d.companySummary);
             const hasPersonal = isValid(d.personalSummary);
-            if (hasCompany || hasPersonal) {
+            const hasEmailDraft = isValid(d.emailDraft);
+
+            if (hasCompany || hasPersonal || hasEmailDraft) {
                 document.getElementById('summaryContainer').classList.remove('hidden');
                 document.getElementById('companySummaryBlock').classList.toggle('hidden', !hasCompany);
                 document.getElementById('personalSummaryBlock').classList.toggle('hidden', !hasPersonal);
-                setTimeout(() => {
-                    if (hasCompany) UXManager.autoResize(document.getElementById('field-companySummary'));
-                    if (hasPersonal) UXManager.autoResize(document.getElementById('field-personalSummary'));
-                }, 50);
+
+                if (hasEmailDraft) {
+                    document.getElementById('emailDraftContainer').classList.remove('hidden');
+                    // 確保內容區塊不會是隱藏狀態
+                    const content = document.getElementById('emailDraftContent');
+                    if (content) content.classList.remove('hidden');
+                    const icon = document.getElementById('emailDraftIcon');
+                    if (icon) icon.classList.remove('rotate-180');
+                } else {
+                    document.getElementById('emailDraftContainer').classList.add('hidden');
+                }
+
+                // 多次嘗試更新高度，確保 display:none 轉換與動畫過程能抓到正確的 scrollHeight
+                [0, 50, 150, 300].forEach(delay => {
+                    setTimeout(() => {
+                        if (hasCompany) UXManager.autoResize(document.getElementById('field-companySummary'));
+                        if (hasPersonal) UXManager.autoResize(document.getElementById('field-personalSummary'));
+                        if (hasEmailDraft) UXManager.autoResize(document.getElementById('field-emailDraft'));
+                    }, delay);
+                });
             } else { document.getElementById('summaryContainer').classList.add('hidden'); }
 
             // 3. 渲染參考來源標籤
@@ -1739,7 +1962,7 @@
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
                 DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
-                    .then(() => renderHistoryList())
+                    .then(() => HistoryManager.render())
                     .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
             }
         }
@@ -1791,115 +2014,6 @@
             resetEmailDraft(); syncDataToUI(); UXManager.toast("已清空資料");
         };
 
-        /**
-         * [UI 渲染] 渲染歷史紀錄清單
-         */
-        async function renderHistoryList() {
-            const listEl = document.getElementById('historyListContent');
-            const emptyEl = document.getElementById('historyEmptyState');
-            if (!listEl || !emptyEl) return;
-
-            try {
-                const cards = await DatabaseService.getAllCards();
-
-                if (cards.length === 0) {
-                    listEl.classList.add('hidden');
-                    emptyEl.classList.remove('hidden');
-                    return;
-                }
-
-                emptyEl.classList.add('hidden');
-                listEl.classList.remove('hidden');
-
-                listEl.innerHTML = cards.map(c => {
-                    const date = new Date(c.timestamp).toLocaleString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                    const name = c.cardData.fn || '未命名聯絡人';
-                    const org = c.cardData.orgName || '無公司資訊';
-                    const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><i data-lucide="image" class="w-4 h-4 text-slate-400"></i></div>`;
-
-                    return `
-                        <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group flex items-center gap-3 cursor-pointer" onclick="loadHistoryItem(${c.id})">
-                            ${imgPreview}
-                            <div class="flex-1 min-w-0">
-                                <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
-                                <p class="text-xs text-slate-500 truncate">${org}</p>
-                                <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
-                            </div>
-                            <button onclick="event.stopPropagation(); deleteHistoryItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    `;
-                }).join('');
-                lucide.createIcons();
-            } catch (err) {
-                console.error("讀取歷史紀錄失敗:", err);
-            }
-        }
-
-        /**
-         * [功能] 從歷史紀錄載入資料至主畫面
-         * @param {number} id - 紀錄 ID
-         */
-        window.loadHistoryItem = async (id) => {
-            try {
-                const cards = await DatabaseService.getAllCards();
-                const target = cards.find(c => c.id === id);
-                if (target) {
-                    state.cardData = JSON.parse(JSON.stringify(target.cardData));
-                    state.base64Image = target.base64Image;
-                    state.currentHistoryId = id;
-
-                    // 關閉歷史面版
-                    document.getElementById('toggleHistoryBtn').click();
-
-                    // 恢復圖片預覽
-                    if (state.base64Image) {
-                        const preview = document.getElementById('previewImage');
-                        preview.src = `data:image/png;base64,${state.base64Image}`;
-                        preview.classList.remove('hidden');
-                        document.getElementById('uploadPlaceholder').classList.add('hidden');
-
-                        const btn = document.getElementById('identifyBtn');
-                        btn.disabled = false;
-                        btn.classList.replace('bg-slate-100', 'bg-indigo-600');
-                        btn.classList.replace('text-slate-400', 'text-white');
-                        btn.classList.add('shadow-xl', 'hover:bg-indigo-700');
-                    }
-
-                    syncDataToUI();
-                    UXManager.toast("已從歷史紀錄載入");
-                }
-            } catch (err) {
-                UXManager.toast("載入失敗: " + err.message);
-            }
-        };
-
-        /**
-         * [功能] 刪除單筆歷史紀錄
-         * @param {number} id - 紀錄 ID
-         */
-        window.deleteHistoryItem = async (id) => {
-            if (!confirm("確定要刪除這筆紀錄嗎？")) return;
-            try {
-                await DatabaseService.deleteCard(id);
-                renderHistoryList();
-                UXManager.toast("紀錄已刪除");
-            } catch (err) {
-                UXManager.toast("刪除失敗: " + err.message);
-            }
-        };
-
-        window.clearAllHistory = async () => {
-            if (!confirm("警告：這將會永久刪除所有保留在瀏覽器內的歷史紀錄，確定嗎？")) return;
-            try {
-                await DatabaseService.clearAll();
-                renderHistoryList();
-                UXManager.toast("所有歷史紀錄已清空");
-            } catch (err) {
-                UXManager.toast("清空失敗: " + err.message);
-            }
-        };
     </script>
 </body>
 
