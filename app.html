@@ -120,7 +120,7 @@
                         <!-- 公司摘要 -->
                         <div id="companySummaryBlock" class="hidden">
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
-                                onclick="UXManager.toggleSection('companySummaryContent', 'companySummaryIcon')">
+                                data-toggle-target="companySummaryContent" data-toggle-icon="companySummaryIcon">
                                 <h3
                                     class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
                                     <i data-lucide="building" class="w-4 h-4"></i> 公司摘要 (Company Summary)
@@ -138,7 +138,7 @@
                         <!-- 個人摘要 -->
                         <div id="personalSummaryBlock" class="hidden">
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
-                                onclick="UXManager.toggleSection('personalSummaryContent', 'personalSummaryIcon')">
+                                data-toggle-target="personalSummaryContent" data-toggle-icon="personalSummaryIcon">
                                 <h3
                                     class="text-xs font-black text-purple-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-purple-800 transition-colors">
                                     <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要 (Personal Summary)
@@ -157,7 +157,7 @@
                         <!-- 參考來源區塊 -->
                         <div id="sourcesBlock" class="hidden pt-2 border-t border-slate-100">
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
-                                onclick="UXManager.toggleSection('sourcesListWrapper', 'sourcesIcon')">
+                                data-toggle-target="sourcesListWrapper" data-toggle-icon="sourcesIcon">
                                 <h3
                                     class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1 group-hover:text-slate-600 transition-colors">
                                     <i data-lucide="link" class="w-3 h-3"></i> 參考來源 (Sources)
@@ -174,7 +174,7 @@
                         <div id="emailDraftContainer" class="hidden mt-4 pt-4 border-t border-indigo-100">
                             <div class="flex justify-between items-center mb-2">
                                 <div class="flex items-center gap-2 cursor-pointer flex-1 group"
-                                    onclick="UXManager.toggleSection('emailDraftContent', 'emailDraftIcon')">
+                                    data-toggle-target="emailDraftContent" data-toggle-icon="emailDraftIcon">
                                     <h3
                                         class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
                                         <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤 (Follow-up)
@@ -240,7 +240,7 @@
                         <h2 class="text-2xl font-black flex items-center gap-2 text-slate-800">
                             <i data-lucide="file-edit" class="text-indigo-600 w-6 h-6"></i> 編輯名片資料
                         </h2>
-                        <button onclick="clearForm()"
+                        <button id="clearFormBtn"
                             class="text-sm font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
                             <i data-lucide="trash-2" class="w-4 h-4"></i> 清空
                         </button>
@@ -320,7 +320,7 @@
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                         <i data-lucide="phone" class="w-4 h-4"></i> 電話 (Phone)
                                     </h3>
-                                    <button onclick="addListItem('phones')" class="text-indigo-600 text-xs font-black">+
+                                    <button data-add-item="phones" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
                                 </div>
                                 <div id="list-phones" class="space-y-2"></div>
@@ -331,7 +331,7 @@
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                         <i data-lucide="printer" class="w-4 h-4"></i> 傳真 (Fax)
                                     </h3>
-                                    <button onclick="addListItem('faxes')" class="text-indigo-600 text-xs font-black">+
+                                    <button data-add-item="faxes" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
                                 </div>
                                 <div id="list-faxes" class="space-y-2"></div>
@@ -342,7 +342,7 @@
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                         <i data-lucide="mail" class="w-4 h-4"></i> 信箱 (Email)
                                     </h3>
-                                    <button onclick="addListItem('emails')" class="text-indigo-600 text-xs font-black">+
+                                    <button data-add-item="emails" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
                                 </div>
                                 <div id="list-emails" class="space-y-2"></div>
@@ -353,7 +353,7 @@
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                         <i data-lucide="globe" class="w-4 h-4"></i> 網站 (Website)
                                     </h3>
-                                    <button onclick="addListItem('urls')" class="text-indigo-600 text-xs font-black">+
+                                    <button data-add-item="urls" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
                                 </div>
                                 <div id="list-urls" class="space-y-2"></div>
@@ -367,7 +367,7 @@
                                     class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                     <i data-lucide="map-pin" class="w-4 h-4"></i> 地址 (Address)
                                 </h3>
-                                <button id="btn-maps" onclick="openGoogleMaps()"
+                                <button id="btn-maps"
                                     class="text-xs font-bold text-slate-500 hover:text-indigo-600 flex items-center gap-1 hidden">
                                     <i data-lucide="map" class="w-3 h-3"></i> Google Maps
                                 </button>
@@ -430,10 +430,11 @@
                 <!-- 除錯區 -->
                 <div class="mt-8 pt-4 border-t border-dashed border-slate-300 space-y-4">
                     <div>
-                        <button onclick="UXManager.toggleDebug('debugPanel1', 'debugToggleText1', 'OCR與上網搜尋')"
+                        <button id="toggleDebugBtn" data-toggle-debug="debugPanel1" data-toggle-text="debugToggleText1"
+                            data-toggle-phase="OCR與上網搜尋"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText1">顯示 OCR與上網搜尋 原始回應
-                                (Debug)</span>
+                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText1">顯示 OCR與上網搜尋
+                                原始回應</span>
                         </button>
                         <pre id="debugPanel1"
                             class="hidden mt-4 bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono whitespace-pre-wrap break-all shadow-inner overflow-y-auto max-h-96"></pre>
@@ -486,7 +487,7 @@
                 <i data-lucide="loader-2" class="absolute inset-0 w-12 h-12 text-indigo-600 animate-spin-slow"></i>
                 <i data-lucide="sparkles" class="w-5 h-5 text-indigo-600 animate-pulse"></i>
             </div>
-            <span id="globalLoadingText" class="text-slate-800 font-black tracking-widest text-lg">AI 處理中...</span>
+            <span id="globalLoadingText" class="text-slate-800 font-black tracking-widest text-lg">處理中...</span>
             <span class="text-slate-400 text-xs font-medium mt-1">請稍候，這可能需要幾秒鐘的時間</span>
         </div>
     </div>
@@ -509,7 +510,7 @@
                 <h3 class="font-bold">歷史紀錄</h3>
             </div>
             <div class="flex items-center gap-1">
-                <button onclick="clearAllHistory()" title="清空全部"
+                <button id="clearAllHistoryBtn" title="清空全部"
                     class="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-lg transition-colors">
                     <i data-lucide="trash" class="w-4 h-4"></i>
                 </button>
@@ -534,7 +535,7 @@
 
     <script>
         /**
-         * 名片快手 1.02
+         * 名片快手 1.03
          */
 
         /**
@@ -542,7 +543,9 @@
          */
         const apiKey = "";
         const MODEL_NAME = "gemini-2.0-flash";
+        const MODEL_API = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
         const DEBOUNCE_DELAY_MS = 1000; // QR Code 與 UI 更新的防抖延遲 (毫秒)
+        const DEFAULT_CATEGORY_NAME = "名片快手"; // 匯出名片時，強制加入的分類標籤 (Categories)
 
         /** [提示詞] 名片 OCR、規格化與上網深度搜尋 */
         const PROMPT_OCR = `
@@ -593,7 +596,7 @@
 回傳純 JSON 欄位: fn, lastName, firstName, middleName, prefix, suffix, orgName, orgUnit, title, poBox, extendedAddress, streetAddress, locality, region, postalCode, country, phones, faxes, emails, urls, note, companySummary, personalSummary。`;
 
         /** [提示詞] 生成跟進郵件 */
-        const GET_PROMPT_EMAIL = (org, name, companySummary, personalSummary) => `
+        const PROMPT_EMAIL = (org, name, companySummary, personalSummary) => `
 你是一位精通台灣商務文化及禮儀的專家，剛拜訪下列客戶:
 - 組織名稱: ${org || '貴公司'}
 - 客戶全名: ${name || '○先生/女士'}
@@ -621,10 +624,10 @@
 
         /** [配置] 靜態欄位清單，用於自動化表單同步 */
         const STATIC_FIELDS = [
-            'fn', 'lastName', 'firstName', 'middleName', 'prefix', 'suffix',
-            'orgName', 'orgUnit', 'title',
-            'country', 'postalCode', 'region', 'locality', 'poBox', 'extendedAddress', 'streetAddress',
-            'note', 'companySummary', 'personalSummary', 'emailDraft'
+            "fn", "lastName", "firstName", "middleName", "prefix", "suffix",
+            "orgName", "orgUnit", "title",
+            "country", "postalCode", "region", "locality", "poBox", "extendedAddress", "streetAddress",
+            "note", "companySummary", "personalSummary", "emailDraft"
         ];
 
         /**
@@ -649,7 +652,7 @@
          */
         function isValid(val) {
             if (val === null || val === undefined) return false;
-            if (typeof val === 'string') {
+            if (typeof val === "string") {
                 const trimmed = val.trim();
                 return trimmed !== "" && trimmed.toLowerCase() !== "null";
             }
@@ -674,51 +677,71 @@
 
         /**
          * 模組 1：AI 核心通訊模組 (AI Service Module)
-         * 封裝 Google Gemini API 的通訊邏輯、錯誤處理與重試機制。
+         * 封裝 Google Gemini API 的通訊邏輯、提問處理、JSON 解析與重試機制。
          */
         const GeminiService = {
-            key: "",
+            /** @property {string} modelApi - 當前使用的 API 端點網址 */
+            modelApi: MODEL_API,
+            /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
             baseDelay: 1000,
+            /** @property {number} maxRetries - API 呼叫失敗時的最大重試次數 */
             maxRetries: 5,
 
             /**
-             * 初始化金鑰與重試設定
-             * @param {string} key - API Key
-             * @param {number} [delay=1000] - 基礎延遲毫秒數
-             * @param {number} [retries=5] - 最大重試次數
+             * 動態更新 API 金鑰與重試延遲等設定
+             * @param {string} [api=MODEL_API] - 完整的 API 端點網址 (包含金鑰)
+             * @param {number} [delay=1000] - 發生錯誤時的基礎等待時間 (毫秒)
+             * @param {number} [retries=5] - 允許的最大重試次數
              */
-            init(key, delay, retries) {
-                this.key = key;
+            init(api, delay, retries) {
+                if (api !== undefined) this.modelApi = api;
                 if (delay !== undefined) this.baseDelay = delay;
                 if (retries !== undefined) this.maxRetries = retries;
             },
 
             /**
-             * [底層] 發送 HTTP 請求至 Gemini API，具備指數退避重試邏輯。
-             * @param {Object} payload - 傳送給 API 的 JSON 內容
-             * @param {string} [model=MODEL_NAME] - 使用的模型名稱
-             * @returns {Object} API 回傳的 JSON 完整物件
+             * [底層] 發送 HTTP 請求至 Gemini API，具備指數退避 (Exponential Backoff) 重試邏輯。
+             * 針對 4xx 用戶端錯誤 (除 429 外) 會立即中斷，不會浪費資源重試。
+             * 
+             * @param {Object} payload - 傳送給 API 的完整 JSON 負載 (如 contents, tools)
+             * @returns {Promise<Object>} API 解析成功後回傳的 JSON 物件
+             * @throws {Error} 當達到最大重試次數，或遇到無法重試的 HTTP 客戶端錯誤時拋出例外
              */
-            async fetch(payload, model = MODEL_NAME) {
+            async fetch(payload) {
                 let currentDelay = this.baseDelay;
                 const retries = this.maxRetries;
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${this.key}`;
 
                 for (let i = 0; i < retries; i++) {
                     try {
-                        const response = await window.fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
+                        const response = await window.fetch(this.modelApi, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(payload)
                         });
 
                         if (!response.ok) {
                             const errorBody = await response.json().catch(() => ({}));
-                            throw new Error(errorBody.error?.message || `API 狀態碼 ${response.status}`);
+                            const status = response.status;
+                            const msg = errorBody.error?.message || `API 狀態碼 ${status}`;
+
+                            // 客戶端授權或輸入參數錯誤 (4xx 但不包含 429 Too Many Requests) 
+                            // 不需重試，因為再試也不會成功，直接拋出錯誤中斷流程。
+                            if (status >= 400 && status < 500 && status !== 429) {
+                                throw new Error(msg);
+                            }
+
+                            // 若是伺服器錯誤 (5xx) 或 429 則觸發例外，進入下方 catch 展開重試循環
+                            throw new Error(msg);
                         }
                         return await response.json();
                     } catch (error) {
+                        // 檢查若是稍早強制拋出的 4xx 客戶端錯誤，或已達重試次數上限：直接拋出不重試
+                        if (error.message && error.message.includes("狀態碼 4") && !error.message.includes("429")) {
+                            throw error;
+                        }
                         if (i === retries - 1) throw error;
+
+                        // 等待一段時間後再重試，延遲時間隨失敗次數倍增
                         await new Promise(res => setTimeout(res, currentDelay));
                         currentDelay *= 2;
                     }
@@ -726,35 +749,52 @@
             },
 
             /**
-             * 從 API 回應物件中提取最後一段文本內容
+             * 安全地從 API 回應物件中提取 AI 的文字回應。
+             * 會將所有包含內容的部位 (parts) 給串接起來，防止被截斷。
+             * 
              * @param {Object} response - fetch 回傳的物件
-             * @returns {string} 提取出的純文字
+             * @returns {string} 提取並組合好的文字內容 (如果沒有則回傳空字串)
              */
             extractText(response) {
                 const parts = response.candidates?.[0]?.content?.parts || [];
-                return parts.length > 0 ? parts[parts.length - 1].text : "";
+                return parts.map(p => p.text || "").join("");
             },
 
             /**
-             * 將包含 Markdown 代碼區塊的文本解析為 JSON 物件
-             * @param {string} text - 原始文本內容
-             * @returns {Object} 解析後的物件
+             * 將 AI 開發長篇大論伴隨的 Markdown 程式碼區塊中的 JSON 內容萃取並轉換為物件。
+             * 支援智慧雙重退路 (Fallback) 解析機制，盡可能避免解析失敗。
+             * 
+             * @param {string} text - AI 原始回覆的文本
+             * @returns {Object} 成功解析後的 JavaScript 物件
+             * @throws {Error} 若所有備用的萃取手段皆失敗，則拋出格式異常
              */
             parseJSON(text) {
                 if (!text) return {};
+                let parsed = null;
                 try {
-                    // 強化解析：抓取最外層的大括號範圍，避免 AI 產生對話前綴
-                    const startIdx = text.indexOf('{');
-                    const endIdx = text.lastIndexOf('}');
+                    // 第一重解析：嘗試抓取最外層的 "{" 與 "}" 範圍，精準切出 JSON 的核心本體
+                    const startIdx = text.indexOf("{");
+                    const endIdx = text.lastIndexOf("}");
 
                     if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
                         const jsonStr = text.substring(startIdx, endIdx + 1);
-                        return JSON.parse(jsonStr);
+                        try {
+                            parsed = JSON.parse(jsonStr);
+                        } catch (e) {
+                            // [防護機制] 若提取的 jsonStr 不是合法 JSON (例如中間參雜了干擾字元)，
+                            // JSON.parse() 會拋出例外。此處刻意 catch 並忽略錯誤，
+                            // 是為了避免整個 function 崩潰，讓程式能繼續執行下方的 Fallback (第二重備用方案)。
+                        }
                     }
 
-                    // Fallback to old behavior if no brackets found (e.g. valid json without top-level braces, though unexpected here)
-                    const cleanText = text.replace(/^```[a-z]*\n?/i, '').replace(/\n?```$/i, '').trim();
-                    return JSON.parse(cleanText);
+                    if (!parsed) {
+                        // 第二重解析：如果第一步抓括號失敗 (例如根本沒有大括號，或是上述 try-catch 攔截了錯誤)
+                        // 退回到移除首尾 Markdown 格式符號 ( ```json 與 ``` ) 後重新強行轉換
+                        const cleanText = text.replace(/^```[a-z]*\n?/i, "").replace(/\n?```$/i, "").trim();
+                        parsed = JSON.parse(cleanText);
+                    }
+
+                    return parsed;
                 } catch (e) {
                     console.error("GeminiService.parseJSON 失敗:", e, "內容:", text);
                     throw new Error("AI 回傳格式異常。");
@@ -762,17 +802,20 @@
             },
 
             /**
-             * [高階] 封裝對話請求，支援圖片上傳與工具呼叫
-             * @param {string} prompt - 提示內容
-             * @param {string|null} [imageBase64=null] - 影像 Base64 (選填)
-             * @param {Array} [tools=null] - 工具清單，如 Google Search (選填)
-             * @returns {Object} API 回傳回應
+             * [高階封裝] 快速組織對話請求，簡化與 API 的互動流程。
+             * 支援額外的圖片上傳 (如名片 OCR) 與工具擴充 (如 Google Search 深度搜尋)。
+             * 
+             * @param {string} prompt - 提問內容與要求 (System Prompt)
+             * @param {string|null} [imageBase64=null] - (可選) 影像檔案的 Base64 格式編碼字串
+             * @param {Array} [tools=null] - (可選) 授權給 API 呼叫的額外工具功能清單
+             * @returns {Promise<Object>} API 回傳的完整原始物件
              */
             async ask(prompt, imageBase64 = null, tools = null) {
                 const parts = [{ text: prompt }];
                 if (imageBase64) {
                     parts.push({ inlineData: { mimeType: "image/png", data: imageBase64 } });
                 }
+
                 const payload = { contents: [{ role: "user", parts }] };
                 if (tools) payload.tools = tools;
 
@@ -782,14 +825,25 @@
 
         /**
          * 模組 2：影像處理與預載模組 (Image Processing Module)
-         * 處理前端影像壓縮，確保符合 API 限制。
+         * 處理前端影像壓縮，確保圖檔尺寸與容量符合 API 的嚴格限制，並優化上傳速度。
          */
         const ImageProcessor = {
+            /** @property {HTMLCanvasElement} canvas - 共用的 Canvas 實例，避免重複建立導致記憶體碎片化 */
+            canvas: document.createElement("canvas"),
+
             /**
-             * 處理 File 物件並轉換為壓縮後的 Base64
-             * @param {File} file - input 取得的檔案物件
-             * @param {number} [maxSide=1200] - 最大邊長像素值
-             * @returns {Promise<string>} 壓縮後的 Base64 字串 (不含頭部)
+             * 處理 ImageProcessor 的初始化，可動態綁定或替換共用的 Canvas 實體
+             * @param {HTMLCanvasElement} [canvas] - (選填) 自訂的 Canvas DOM 節點。若未提供，則維持預設建立的實例
+             */
+            init(canvas) {
+                if (canvas !== undefined) this.canvas = canvas;
+            },
+
+            /**
+             * 接收使用者上傳的 File 物件，讀取並轉換為壓縮後的 Base64 字串
+             * @param {File} file - 來自 `<input type="file">` 取得的圖片檔案物件
+             * @param {number} [maxSide=1200] - 壓縮後允許的最大邊長 (寬度或高度的像素值)
+             * @returns {Promise<string>} 成功壓縮後的純 Base64 字串 (已去除 `data:image/...` 等頭部標記)
              */
             async compress(file, maxSide = 1200) {
                 return new Promise((resolve, reject) => {
@@ -801,11 +855,12 @@
                     reader.onerror = () => reject(new Error("檔案讀取失敗"));
                 });
             },
+
             /**
-             * 將 DataURL 字串轉換為壓縮後的 Base64
-             * @param {string} dataUrl - 原始資料的 DataURL
-             * @param {number} [maxSide=1200] - 最大邊長像素值
-             * @returns {Promise<string>} 壓縮後的 Base64 字串
+             * 將 Data URL 字串載入為 Image 物件後進行壓縮
+             * @param {string} dataUrl - 原始資料的 Base64 Data URL (包含頭部標記)
+             * @param {number} [maxSide=1200] - 允許的最大邊長
+             * @returns {Promise<string>} 壓縮後的 Base64 字串 (不含頭部標記)
              */
             async compressDataURL(dataUrl, maxSide = 1200) {
                 return new Promise((resolve, reject) => {
@@ -815,162 +870,201 @@
                     img.onerror = () => reject(new Error("影像載入失敗"));
                 });
             },
+
             /** 
-             * [核心邏輯] 利用 Canvas 畫布進行縮放與降質 
-             * @param {HTMLImageElement} img - 載入完成的圖片元素
-             * @param {number} [maxSide=1200] - 最大邊長像素值
-             * @returns {string} 壓縮後的 Base64 字串
+             * [核心邏輯] 利用 Canvas 畫布進行縮放與壓縮渲染。
+             * 由於共用 Canvas，每次渲染前會安全清除畫布並最佳化頻繁讀取的效能。
+             * 
+             * @param {HTMLImageElement} img - 載入完成的圖片 DOM 實體
+             * @param {number} [maxSide=1200] - 允許的最大邊長
+             * @returns {string} 壓縮並轉換成 PNG 格式的純 Base64 字串
              */
             compressImage(img, maxSide = 1200) {
-                const canvas = document.createElement('canvas');
                 let { width, height } = img;
+
+                // 等比例縮放計算：如果原圖大於最大邊長限制，則進行縮小
                 if (width > maxSide || height > maxSide) {
-                    if (width > height) { height = Math.round((height * maxSide) / width); width = maxSide; }
-                    else { width = Math.round((width * maxSide) / height); height = maxSide; }
+                    if (width > height) {
+                        height = Math.round((height * maxSide) / width);
+                        width = maxSide;
+                    } else {
+                        width = Math.round((width * maxSide) / height);
+                        height = maxSide;
+                    }
                 }
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
+
+                this.canvas.width = width;
+                this.canvas.height = height;
+
+                // 取得 2D 渲染環境。加入 willReadFrequently: true 標記，
+                // 告訴瀏覽器這張畫布會頻繁執行 toDataURL/getImageData 等讀取操作，藉此啟用硬體加速優化。
+                const ctx = this.canvas.getContext('2d', { willReadFrequently: true });
+
+                // [防護機制] 因為共用 canvas，保險起見在描繪新內容前先清空畫布，避免殘影干擾
+                ctx.clearRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
-                return canvas.toDataURL('image/png').split(',')[1];
+
+                // 轉出 PNG，並切掉逗號前面的 `data:image/png;base64,` 宣告頭部
+                return this.canvas.toDataURL("image/png").split(",")[1];
             }
         };
 
         /**
          * 模組 3：vCard 3.0 標準化模組 (Data Transformation Module)
-         * 將 JSON 資料物件轉換為 RFC 2426 編碼格式。
+         * 負責將應用的 JSON 內部狀態轉換為符合 RFC 2426 (vCard 3.0) 規範的純文字字串。
          */
         const vCardFormatter = {
+            /** @property {string} categoryName - 匯出名片時，強制加入的分類標籤 (Categories) */
+            categoryName: DEFAULT_CATEGORY_NAME,
+
             /**
-             * 台灣電話號碼格式化
-             * 將 +886 或 886 轉為 0，並增加區碼分隔號。
-             * @param {string} phone - 原始電話字串
-             * @returns {string} 格式化後的電話
+             * 初始化 vCardFormatter 的組態
+             * @param {string} category - 欲加入的分類標記名稱
+             */
+            init(category) {
+                if (category !== undefined) this.categoryName = category;
+            },
+
+            /**
+             * 台灣電話號碼格式化 (Phone Normalization)
+             * 自動移除雜訊，並將 +886 或 886 轉為 0，接著自動補上符合台灣習慣的破折號 (-) 分隔。
+             * 
+             * @param {string} phone - 原始電話或手機字串
+             * @returns {string} 格式化後的電話號碼 (處理失敗時回傳清理過數字的字串)
              */
             normalizePhone(phone) {
                 if (!isValid(phone)) return phone || "";
 
                 // 1. 轉為字串並移除所有非數字與非加號內容
-                let cleaned = String(phone).trim().replace(/[^\d+]/g, '');
+                let cleaned = String(phone).trim().replace(/[^\d+]/g, "");
 
                 // 2. 處理國碼：將 +886 或 886 轉回台灣本地 0 開頭格式
-                if (cleaned.startsWith('+886')) cleaned = '0' + cleaned.slice(4);
-                else if (cleaned.startsWith('886')) cleaned = '0' + cleaned.slice(3);
+                if (cleaned.startsWith("+886")) cleaned = "0" + cleaned.slice(4);
+                else if (cleaned.startsWith("886")) cleaned = "0" + cleaned.slice(3);
 
                 // 3. 針對台灣本地號碼 (0 開頭) 進行格式化
-                if (cleaned.startsWith('0')) {
+                if (cleaned.startsWith("0")) {
                     // 3.1 手機號碼：09XX-XXX-XXX
                     if (/^09\d{8}$/.test(cleaned)) return `${cleaned.slice(0, 4)}-${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
 
                     // 3.2 特殊三碼區碼 (苗栗、南投、金門、澎湖、台東)
-                    const area3 = ['037', '049', '082', '069', '089'];
+                    const area3 = ["037", "049", "082", "069", "089"];
                     if (area3.includes(cleaned.slice(0, 3))) return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
 
                     // 3.3 特殊四碼區碼 (馬祖)
-                    if (cleaned.startsWith('0836')) return `${cleaned.slice(0, 4)}-${cleaned.slice(4)}`;
+                    if (cleaned.startsWith("0836")) return `${cleaned.slice(0, 4)}-${cleaned.slice(4)}`;
 
-                    // 3.4 標準二碼區碼 (北中南各大城市)
+                    // 3.4 標準二碼區碼 (大台北、桃園、台中、台南、高雄等各大城市)
                     if (/^0[2-8]/.test(cleaned)) {
                         let area = cleaned.slice(0, 2);
                         let body = cleaned.slice(2);
-                        // 台北區碼 02 且為 8 碼電話時，格式為 02-XXXX-XXXX
-                        if (area === '02' && body.length === 8) return `${area}-${body.slice(0, 4)}-${body.slice(4)}`;
-                        // 其餘為 0X-XXXXXXX
+                        // 區碼為 2 碼且後方號碼為 8 碼時，多數統一格式為 0X-XXXX-XXXX
+                        if (body.length === 8) return `${area}-${body.slice(0, 4)}-${body.slice(4)}`;
+
+                        // 其餘為 0X-XXXXXXX 或其他長度
                         return `${area}-${body}`;
                     }
                 }
 
-                // 4. 若非 0 開頭或不符合台灣規則，回傳清理後的原始字串
+                // 4. 若非 0 開頭或不符合任何台灣已知規則，回傳清理後的原始字串
                 return cleaned;
             },
 
             /** 
-             * 生成 vCard 的修訂時間戳記 (REV) 
-             * @returns {string} 格式化後的時間戳記字串
+             * 生成 vCard 要求的高精度修訂時間戳記 (REV，如 20240101T120000Z)
+             * @returns {string} 格式化後的 ISO 8601 時間戳記字串 (去除連字符號、冒號與毫秒)
              */
             formatREV() {
-                return new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+                return new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
             },
 
             /**
-             * [核心] 產生完整 vCard 3.0 字串
-             * @param {Object} d - 聯絡人資料物件
-             * @returns {string} vCard 格式文本
+             * [核心轉換邏輯] 產生完整 vCard 3.0 字串
+             * 
+             * @param {Object} d - 當前的名片狀態資料 (cardData)
+             * @returns {string} 符合 vCard 3.0 格式規範的字串文字
              */
             generate(d) {
-                // 1. 輔助函數：檢查是否包含非 ASCII 字元 (用於決定是否標註 UTF-8)
+                // 1. 輔助函數：檢查是否包含非 ASCII 字元 (若有中文字等，則標註 UTF-8 以防亂碼)
                 const hasNonAscii = (str) => /[^\x20-\x7E]/.test(str);
                 const getUtf8 = (str) => hasNonAscii(str) ? ";CHARSET=UTF-8" : "";
 
-                // 2. 初始化 vCard 陣列與 Header (版本 3.0)
-                const parts = ["BEGIN:VCARD", "VERSION:3.0", `REV:${this.formatREV()}`, "CATEGORIES;CHARSET=UTF-8:名片快手"];
+                // 2. 初始化 vCard 陣列與 Header (遵循版本 3.0 規範)
+                const parts = ["BEGIN:VCARD", "VERSION:3.0", `REV:${this.formatREV()}`];
+                if (this.categoryName) {
+                    parts.push(`CATEGORIES${getUtf8(this.categoryName)}:${this.categoryName}`);
+                }
 
-                // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則組合姓與名
-                const fnValue = isValid(d.fn) ? d.fn : ((isValid(d.lastName) ? d.lastName : '') + (isValid(d.firstName) ? d.firstName : '') || '聯絡人');
+                // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則嘗試組合姓氏與名字，皆無則顯示 "聯絡人"
+                const fnValue = isValid(d.fn) ? d.fn : ((isValid(d.lastName) ? d.lastName : "") + (isValid(d.firstName) ? d.firstName : "") || "聯絡人");
                 parts.push(`FN${getUtf8(fnValue)}:${fnValue}`);
 
-                // 4. 處理姓名結構 (N): 格式為 姓;名;中間名;前綴;後綴
-                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix].map(v => isValid(v) ? v : '').join(';');
+                // 4. 處理姓名結構 (N): vCard 格式嚴格要求為「姓;名;中間名;前綴;後綴」
+                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix].map(v => isValid(v) ? v : "").join(";");
                 parts.push(`N${getUtf8(nValue)}:${nValue}`);
 
                 // 5. 處理組織與部門 (ORG)
                 if (isValid(d.orgName) || isValid(d.orgUnit)) {
-                    let orgStr = (d.orgName || '');
-                    if (isValid(d.orgUnit)) orgStr += ';' + d.orgUnit;
+                    let orgStr = (d.orgName || "");
+                    if (isValid(d.orgUnit)) orgStr += ";" + d.orgUnit;
                     parts.push(`ORG${getUtf8(orgStr)}:${orgStr}`);
                 }
 
                 // 6. 處理職稱 (TITLE)
                 if (isValid(d.title)) parts.push(`TITLE${getUtf8(d.title)}:${d.title}`);
 
-                // 7. 處理地址 (ADR): 格式為 郵政信箱;延伸地址;街道地址;城市;區域;郵遞區號;國家
-                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country].map(v => isValid(v) ? v : '').join(';');
+                // 7. 處理地址 (ADR): vCard 格式嚴格要求為「郵政信箱;延伸地址;街道地址;城市;區域;郵遞區號;國家」
+                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country].map(v => isValid(v) ? v : "").join(";");
                 parts.push(`ADR;TYPE=WORK${getUtf8(adrValue)}:${adrValue}`);
 
-                // 8. 處理多組電話與傳真
+                // 8. 處理多組電話 (phones)
                 (d.phones || []).forEach(p => {
                     if (isValid(p.value)) {
-                        let type = p.type === 'cell' ? 'CELL' : (p.type === 'home' ? 'HOME' : 'WORK');
-                        let num = String(p.value).replace(/[^\d+\-() ]/g, '');
+                        let type = p.type === "cell" ? "CELL" : (p.type === "home" ? "HOME" : "WORK");
+                        let num = String(p.value).replace(/[^\d+\-() ]/g, ""); // 濾除怪異符號，保留括號、加號、破折號與空白
+
+                        // 若有分機號碼，以逗號區隔
                         if (isValid(p.ext)) num += `,${String(p.ext).trim()}`;
                         parts.push(`TEL;TYPE=${type},VOICE:${num}`);
                     }
                 });
 
+                // 處理多組傳真 (faxes)
                 (d.faxes || []).forEach(f => {
                     if (isValid(f.value)) {
-                        let type = f.type === 'home' ? 'HOME' : 'WORK';
-                        let num = String(f.value).replace(/[^\d+\-() ]/g, '');
+                        let type = f.type === "home" ? "HOME" : "WORK";
+                        let num = String(f.value).replace(/[^\d+\-() ]/g, "");
                         if (isValid(f.ext)) num += `,${String(f.ext).trim()}`;
                         parts.push(`TEL;TYPE=${type},FAX:${num}`);
                     }
                 });
 
-                // 9. 處理多組電子郵件
+                // 9. 處理多組電子郵件 (emails)
                 (d.emails || []).forEach(e => {
                     if (isValid(e.value)) {
-                        let type = e.type === 'home' ? 'HOME' : 'WORK';
+                        let type = e.type === "home" ? "HOME" : "WORK";
                         parts.push(`EMAIL;TYPE=${type}:${e.value.trim()}`);
                     }
                 });
 
-                // 10. 處理多組網站連結
+                // 10. 處理多組網站連結 (urls)
                 (d.urls || []).forEach(w => {
                     if (isValid(w.value)) {
-                        let type = w.type === 'home' ? 'HOME' : 'WORK';
+                        let type = w.type === "home" ? "HOME" : "WORK";
                         parts.push(`URL;TYPE=${type}:${w.value.trim()}`);
                     }
                 });
 
-                // 11. 處理備註 (NOTE): 將換行符號轉為 \n
+                // 11. 處理備註 (NOTE)
+                // 根據 RFC 2426，換行必須被轉義為字面的 \n，且逗號有時也會被解析器切割，因此進行安全轉義。
                 if (isValid(d.note)) {
-                    const cleanNote = d.note.replace(/\n/g, '\\n');
+                    const cleanNote = d.note.replace(/\n/g, "\\n").replace(/,/g, "\\,");
                     parts.push(`NOTE${getUtf8(cleanNote)}:${cleanNote}`);
                 }
 
-                // 12. 結束標記並過濾掉無效行，最後合併為字串
+                // 12. 結束標記並過濾掉因為少欄位產生的無效行 (例如只有冒號沒有值的行)，最後合併為字串
                 parts.push("END:VCARD");
-                return parts.filter(line => line && line.includes(':') && !line.endsWith(':')).join("\n");
+                return parts.filter(line => line && line.includes(":") && !line.endsWith(":")).join("\n");
             }
         };
 
@@ -980,98 +1074,132 @@
          */
         const UXManager = {
             /** 
-             * 初始化模組，綁定 textarea 自動調整高度事件 
-             * @returns {void}
-             */
+             * 初始化模組，綁定 textarea 自動調整高度事件與 UI 區塊收合事件
+         * @returns {void}
+         */
             init() {
-                const textareas = ['field-companySummary', 'field-personalSummary', 'emailDraftText', 'field-note'];
+                // 1. 綁定 textarea 自動調整高度
+                const textareas = ["field-companySummary", "field-personalSummary", "emailDraftText", "field-note"];
                 textareas.forEach(id => {
                     const el = document.getElementById(id);
-                    if (el) el.addEventListener('input', () => this.autoResize(el));
+                    if (el) el.addEventListener("input", () => this.autoResize(el));
+                });
+
+                // 2. 綁定 UI 區塊收合/展開 (移除 HTML 內的 onclick)
+                document.querySelectorAll("[data-toggle-target]").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const targetId = btn.getAttribute("data-toggle-target");
+                        const iconId = btn.getAttribute("data-toggle-icon");
+                        this.toggleSection(targetId, iconId);
+                    });
                 });
             },
             /** 
              * 顯示 Toast 訊息 
              * @param {string} msg - 要顯示的訊息內容
-             * @returns {void}
-             */
-            toast(msg) {
-                const toast = document.getElementById('toast');
+             * @param {number} [duration=3000] - 訊息顯示時間 (毫秒)
+         * @returns {void}
+         */
+            toast(msg, duration = 3000) {
+                const toast = document.getElementById("toast");
+                if (!toast) return;
+
                 toast.textContent = msg;
-                toast.classList.remove('opacity-0', 'pointer-events-none');
-                setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
+                toast.classList.remove("opacity-0", "pointer-events-none");
+
+                // 清除前一次的計時器，避免連續觸發時 Toast 提早消失
+                if (this._toastTimeout) clearTimeout(this._toastTimeout);
+
+                this._toastTimeout = setTimeout(() => {
+                    toast.classList.add("opacity-0", "pointer-events-none");
+                }, duration);
             },
             /** 
              * 設定按鈕的全域載入遮罩狀態 
              * @param {boolean} isLoading - 是否處於載入狀態
-             * @param {string} [text="AI 處理中..."] - 載入時欲顯示的文字
-             * @returns {void}
-             */
-            setLoading(isLoading, text = "AI 處理中...") {
-                const btn = document.getElementById('identifyBtn');
+             * @param {string} [text="處理中..."] - 載入時欲顯示的文字
+         * @returns {void}
+         */
+            setLoading(isLoading, text = "處理中...") {
+                const btn = document.getElementById("identifyBtn");
                 if (btn) btn.disabled = isLoading;
 
-                const overlay = document.getElementById('globalLoadingOverlay');
-                const modal = document.getElementById('globalLoadingModal');
-                const textEl = document.getElementById('globalLoadingText');
+                const overlay = document.getElementById("globalLoadingOverlay");
+                const modal = document.getElementById("globalLoadingModal");
+                const textEl = document.getElementById("globalLoadingText");
 
                 if (overlay && modal && textEl) {
-                    textEl.textContent = text;
                     if (isLoading) {
-                        overlay.classList.remove('opacity-0', 'pointer-events-none');
-                        setTimeout(() => modal.classList.remove('scale-95'), 10);
+                        textEl.textContent = text;
+                        overlay.classList.remove("opacity-0", "pointer-events-none");
+                        setTimeout(() => modal.classList.remove("scale-95"), 10);
                     } else {
-                        modal.classList.add('scale-95');
-                        overlay.classList.add('opacity-0', 'pointer-events-none');
+                        modal.classList.add("scale-95");
+                        overlay.classList.add("opacity-0", "pointer-events-none");
+                        // 隱藏時可延遲清空或保持原文字，避免消失動畫過程中文字突然變更
                     }
                 }
             },
             /** 
              * 顯示錯誤訊息區塊 
              * @param {string} msg - 錯誤訊息內容
-             * @returns {void}
-             */
+         * @returns {void}
+         */
             showError(msg) {
-                const err = document.getElementById('errorMessage');
-                const text = document.getElementById('errorText');
+                const err = document.getElementById("errorMessage");
+                const text = document.getElementById("errorText");
+                const debugBtn = document.getElementById("debugPanel1");
+
                 if (text) text.textContent = msg;
-                if (err) err.classList.remove('hidden');
-                document.getElementById('debugPanel1').classList.remove('hidden');
+                if (err) err.classList.remove("hidden");
+                if (debugBtn) debugBtn.classList.remove("hidden");
             },
             /** 
              * 文字框自動依內容調整高度 
              * @param {HTMLElement} el - 需要被調整高度的 textarea 元素
-             * @returns {void}
-             */
+         * @returns {void}
+         */
             autoResize(el) {
                 if (!el) return;
-                el.style.height = 'auto';
-                el.style.height = (el.scrollHeight) + 'px';
+                el.style.height = "auto";
+                el.style.height = (el.scrollHeight) + "px";
             },
             /** 
              * 切換除錯面版顯示 
              * @param {string} panelId - 面板 DOM ID
              * @param {string} textId - 按鈕文字 DOM ID
              * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
-             * @returns {void}
-             */
+         * @returns {void}
+         */
             toggleDebug(panelId, textId, phaseName) {
                 const panel = document.getElementById(panelId);
-                const isHidden = panel.classList.toggle('hidden');
-                document.getElementById(textId).textContent = isHidden ? `顯示 ${phaseName} 原始回應 (Debug)` : `隱藏 ${phaseName} 原始回應`;
+                if (!panel) return;
+
+                const isHidden = panel.classList.toggle("hidden");
+                const textEl = document.getElementById(textId);
+                if (textEl) {
+                    textEl.textContent = isHidden ? `顯示 ${phaseName} 原始回應` : `隱藏 ${phaseName} 原始回應`;
+                }
             },
             /** 
              * 切換 UI 區塊展開或收合狀態 
              * @param {string} contentId - 內容區塊 DOM ID
              * @param {string} iconId - 圖示 DOM ID
-             * @returns {void}
-             */
+         * @returns {void}
+         */
             toggleSection(contentId, iconId) {
                 const content = document.getElementById(contentId);
-                const isHidden = content.classList.toggle('hidden');
+                if (!content) return;
+
+                const isHidden = content.classList.toggle("hidden");
                 const icon = document.getElementById(iconId);
-                if (icon) icon.classList.toggle('rotate-180', isHidden);
-                if (!isHidden) setTimeout(() => { content.querySelectorAll('textarea').forEach(ta => this.autoResize(ta)); }, 10);
+                if (icon) icon.classList.toggle("rotate-180", isHidden);
+
+                if (!isHidden) {
+                    setTimeout(() => {
+                        content.querySelectorAll("textarea").forEach(ta => this.autoResize(ta));
+                    }, 10);
+                }
             }
         };
 
@@ -1101,7 +1229,7 @@
                 keys.forEach(key => {
                     const el = document.getElementById(`field-${key}`);
                     if (el) {
-                        el.addEventListener('input', (e) => {
+                        el.addEventListener("input", (e) => {
                             state.cardData[key] = e.target.value;
                             if (onUpdate) onUpdate();
                         });
@@ -1121,7 +1249,7 @@
              * @returns {string} 完整的 Google Maps 搜尋連結
              */
             getGoogleMapsUrl(d) {
-                const fullAddress = [d.country, d.region, d.locality, d.streetAddress].filter(v => isValid(v)).join(', ');
+                const fullAddress = [d.country, d.region, d.locality, d.streetAddress].filter(v => isValid(v)).join(", ");
                 if (!fullAddress) return "";
                 return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
             },
@@ -1132,7 +1260,7 @@
              */
             openGoogleMaps(d) {
                 const url = this.getGoogleMapsUrl(d);
-                if (url) window.open(url, '_blank');
+                if (url) window.open(url, "_blank");
             }
         };
 
@@ -1145,13 +1273,13 @@
              * 觸發瀏覽器下載檔案
              * @param {string} filename - 存檔檔名
              * @param {string} content - 檔案內容
-             * @param {string} [mimeType='text/vcard'] - MIME 類型
+             * @param {string} [mimeType="text/vcard"] - MIME 類型
              */
-            download(filename, content, mimeType = 'text/vcard') {
+            download(filename, content, mimeType = "text/vcard") {
                 if (!content) return;
                 const blob = new Blob([content], { type: mimeType });
                 const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
+                const a = document.createElement("a");
                 a.href = url;
                 a.download = filename;
                 a.click();
@@ -1164,12 +1292,12 @@
              */
             copyToClipboard(text) {
                 if (!text) return false;
-                const el = document.createElement('textarea');
+                const el = document.createElement("textarea");
                 el.value = text;
                 document.body.appendChild(el);
                 el.select();
                 try {
-                    document.execCommand('copy');
+                    document.execCommand("copy");
                     document.body.removeChild(el);
                     return true;
                 } catch (err) {
@@ -1185,8 +1313,8 @@
          * 負責使用 IndexedDB 在瀏覽器端自動保存已辨識的名片歷史紀錄。
          */
         const DatabaseService = {
-            dbName: 'NCS_HistoryDB',
-            storeName: 'cards',
+            dbName: "NCS_HistoryDB",
+            storeName: "cards",
             version: 1,
             db: null,
 
@@ -1202,8 +1330,8 @@
                         const db = event.target.result;
                         if (!db.objectStoreNames.contains(this.storeName)) {
                             // 使用 timestamp 作為 keyPath 確保唯一與排序
-                            const store = db.createObjectStore(this.storeName, { keyPath: 'id' });
-                            store.createIndex('timestamp', 'timestamp', { unique: false });
+                            const store = db.createObjectStore(this.storeName, { keyPath: "id" });
+                            store.createIndex("timestamp", "timestamp", { unique: false });
                         }
                     };
 
@@ -1229,7 +1357,7 @@
             async saveCard(cardData, base64Image, existingId = null) {
                 if (!this.db) return null;
                 return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const transaction = this.db.transaction([this.storeName], "readwrite");
                     const store = transaction.objectStore(this.storeName);
                     const now = Date.now();
                     const record = {
@@ -1251,7 +1379,7 @@
             async getAllCards() {
                 if (!this.db) return [];
                 return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], 'readonly');
+                    const transaction = this.db.transaction([this.storeName], "readonly");
                     const store = transaction.objectStore(this.storeName);
                     const request = store.getAll();
                     request.onsuccess = () => {
@@ -1264,6 +1392,22 @@
             },
 
             /**
+             * 取得單筆歷史紀錄
+             * @param {number} id - 紀錄 ID
+             * @returns {Promise<Object|null>}
+             */
+            async getCard(id) {
+                if (!this.db) return null;
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([this.storeName], "readonly");
+                    const store = transaction.objectStore(this.storeName);
+                    const request = store.get(id);
+                    request.onsuccess = () => resolve(request.result || null);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            },
+
+            /**
              * 刪除指定歷史紀錄
              * @param {number} id - 紀錄 ID
              * @returns {Promise<void>}
@@ -1271,7 +1415,7 @@
             async deleteCard(id) {
                 if (!this.db) return;
                 return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const transaction = this.db.transaction([this.storeName], "readwrite");
                     const store = transaction.objectStore(this.storeName);
                     const request = store.delete(id);
                     request.onsuccess = () => resolve();
@@ -1286,7 +1430,7 @@
             async clearAll() {
                 if (!this.db) return;
                 return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], 'readwrite');
+                    const transaction = this.db.transaction([this.storeName], "readwrite");
                     const store = transaction.objectStore(this.storeName);
                     const request = store.clear();
                     request.onsuccess = () => resolve();
@@ -1302,28 +1446,28 @@
         const HistoryManager = {
             /**
              * 初始化歷史紀錄面板的事件監聽
-             * @returns {void}
-             */
+         * @returns {void}
+         */
             init() {
                 // 歷史紀錄面版開關事件
-                const toggleHistoryBtn = document.getElementById('toggleHistoryBtn');
-                const closeHistoryBtn = document.getElementById('closeHistoryBtn');
-                const historyOverlay = document.getElementById('historyOverlay');
-                const historyPanel = document.getElementById('historyPanel');
+                const toggleHistoryBtn = document.getElementById("toggleHistoryBtn");
+                const closeHistoryBtn = document.getElementById("closeHistoryBtn");
+                const historyOverlay = document.getElementById("historyOverlay");
+                const historyPanel = document.getElementById("historyPanel");
 
                 this.toggleHistoryPanel = () => {
-                    const isHidden = historyOverlay.classList.contains('hidden');
+                    const isHidden = historyOverlay.classList.contains("hidden");
                     if (isHidden) {
-                        historyOverlay.classList.remove('hidden');
+                        historyOverlay.classList.remove("hidden");
                         // 確保 display block生效後才觸發動畫
                         setTimeout(() => {
-                            historyOverlay.classList.remove('opacity-0');
-                            historyPanel.classList.remove('translate-x-full');
+                            historyOverlay.classList.remove("opacity-0");
+                            historyPanel.classList.remove("translate-x-full");
                         }, 10);
                     } else {
-                        historyOverlay.classList.add('opacity-0');
-                        historyPanel.classList.add('translate-x-full');
-                        setTimeout(() => historyOverlay.classList.add('hidden'), 300);
+                        historyOverlay.classList.add("opacity-0");
+                        historyPanel.classList.add("translate-x-full");
+                        setTimeout(() => historyOverlay.classList.add("hidden"), 300);
                     }
                 };
 
@@ -1337,26 +1481,26 @@
              * @returns {Promise<void>}
              */
             async render() {
-                const listEl = document.getElementById('historyListContent');
-                const emptyEl = document.getElementById('historyEmptyState');
+                const listEl = document.getElementById("historyListContent");
+                const emptyEl = document.getElementById("historyEmptyState");
                 if (!listEl || !emptyEl) return;
 
                 try {
                     const cards = await DatabaseService.getAllCards();
 
                     if (cards.length === 0) {
-                        listEl.classList.add('hidden');
-                        emptyEl.classList.remove('hidden');
+                        listEl.classList.add("hidden");
+                        emptyEl.classList.remove("hidden");
                         return;
                     }
 
-                    emptyEl.classList.add('hidden');
-                    listEl.classList.remove('hidden');
+                    emptyEl.classList.add("hidden");
+                    listEl.classList.remove("hidden");
 
                     listEl.innerHTML = cards.map(c => {
-                        const date = new Date(c.timestamp).toLocaleString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                        const name = c.cardData.fn || '未命名聯絡人';
-                        const org = c.cardData.orgName || '無公司資訊';
+                        const date = new Date(c.timestamp).toLocaleString("zh-TW", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+                        const name = c.cardData.fn || "未命名聯絡人";
+                        const org = c.cardData.orgName || "無公司資訊";
                         const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><i data-lucide="image" class="w-4 h-4 text-slate-400"></i></div>`;
 
                         return `
@@ -1372,7 +1516,7 @@
                                 </button>
                             </div>
                         `;
-                    }).join('');
+                    }).join("");
                     lucide.createIcons();
                 } catch (err) {
                     console.error("讀取歷史紀錄失敗:", err);
@@ -1386,8 +1530,7 @@
              */
             async loadItem(id) {
                 try {
-                    const cards = await DatabaseService.getAllCards();
-                    const target = cards.find(c => c.id === id);
+                    const target = await DatabaseService.getCard(id);
                     if (target) {
                         state.cardData = JSON.parse(JSON.stringify(target.cardData));
                         state.base64Image = target.base64Image;
@@ -1395,24 +1538,44 @@
 
                         // 關閉歷史面版
                         if (this.toggleHistoryPanel) {
-                            const overlay = document.getElementById('historyOverlay');
-                            if (!overlay.classList.contains('hidden')) {
+                            const overlay = document.getElementById("historyOverlay");
+                            if (overlay && !overlay.classList.contains("hidden")) {
                                 this.toggleHistoryPanel();
                             }
                         }
 
-                        // 恢復圖片預覽
-                        if (state.base64Image) {
-                            const preview = document.getElementById('previewImage');
-                            preview.src = `data:image/png;base64,${state.base64Image}`;
-                            preview.classList.remove('hidden');
-                            document.getElementById('uploadPlaceholder').classList.add('hidden');
+                        // 恢復圖片預覽或退回選取狀態
+                        const preview = document.getElementById("previewImage");
+                        const placeholder = document.getElementById("uploadPlaceholder");
+                        const btn = document.getElementById("identifyBtn");
 
-                            const btn = document.getElementById('identifyBtn');
-                            btn.disabled = false;
-                            btn.classList.replace('bg-slate-100', 'bg-indigo-600');
-                            btn.classList.replace('text-slate-400', 'text-white');
-                            btn.classList.add('shadow-xl', 'hover:bg-indigo-700');
+                        if (state.base64Image) {
+                            if (preview) {
+                                preview.src = `data:image/png;base64,${state.base64Image}`;
+                                preview.classList.remove("hidden");
+                            }
+                            if (placeholder) placeholder.classList.add("hidden");
+
+                            if (btn) {
+                                btn.disabled = false;
+                                btn.classList.replace("bg-slate-100", "bg-indigo-600");
+                                btn.classList.replace("text-slate-400", "text-white");
+                                btn.classList.add("shadow-xl", "hover:bg-indigo-700");
+                            }
+                        } else {
+                            // 若無影像，則清空預覽並恢復占位符
+                            if (preview) {
+                                preview.removeAttribute("src");
+                                preview.classList.add("hidden");
+                            }
+                            if (placeholder) placeholder.classList.remove("hidden");
+
+                            if (btn) {
+                                btn.disabled = true;
+                                btn.classList.replace("bg-indigo-600", "bg-slate-100");
+                                btn.classList.replace("text-white", "text-slate-400");
+                                btn.classList.remove("shadow-xl", "hover:bg-indigo-700");
+                            }
                         }
 
                         syncDataToUI();
@@ -1477,7 +1640,7 @@
             isValidURL(url) {
                 if (!url) return true; // 允許空白
                 try {
-                    new URL(url.startsWith('http') ? url : `https://${url}`);
+                    new URL(url.startsWith("http") ? url : `https://${url}`);
                     return true;
                 } catch {
                     return false;
@@ -1487,7 +1650,9 @@
 
         window.onload = async () => {
             lucide.createIcons();
-            GeminiService.init(apiKey);
+            GeminiService.init();
+            ImageProcessor.init();
+            vCardFormatter.init();
             UXManager.init();
 
             // 初始化本地資料庫並載入歷史清單
@@ -1504,12 +1669,68 @@
 
             setupDragAndDrop();
 
-            document.getElementById('identifyBtn').onclick = identifyCard;
-            document.getElementById('saveVcfBtn').onclick = downloadVCard;
-            document.getElementById('copyVcfBtn').onclick = copyVCardContent;
-            document.getElementById('generateEmailBtn').onclick = generateEmailDraft;
+            document.getElementById("identifyBtn").onclick = identifyCard;
+            document.getElementById("saveVcfBtn").onclick = downloadVCard;
+            document.getElementById("copyVcfBtn").onclick = copyVCardContent;
+            document.getElementById("generateEmailBtn").onclick = generateEmailDraft;
 
-            window.clearAllHistory = () => HistoryManager.clearAll();
+            // 綁定列表操作按鈕 (新增)
+            document.querySelectorAll("[data-add-item]").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const type = e.target.closest("button").getAttribute("data-add-item");
+                    addListItem(type);
+                });
+            });
+
+            // 使用事件委派綁定動態生成的列表項目事件 (移除、更新)
+            const rightPanel = document.getElementById("fieldsContainer");
+            if (rightPanel) {
+                rightPanel.addEventListener("click", (e) => {
+                    const removeBtn = e.target.closest("[data-remove-item]");
+                    if (removeBtn) {
+                        const [type, idx] = removeBtn.getAttribute("data-remove-item").split(",");
+                        removeListItem(type, parseInt(idx, 10));
+                    }
+                });
+
+                rightPanel.addEventListener("input", (e) => {
+                    if (e.target.hasAttribute("data-update-list")) {
+                        const [type, idx, key] = e.target.getAttribute("data-update-list").split(",");
+                        updateListItem(type, parseInt(idx, 10), key, e.target.value);
+                    } else if (e.target.hasAttribute("data-update-list-validate")) {
+                        const [type, idx, key] = e.target.getAttribute("data-update-list-validate").split(",");
+                        updateListItem(type, parseInt(idx, 10), key, e.target.value, e.target);
+                    }
+                });
+
+                rightPanel.addEventListener("change", (e) => {
+                    if (e.target.hasAttribute("data-update-list-type")) {
+                        const [type, idx] = e.target.getAttribute("data-update-list-type").split(",");
+                        updateListItem(type, parseInt(idx, 10), "type", e.target.value);
+                    }
+                });
+            }
+
+            // 綁定其他獨立按鈕
+            const clearFormBtn = document.getElementById("clearFormBtn");
+            if (clearFormBtn) clearFormBtn.onclick = clearForm;
+
+            const btnMaps = document.getElementById("btn-maps");
+            if (btnMaps) btnMaps.onclick = () => openGoogleMaps();
+
+            const clearAllHistoryBtn = document.getElementById("clearAllHistoryBtn");
+            if (clearAllHistoryBtn) clearAllHistoryBtn.onclick = HistoryManager.clearAll;
+
+            const toggleDebugBtn = document.getElementById("toggleDebugBtn");
+            if (toggleDebugBtn) {
+                toggleDebugBtn.onclick = () => {
+                    UXManager.toggleDebug(
+                        toggleDebugBtn.getAttribute("data-toggle-debug"),
+                        toggleDebugBtn.getAttribute("data-toggle-text"),
+                        toggleDebugBtn.getAttribute("data-toggle-phase")
+                    );
+                };
+            }
         };
 
         /**
@@ -1519,17 +1740,17 @@
          * - 處理全域的剪貼簿 `paste` 事件以支援 Ctrl+V 貼上圖片
          */
         function setupDragAndDrop() {
-            const dropZone = document.getElementById('dropZone');
-            const fileInput = document.getElementById('fileInput');
+            const dropZone = document.getElementById("dropZone");
+            const fileInput = document.getElementById("fileInput");
 
             // 點擊上傳區域觸發隱藏的 file input
             dropZone.onclick = () => fileInput.click();
 
             // 處理拖曳進入、離開與放開事件
-            dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('border-indigo-500', 'bg-indigo-50/30'); };
-            dropZone.ondragleave = (e) => { e.preventDefault(); dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/30'); };
+            dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("border-indigo-500", "bg-indigo-50/30"); };
+            dropZone.ondragleave = (e) => { e.preventDefault(); dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30"); };
             dropZone.ondrop = async (e) => {
-                e.preventDefault(); dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/30');
+                e.preventDefault(); dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
                 if (e.dataTransfer.files && e.dataTransfer.files.length > 0) await processFile(e.dataTransfer.files[0]);
             };
 
@@ -1570,17 +1791,17 @@
                 state.base64Image = base64;
 
                 // 2. 更新預覽 UI
-                const preview = document.getElementById('previewImage');
+                const preview = document.getElementById("previewImage");
                 preview.src = `data:image/png;base64,${base64}`;
-                preview.classList.remove('hidden');
-                document.getElementById('uploadPlaceholder').classList.add('hidden');
+                preview.classList.remove("hidden");
+                document.getElementById("uploadPlaceholder").classList.add("hidden");
 
                 // 3. 解鎖並強化辨識按鈕樣式
-                const btn = document.getElementById('identifyBtn');
+                const btn = document.getElementById("identifyBtn");
                 btn.disabled = false;
-                btn.classList.replace('bg-slate-100', 'bg-indigo-600');
-                btn.classList.replace('text-slate-400', 'text-white');
-                btn.classList.add('shadow-xl', 'hover:bg-indigo-700');
+                btn.classList.replace("bg-slate-100", "bg-indigo-600");
+                btn.classList.replace("text-slate-400", "text-white");
+                btn.classList.add("shadow-xl", "hover:bg-indigo-700");
 
                 UXManager.toast("影像準備就緒");
             } catch (err) { UXManager.showError("影像處理失敗：" + err.message); }
@@ -1607,13 +1828,13 @@
             try {
                 // 執行 OCR 與上網搜尋
                 const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
-                document.getElementById('debugPanel1').textContent = JSON.stringify(result1, null, 2);
+                document.getElementById("debugPanel1").textContent = JSON.stringify(result1, null, 2);
 
                 const text1 = GeminiService.extractText(result1);
                 const parsedData = GeminiService.parseJSON(text1);
 
                 // 防呆容錯處理：確保所有的清單資料型態為陣列
-                ['phones', 'faxes', 'emails', 'urls'].forEach(key => {
+                ["phones", "faxes", "emails", "urls"].forEach(key => {
                     if (!Array.isArray(parsedData[key])) parsedData[key] = [];
                 });
 
@@ -1651,9 +1872,9 @@
          */
         function resetEmailDraft() {
             state.cardData.emailDraft = "";
-            const draftContainer = document.getElementById('emailDraftContainer');
-            if (draftContainer) draftContainer.classList.add('hidden');
-            const textArea = document.getElementById('field-emailDraft');
+            const draftContainer = document.getElementById("emailDraftContainer");
+            if (draftContainer) draftContainer.classList.add("hidden");
+            const textArea = document.getElementById("field-emailDraft");
             if (textArea) { textArea.value = ""; textArea.style.height = 'auto'; }
         }
 
@@ -1667,26 +1888,28 @@
         async function generateEmailDraft() {
             const d = state.cardData;
             if (!isValid(d.fn) && !isValid(d.orgName)) { UXManager.toast("請先辨識資訊"); return; }
-            const draftContainer = document.getElementById('emailDraftContainer');
-            const loadingOverlay = document.getElementById('emailLoading');
-            const textArea = document.getElementById('field-emailDraft');
+            const draftContainer = document.getElementById("emailDraftContainer");
+            const loadingOverlay = document.getElementById("emailLoading");
+            const textArea = document.getElementById("field-emailDraft");
 
             // 1. 確保區塊顯示並打開收合
-            draftContainer.classList.remove('hidden');
-            const content = document.getElementById('emailDraftContent');
-            if (content && content.classList.contains('hidden')) {
-                UXManager.toggleSection('emailDraftContent', 'emailDraftIcon');
+            draftContainer.classList.remove("hidden");
+            const content = document.getElementById("emailDraftContent");
+            if (content && content.classList.contains("hidden")) {
+                UXManager.toggleSection("emailDraftContent", "emailDraftIcon");
             }
 
             // 2. 清空舊內容並顯示 Loading
             textArea.value = "";
             UXManager.autoResize(textArea);
-            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.remove("hidden");
 
             // 3. 滾動到區塊位置
-            draftContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            draftContainer.scrollIntoView({
+                behavior: "smooth", block: "center"
+            });
 
-            const prompt = GET_PROMPT_EMAIL(d.orgName, d.fn, d.companySummary, d.personalSummary);
+            const prompt = PROMPT_EMAIL(d.orgName, d.fn, d.companySummary, d.personalSummary);
 
             try {
                 const result = await GeminiService.ask(prompt);
@@ -1703,14 +1926,16 @@
                 }
 
             } catch (err) { textArea.value = "發生錯誤：" + err.message; state.cardData.emailDraft = ""; }
-            finally { loadingOverlay.classList.add('hidden'); }
+            finally {
+                loadingOverlay.classList.add("hidden");
+            }
         }
 
         /**
          * [功能] 複製郵件草稿至剪貼簿
          */
         window.copyEmailDraft = () => {
-            const text = document.getElementById('field-emailDraft').value;
+            const text = document.getElementById("field-emailDraft").value;
             if (ExportService.copyToClipboard(text)) {
                 UXManager.toast("草稿已複製！");
             }
@@ -1733,46 +1958,46 @@
             const hasEmailDraft = isValid(d.emailDraft);
 
             if (hasCompany || hasPersonal || hasEmailDraft) {
-                document.getElementById('summaryContainer').classList.remove('hidden');
-                document.getElementById('companySummaryBlock').classList.toggle('hidden', !hasCompany);
-                document.getElementById('personalSummaryBlock').classList.toggle('hidden', !hasPersonal);
+                document.getElementById("summaryContainer").classList.remove("hidden");
+                document.getElementById("companySummaryBlock").classList.toggle("hidden", !hasCompany);
+                document.getElementById("personalSummaryBlock").classList.toggle("hidden", !hasPersonal);
 
                 if (hasEmailDraft) {
-                    document.getElementById('emailDraftContainer').classList.remove('hidden');
+                    document.getElementById("emailDraftContainer").classList.remove("hidden");
                     // 確保內容區塊不會是隱藏狀態
-                    const content = document.getElementById('emailDraftContent');
-                    if (content) content.classList.remove('hidden');
-                    const icon = document.getElementById('emailDraftIcon');
-                    if (icon) icon.classList.remove('rotate-180');
+                    const content = document.getElementById("emailDraftContent");
+                    if (content) content.classList.remove("hidden");
+                    const icon = document.getElementById("emailDraftIcon");
+                    if (icon) icon.classList.remove("rotate-180");
                 } else {
-                    document.getElementById('emailDraftContainer').classList.add('hidden');
+                    document.getElementById("emailDraftContainer").classList.add("hidden");
                 }
 
                 // 多次嘗試更新高度，確保 display:none 轉換與動畫過程能抓到正確的 scrollHeight
                 [0, 50, 150, 300].forEach(delay => {
                     setTimeout(() => {
-                        if (hasCompany) UXManager.autoResize(document.getElementById('field-companySummary'));
-                        if (hasPersonal) UXManager.autoResize(document.getElementById('field-personalSummary'));
-                        if (hasEmailDraft) UXManager.autoResize(document.getElementById('field-emailDraft'));
+                        if (hasCompany) UXManager.autoResize(document.getElementById("field-companySummary"));
+                        if (hasPersonal) UXManager.autoResize(document.getElementById("field-personalSummary"));
+                        if (hasEmailDraft) UXManager.autoResize(document.getElementById("field-emailDraft"));
                     }, delay);
                 });
-            } else { document.getElementById('summaryContainer').classList.add('hidden'); }
+            } else { document.getElementById("summaryContainer").classList.add("hidden"); }
 
             // 3. 渲染參考來源標籤
-            const sourcesList = document.getElementById('sourcesList');
-            const sourcesBlock = document.getElementById('sourcesBlock');
+            const sourcesList = document.getElementById("sourcesList");
+            const sourcesBlock = document.getElementById("sourcesBlock");
             if (d.sources && d.sources.length > 0) {
-                sourcesBlock.classList.remove('hidden');
+                sourcesBlock.classList.remove("hidden");
                 sourcesList.innerHTML = d.sources.map(s => `
                     <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
-                        <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || '來源'}
-                    </a>
-                `).join('');
+                        <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
+                    </a >
+                    `).join("");
                 lucide.createIcons();
-            } else { sourcesBlock.classList.add('hidden'); }
+            } else { sourcesBlock.classList.add("hidden"); }
 
             // 4. 渲染所有動態清單
-            renderList('phones'); renderList('faxes'); renderList('emails'); renderList('urls');
+            renderList("phones"); renderList("faxes"); renderList("emails"); renderList("urls");
 
             // 5. 更新右側預覽 (QR Code & Google Maps)
             debouncedUpdateVCardPreview();
@@ -1782,58 +2007,58 @@
          * [UI 渲染] 渲染動態陣列清單 (電話、信箱等)
          * - 生成 DOM 節點並插入對應的 container 中
          * - 處理 phone, faxes, emails, urls 不同的 placeholder 與選項
-         * @param {string} type - 清單類別 ('phones', 'faxes', 'emails', 'urls')
+         * @param {string} type - 清單類別 ("phones", "faxes", "emails", "urls")
          * @returns {void}
          */
         function renderList(type) {
             const container = document.getElementById(`list-${type}`);
             if (!container) return; container.innerHTML = "";
             const items = state.cardData[type] || [];
-            if (items.length === 0) { container.innerHTML = `<div class="text-xs text-slate-400 italic py-1 px-2">無資料</div>`; return; }
+            if (items.length === 0) { container.innerHTML = `<div class="text-xs text-slate-400 italic py-1 px-2"> 無資料</div>`; return; }
 
             items.forEach((item, idx) => {
-                let valKey = 'value';
-                let div = document.createElement('div');
+                let valKey = "value";
+                let div = document.createElement("div");
                 div.className = "flex flex-col gap-1 w-full group";
 
                 // 設定類別下拉選單
-                let optionsHTML = '';
-                if (type === 'phones') {
-                    optionsHTML = `<option value="work" ${item.type === 'work' ? 'selected' : ''}>公司</option><option value="cell" ${item.type === 'cell' ? 'selected' : ''}>手機</option><option value="home" ${item.type === 'home' ? 'selected' : ''}>住家</option>`;
-                } else if (type === 'faxes') {
-                    optionsHTML = `<option value="work" ${item.type === 'work' ? 'selected' : ''}>公司</option><option value="home" ${item.type === 'home' ? 'selected' : ''}>住家</option>`;
+                let optionsHTML = "";
+                if (type === "phones") {
+                    optionsHTML = `<option value="work" ${item.type === "work" ? "selected" : ""}>公司</option><option value="cell" ${item.type === "cell" ? "selected" : ""}>手機</option><option value="home" ${item.type === "home" ? "selected" : ""}>住家</option>`;
+                } else if (type === "faxes") {
+                    optionsHTML = `<option value="work" ${item.type === "work" ? "selected" : ""}>公司</option><option value="home" ${item.type === "home" ? "selected" : ""}>住家</option>`;
                 } else {
-                    optionsHTML = `<option value="work" ${item.type === 'work' ? 'selected' : ''}>公司</option><option value="home" ${item.type === 'home' ? 'selected' : ''}>個人</option>`;
+                    optionsHTML = `<option value="work" ${item.type === "work" ? "selected" : ""}>公司</option><option value="home" ${item.type === "home" ? "selected" : ""}>個人</option>`;
                 }
 
                 // 設定輸入欄位
-                let inputsHTML = '';
-                let validationMsg = '';
-                if (type === 'phones' || type === 'faxes') {
+                let inputsHTML = "";
+                let validationMsg = "";
+                if (type === "phones" || type === "faxes") {
                     inputsHTML = `
-                        <input type="text" value="${item[valKey] || ''}" placeholder="號碼" oninput="updateListItem('${type}', ${idx}, '${valKey}', this.value)" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                        <input type="text" value="${item.ext || ''}" placeholder="分機" oninput="updateListItem('${type}', ${idx}, 'ext', this.value)" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
-                    `;
+                    <input type="text" value="${item[valKey] || ""}" placeholder="號碼" data-update-list="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                        <input type="text" value="${item.ext || ""}" placeholder="分機" data-update-list="${type},${idx},ext" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
+                            `;
                 } else {
-                    let ph = type === 'emails' ? '信箱地址' : '網址';
+                    let ph = type === "emails" ? "信箱地址" : "網址";
                     let isValid = true;
                     if (item[valKey]) {
-                        isValid = type === 'emails' ? Validator.isValidEmail(item[valKey]) : Validator.isValidURL(item[valKey]);
+                        isValid = type === "emails" ? Validator.isValidEmail(item[valKey]) : Validator.isValidURL(item[valKey]);
                     }
-                    let errorClass = isValid ? 'border-slate-200 focus:ring-indigo-500' : 'border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50';
-                    let msgHidden = isValid ? 'hidden' : '';
-                    inputsHTML = `<input type="text" value="${item[valKey] || ''}" placeholder="${ph}" oninput="updateListItem('${type}', ${idx}, '${valKey}', this.value, this)" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-sm outline-none focus:ring-2 transition-all">`;
+                    let errorClass = isValid ? "border-slate-200 focus:ring-indigo-500" : "border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50";
+                    let msgHidden = isValid ? "hidden" : '';
+                    inputsHTML = `<input type="text" value="${item[valKey] || ""}" placeholder="${ph}" data-update-list-validate="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-sm outline-none focus:ring-2 transition-all">`;
                     validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[10px] text-red-500 font-bold ml-1 flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> 格式似乎有誤</div>`;
                 }
 
                 div.innerHTML = `
-                    <div class="flex items-center gap-2 w-full">
-                        <select onchange="updateListItem('${type}', ${idx}, 'type', this.value)" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] rounded-lg px-1.5 py-2 outline-none">${optionsHTML}</select>
-                        ${inputsHTML}
-                        <button onclick="removeListItem('${type}', ${idx})" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-                    </div>
-                    ${validationMsg}
-                `;
+                                <div class="flex items-center gap-2 w-full">
+                                    <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] rounded-lg px-1.5 py-2 outline-none">${optionsHTML}</select>
+                                    ${inputsHTML}
+                                    <button data-remove-item="${type},${idx}" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+                                </div>
+                                ${validationMsg}
+                                `;
                 container.appendChild(div);
             });
             lucide.createIcons();
@@ -1844,9 +2069,9 @@
          * - 會觸發對應的格式檢查 (如電話號碼正規化)
          * - 同步更新 `state.cardData` 並反映至 UI
          * - 觸發預覽更新
-         * @param {string} listType - 清單類別 ('phones', 'faxes', 'emails', 'urls')
+         * @param {string} listType - 清單類別 ("phones", "faxes", "emails", "urls")
          * @param {number} idx - 在陣列中的索引位置
-         * @param {string} key - 要更新的物件屬性鍵名 ('type', 'value', 'ext')
+         * @param {string} key - 要更新的物件屬性鍵名 ("type", "value", "ext")
          * @param {string} val - 使用者輸入的新值
          * @param {HTMLElement} [el] - 觸發事件的輸入框元素 (用於即時驗證)
          * @returns {void}
@@ -1876,13 +2101,13 @@
                 }
                 const errorMsgEl = el.parentElement.parentElement.querySelector('.validation-msg');
                 if (isValid) {
-                    el.classList.remove('border-red-400', 'focus:ring-red-500', 'text-red-600', 'bg-red-50/50');
-                    el.classList.add('border-slate-200', 'focus:ring-indigo-500');
-                    if (errorMsgEl) errorMsgEl.classList.add('hidden');
+                    el.classList.remove('border-red-400', 'focus:ring-red-500', 'text-red-600', "bg-red-50/50");
+                    el.classList.add("border-slate-200", "focus:ring-indigo-500");
+                    if (errorMsgEl) errorMsgEl.classList.add("hidden");
                 } else {
-                    el.classList.remove('border-slate-200', 'focus:ring-indigo-500');
-                    el.classList.add('border-red-400', 'focus:ring-red-500', 'text-red-600', 'bg-red-50/50');
-                    if (errorMsgEl) errorMsgEl.classList.remove('hidden');
+                    el.classList.remove("border-slate-200", "focus:ring-indigo-500");
+                    el.classList.add("border-red-400", "focus:ring-red-500", "text-red-600", "bg-red-50/50");
+                    if (errorMsgEl) errorMsgEl.classList.remove("hidden");
                 }
             }
 
@@ -1900,7 +2125,7 @@
          * [功能] 新增一個空的動態清單項目
          * - 初始化預設值結構並加入 `state.cardData`
          * - 重新渲染該清單並更新預覽
-         * @param {string} listType - 清單類別 ('phones', 'faxes', 'emails', 'urls')
+         * @param {string} listType - 清單類別 ("phones", "faxes", "emails", "urls")
          * @returns {void}
          */
         window.addListItem = (listType) => {
@@ -1941,23 +2166,23 @@
                     const qr = new QRious({
                         value: utf8EncodedVcf,
                         size: 600, // 給大一點的基礎大小以容納更多備註文字的細節度
-                        level: 'L' // 稍微提高容錯或是降低，L=最低 M=中等 Q=高 H=極高
+                        level: "L" // 稍微提高容錯或是降低，L=最低 M=中等 Q=高 H=極高
                     });
 
                     qrImage.src = qr.toDataURL();
-                    qrImage.classList.remove('hidden'); document.getElementById('qrPlaceholder').classList.add('hidden');
-                    document.getElementById('qrStatus').textContent = "掃描加入聯絡人";
+                    qrImage.classList.remove("hidden"); document.getElementById("qrPlaceholder").classList.add("hidden");
+                    document.getElementById("qrStatus").textContent = "掃描加入聯絡人";
                 } catch (err) {
-                    console.error('QR 產生錯誤:', err);
-                    document.getElementById('qrStatus').textContent = "太多資料無法產生 QR Code";
-                    qrImage.classList.add('hidden'); document.getElementById('qrPlaceholder').classList.remove('hidden');
+                    console.error("QR 產生錯誤:", err);
+                    document.getElementById("qrStatus").textContent = "太多資料無法產生 QR Code";
+                    qrImage.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
                 }
             } else {
-                qrImage.classList.add('hidden'); document.getElementById('qrPlaceholder').classList.remove('hidden');
-                document.getElementById('qrStatus').textContent = "等待資料輸入...";
+                qrImage.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
+                document.getElementById("qrStatus").textContent = "等待資料輸入...";
             }
             // 若地址有任何內容，則顯示 Google Maps 按鈕
-            document.getElementById('btn-maps').classList.toggle('hidden', ![d.country, d.region, d.locality, d.streetAddress].some(v => isValid(v)));
+            document.getElementById("btn-maps").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => isValid(v)));
 
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
@@ -2009,8 +2234,8 @@
             state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
             state.base64Image = null;
             state.currentHistoryId = null;
-            document.getElementById('previewImage').classList.add('hidden');
-            document.getElementById('uploadPlaceholder').classList.remove('hidden');
+            document.getElementById("previewImage").classList.add("hidden");
+            document.getElementById("uploadPlaceholder").classList.remove("hidden");
             resetEmailDraft(); syncDataToUI(); UXManager.toast("已清空資料");
         };
 
