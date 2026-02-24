@@ -2316,6 +2316,7 @@
             state.currentHistoryId = null;
             document.getElementById("previewImage").classList.add("hidden");
             document.getElementById("uploadPlaceholder").classList.remove("hidden");
+            document.getElementById("fileInput").value = "";
             resetEmailDraft(); syncDataToUI(); UXManager.toast("已清空資料");
         };
 
