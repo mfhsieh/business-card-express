@@ -477,6 +477,42 @@
         class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold opacity-0 pointer-events-none transition-opacity duration-300 w-max max-w-[90vw] text-center">
     </div>
 
+    <!-- 全域確認對話框 -->
+    <div id="globalConfirmOverlay"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
+        <div class="bg-white px-6 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
+            id="globalConfirmModal">
+            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
+                <i data-lucide="alert-circle" class="w-6 h-6"></i>
+            </div>
+            <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
+            <div class="flex gap-3 w-full mt-2">
+                <button id="globalConfirmCancelBtn"
+                    class="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">取消</button>
+                <button id="globalConfirmOkBtn"
+                    class="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all active:scale-95">確定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全域確認對話框 -->
+    <div id="globalConfirmOverlay"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
+        <div class="bg-white px-6 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
+            id="globalConfirmModal">
+            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
+                <i data-lucide="alert-circle" class="w-6 h-6"></i>
+            </div>
+            <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
+            <div class="flex gap-3 w-full mt-2">
+                <button id="globalConfirmCancelBtn"
+                    class="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">取消</button>
+                <button id="globalConfirmOkBtn"
+                    class="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all active:scale-95">確定</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 全域載入遮罩 -->
     <div id="globalLoadingOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
@@ -1200,6 +1236,50 @@
                         content.querySelectorAll("textarea").forEach(ta => this.autoResize(ta));
                     }, 10);
                 }
+            },
+            /**
+             * 顯示全域確認對話框並等待使用者回應
+             * @param {string} msg - 顯示的確認訊息
+             * @param {Object} [options] - 其他設定：okText, cancelText
+             * @returns {Promise<boolean>} 回傳 boolean 表示是否確認
+             */
+            confirm(msg, options = {}) {
+                return new Promise((resolve) => {
+                    const overlay = document.getElementById("globalConfirmOverlay");
+                    const modal = document.getElementById("globalConfirmModal");
+                    const textEl = document.getElementById("globalConfirmText");
+                    const okBtn = document.getElementById("globalConfirmOkBtn");
+                    const cancelBtn = document.getElementById("globalConfirmCancelBtn");
+
+                    if (!overlay || !modal || !textEl || !okBtn || !cancelBtn) {
+                        resolve(window.confirm(msg));
+                        return;
+                    }
+
+                    textEl.textContent = msg;
+                    okBtn.textContent = options.okText || "確定";
+                    cancelBtn.textContent = options.cancelText || "取消";
+
+                    const cleanup = () => {
+                        modal.classList.add("scale-95");
+                        overlay.classList.add("opacity-0");
+                        setTimeout(() => overlay.classList.add("hidden"), 200);
+                        okBtn.removeEventListener("click", onOk);
+                        cancelBtn.removeEventListener("click", onCancel);
+                    };
+
+                    const onOk = () => { cleanup(); resolve(true); };
+                    const onCancel = () => { cleanup(); resolve(false); };
+
+                    okBtn.addEventListener("click", onOk);
+                    cancelBtn.addEventListener("click", onCancel);
+
+                    overlay.classList.remove("hidden");
+                    // 強制重繪以播放過渡動畫
+                    overlay.offsetHeight;
+                    overlay.classList.remove("opacity-0");
+                    modal.classList.remove("scale-95");
+                });
             }
         };
 
@@ -1592,10 +1672,10 @@
              * @returns {Promise<void>}
              */
             async deleteItem(id) {
-                if (!confirm("確定要刪除這筆紀錄嗎？")) return;
+                if (!(await UXManager.confirm("確定要刪除這筆紀錄嗎？"))) return;
                 try {
                     await DatabaseService.deleteCard(id);
-                    this.render();
+                    HistoryManager.render();
                     UXManager.toast("紀錄已刪除");
                 } catch (err) {
                     UXManager.toast("刪除失敗: " + err.message);
@@ -1607,10 +1687,10 @@
              * @returns {Promise<void>}
              */
             async clearAll() {
-                if (!confirm("警告：這將會永久刪除所有保留在瀏覽器內的歷史紀錄，確定嗎？")) return;
+                if (!(await UXManager.confirm("警告：這將會永久刪除所有保留在瀏覽器內的歷史紀錄，確定嗎？"))) return;
                 try {
                     await DatabaseService.clearAll();
-                    this.render();
+                    HistoryManager.render();
                     UXManager.toast("所有歷史紀錄已清空");
                 } catch (err) {
                     UXManager.toast("清空失敗: " + err.message);
@@ -2229,8 +2309,8 @@
          * - 重置圖片預覽、Debug 面板與草稿
          * @returns {void}
          */
-        window.clearForm = () => {
-            if (!confirm("確定要清空嗎？")) return;
+        window.clearForm = async () => {
+            if (!(await UXManager.confirm("確定要清空嗎？"))) return;
             state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
             state.base64Image = null;
             state.currentHistoryId = null;
