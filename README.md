@@ -1,6 +1,6 @@
 # 名片快手 (Business Card Express)
 
-[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件。
+[**名片快手**](https://github.com/mfhsieh/business-card-express/tree/main?tab=readme-ov-file) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件。
 
 ## ✨ 核心特色
 
