@@ -706,32 +706,87 @@
         };
 
         /**
-         * 輔助工具：檢查值是否有效且非 null
+         * 模組 0：通用工具模組 (Utils)
+         * 提供全域共用的純函數工具，不依賴任何 DOM 或狀態。
+         * 包含：值有效性檢查、防抖、地圖服務、表單欄位驗證。
          */
-        function isValid(val) {
-            if (val === null || val === undefined) return false;
-            if (typeof val === "string") {
-                const trimmed = val.trim();
-                return trimmed !== "" && trimmed.toLowerCase() !== "null";
-            }
-            return true;
-        }
+        const Utils = {
+            /**
+             * 檢查值是否有效且非 null / 空字串 / 字面字串 "null"
+             * @param {*} val - 待檢查的值
+             * @returns {boolean} 有效則回傳 true，否則 false
+             */
+            isValid(val) {
+                if (val === null || val === undefined) return false;
+                if (typeof val === "string") {
+                    const trimmed = val.trim();
+                    return trimmed !== "" && trimmed.toLowerCase() !== "null";
+                }
+                return true;
+            },
 
-        /**
-         * 輔助工具：防抖函數 (Debounce)
-         * 避免頻繁觸發同一函數 (例如 QR Code 產生)
-         * @param {Function} func - 要執行的函數
-         * @param {number} delay - 延遲毫秒數
-         */
-        function debounce(func, delay) {
-            let timeoutId;
-            return function (...args) {
-                if (timeoutId) clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => {
-                    func.apply(this, args);
-                }, delay);
-            };
-        }
+            /**
+             * 防抖函數：避免頻繁觸發同一函數（例如 QR Code 產生）
+             * @param {Function} func - 要節流的函數
+             * @param {number} delay - 延遲毫秒數
+             * @returns {Function} 封裝後的防抖函數
+             */
+            debounce(func, delay) {
+                let timeoutId;
+                return function (...args) {
+                    if (timeoutId) clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => {
+                        func.apply(this, args);
+                    }, delay);
+                };
+            },
+
+            /**
+             * 根據名片資料合成 Google Maps 搜尋 URL
+             * @param {Object} d - 聯絡人資料物件
+             * @returns {string} 完整的 Google Maps 搜尋連結，若無地址則回傳空字串
+             */
+            getGoogleMapsUrl(d) {
+                const fullAddress = [d.country, d.region, d.locality, d.streetAddress].filter(v => this.isValid(v)).join(", ");
+                if (!fullAddress) return "";
+                return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+            },
+
+            /**
+             * 開啟 Google Maps 搜尋當前地址
+             * @param {Object} d - 聯絡人資料物件
+             * @returns {void}
+             */
+            openGoogleMaps(d) {
+                const url = this.getGoogleMapsUrl(d);
+                if (url) window.open(url, "_blank");
+            },
+
+            /**
+             * 檢查電子郵件格式是否有效（允許空白）
+             * @param {string} email - 電子郵件字串
+             * @returns {boolean} 是否為有效格式
+             */
+            isValidEmail(email) {
+                if (!email) return true;
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            },
+
+            /**
+             * 檢查網址格式是否有效（允許空白）
+             * @param {string} url - 網址字串
+             * @returns {boolean} 是否為有效網址
+             */
+            isValidURL(url) {
+                if (!url) return true;
+                try {
+                    new URL(url.startsWith("http") ? url : `https://${url}`);
+                    return true;
+                } catch {
+                    return false;
+                }
+            }
+        };
 
         /**
          * 模組 1：AI 核心通訊模組 (AI Service Module)
@@ -994,7 +1049,7 @@
              * @returns {string} 格式化後的電話號碼 (處理失敗時回傳清理過數字的字串)
              */
             normalizePhone(phone) {
-                if (!isValid(phone)) return phone || "";
+                if (!Utils.isValid(phone)) return phone || "";
 
                 // 1. 轉為字串並移除所有非數字與非加號內容
                 let cleaned = String(phone).trim().replace(/[^\d+]/g, "");
@@ -1057,52 +1112,52 @@
                 }
 
                 // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則嘗試組合姓氏與名字，皆無則顯示 "聯絡人"
-                const fnValue = isValid(d.fn) ? d.fn : ((isValid(d.lastName) ? d.lastName : "") + (isValid(d.firstName) ? d.firstName : "") || "聯絡人");
+                const fnValue = Utils.isValid(d.fn) ? d.fn : ((Utils.isValid(d.lastName) ? d.lastName : "") + (Utils.isValid(d.firstName) ? d.firstName : "") || "聯絡人");
                 parts.push(`FN${getUtf8(fnValue)}:${fnValue}`);
 
                 // 4. 處理姓名結構 (N): vCard 格式嚴格要求為「姓;名;中間名;前綴;後綴」
-                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix].map(v => isValid(v) ? v : "").join(";");
+                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix].map(v => Utils.isValid(v) ? v : "").join(";");
                 parts.push(`N${getUtf8(nValue)}:${nValue}`);
 
                 // 5. 處理組織與部門 (ORG)
-                if (isValid(d.orgName) || isValid(d.orgUnit)) {
+                if (Utils.isValid(d.orgName) || Utils.isValid(d.orgUnit)) {
                     let orgStr = (d.orgName || "");
-                    if (isValid(d.orgUnit)) orgStr += ";" + d.orgUnit;
+                    if (Utils.isValid(d.orgUnit)) orgStr += ";" + d.orgUnit;
                     parts.push(`ORG${getUtf8(orgStr)}:${orgStr}`);
                 }
 
                 // 6. 處理職稱 (TITLE)
-                if (isValid(d.title)) parts.push(`TITLE${getUtf8(d.title)}:${d.title}`);
+                if (Utils.isValid(d.title)) parts.push(`TITLE${getUtf8(d.title)}:${d.title}`);
 
                 // 7. 處理地址 (ADR): vCard 格式嚴格要求為「郵政信箱;延伸地址;街道地址;城市;區域;郵遞區號;國家」
-                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country].map(v => isValid(v) ? v : "").join(";");
+                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country].map(v => Utils.isValid(v) ? v : "").join(";");
                 parts.push(`ADR;TYPE=WORK${getUtf8(adrValue)}:${adrValue}`);
 
                 // 8. 處理多組電話 (phones)
                 (d.phones || []).forEach(p => {
-                    if (isValid(p.value)) {
+                    if (Utils.isValid(p.value)) {
                         let type = p.type === "cell" ? "CELL" : (p.type === "home" ? "HOME" : "WORK");
                         let num = String(p.value).replace(/[^\d+\-() ]/g, ""); // 濾除怪異符號，保留括號、加號、破折號與空白
 
                         // 若有分機號碼，以逗號區隔
-                        if (isValid(p.ext)) num += `,${String(p.ext).trim()}`;
+                        if (Utils.isValid(p.ext)) num += `,${String(p.ext).trim()}`;
                         parts.push(`TEL;TYPE=${type},VOICE:${num}`);
                     }
                 });
 
                 // 處理多組傳真 (faxes)
                 (d.faxes || []).forEach(f => {
-                    if (isValid(f.value)) {
+                    if (Utils.isValid(f.value)) {
                         let type = f.type === "home" ? "HOME" : "WORK";
                         let num = String(f.value).replace(/[^\d+\-() ]/g, "");
-                        if (isValid(f.ext)) num += `,${String(f.ext).trim()}`;
+                        if (Utils.isValid(f.ext)) num += `,${String(f.ext).trim()}`;
                         parts.push(`TEL;TYPE=${type},FAX:${num}`);
                     }
                 });
 
                 // 9. 處理多組電子郵件 (emails)
                 (d.emails || []).forEach(e => {
-                    if (isValid(e.value)) {
+                    if (Utils.isValid(e.value)) {
                         let type = e.type === "home" ? "HOME" : "WORK";
                         parts.push(`EMAIL;TYPE=${type}:${e.value.trim()}`);
                     }
@@ -1110,7 +1165,7 @@
 
                 // 10. 處理多組網站連結 (urls)
                 (d.urls || []).forEach(w => {
-                    if (isValid(w.value)) {
+                    if (Utils.isValid(w.value)) {
                         let type = w.type === "home" ? "HOME" : "WORK";
                         parts.push(`URL;TYPE=${type}:${w.value.trim()}`);
                     }
@@ -1118,7 +1173,7 @@
 
                 // 11. 處理備註 (NOTE)
                 // 根據 RFC 2426，換行必須被轉義為字面的 \n，且逗號有時也會被解析器切割，因此進行安全轉義。
-                if (isValid(d.note)) {
+                if (Utils.isValid(d.note)) {
                     const cleanNote = d.note.replace(/\n/g, "\\n").replace(/,/g, "\\,");
                     parts.push(`NOTE${getUtf8(cleanNote)}:${cleanNote}`);
                 }
@@ -1134,11 +1189,29 @@
          * 負責 UI 反饋、Loading 顯示、錯誤提示與區塊展開/收合。
          */
         const UXManager = {
+            /** @property {HTMLElement|null} elIdentifyBtn - 快取辨識按鈕，避免重複查詢 DOM */
+            elIdentifyBtn: null,
+            /** @property {HTMLElement|null} elPreviewImage - 快取圖片預覽元素 */
+            elPreviewImage: null,
+            /** @property {HTMLElement|null} elUploadPlaceholder - 快取上傳占位符 */
+            elUploadPlaceholder: null,
+            /** @property {HTMLElement|null} elFileInput - 快取隱藏 file input */
+            elFileInput: null,
+            /** @property {HTMLElement|null} elDebugPanel1 - 快取 Debug 面板 */
+            elDebugPanel1: null,
+
             /** 
-             * 初始化模組，綁定 textarea 自動調整高度事件與 UI 區塊收合事件
+             * 初始化模組，快取常用 DOM 元素、綁定 textarea 自動調整高度事件與 UI 區塊收合事件
              * @returns {void}
              */
             init() {
+                // 0. 快取常用 DOM 元素（集中在此，避免各方法重複 getElementById）
+                this.elIdentifyBtn = document.getElementById("identifyBtn");
+                this.elPreviewImage = document.getElementById("previewImage");
+                this.elUploadPlaceholder = document.getElementById("uploadPlaceholder");
+                this.elFileInput = document.getElementById("fileInput");
+                this.elDebugPanel1 = document.getElementById("debugPanel1");
+
                 // 1. 綁定 textarea 自動調整高度
                 const textareas = ["field-companySummary", "field-personalSummary", "emailDraftText", "field-note"];
                 textareas.forEach(id => {
@@ -1156,8 +1229,7 @@
                 });
 
                 // 3. 綁定主要操作按鈕
-                const identifyBtn = document.getElementById("identifyBtn");
-                if (identifyBtn) identifyBtn.addEventListener("click", () => this.identifyCard());
+                if (this.elIdentifyBtn) this.elIdentifyBtn.addEventListener("click", () => this.identifyCard());
 
                 const generateEmailBtn = document.getElementById("generateEmailBtn");
                 if (generateEmailBtn) generateEmailBtn.addEventListener("click", () => this.generateEmailDraft());
@@ -1190,6 +1262,26 @@
             },
 
             /**
+             * [UI] 設定辨識按鈕的啟用／停用狀態及對應樣式
+             * @param {boolean} enabled - true 為啟用（有圖片可辨識），false 為停用（初始或清空後）
+             * @returns {void}
+             */
+            setIdentifyBtnState(enabled) {
+                const btn = this.elIdentifyBtn;
+                if (!btn) return;
+                btn.disabled = !enabled;
+                if (enabled) {
+                    btn.classList.replace("bg-slate-100", "bg-indigo-600");
+                    btn.classList.replace("text-slate-400", "text-white");
+                    btn.classList.add("shadow-xl", "hover:bg-indigo-700");
+                } else {
+                    btn.classList.replace("bg-indigo-600", "bg-slate-100");
+                    btn.classList.replace("text-white", "text-slate-400");
+                    btn.classList.remove("shadow-xl", "hover:bg-indigo-700");
+                }
+            },
+
+            /**
              * [核心邏輯] AI 辨識主程序
              * 包含影像 OCR 辨識與上網深度搜尋。
              * - 依賴 `state.base64Image` 作為分析來源
@@ -1205,12 +1297,12 @@
                 this.setLoading(true, "影像辨識與上網搜尋中...");
 
                 // 清空舊的 Debug 資訊
-                document.getElementById('debugPanel1').textContent = "";
+                this.elDebugPanel1.textContent = "";
 
                 try {
                     // 執行 OCR 與上網搜尋
                     const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
-                    document.getElementById("debugPanel1").textContent = JSON.stringify(result1, null, 2);
+                    this.elDebugPanel1.textContent = JSON.stringify(result1, null, 2);
 
                     const text1 = GeminiService.extractText(result1);
                     const parsedData = GeminiService.parseJSON(text1);
@@ -1261,7 +1353,7 @@
              */
             async generateEmailDraft() {
                 const d = state.cardData;
-                if (!isValid(d.fn) && !isValid(d.orgName)) { this.toast("請先辨識資訊"); return; }
+                if (!Utils.isValid(d.fn) && !Utils.isValid(d.orgName)) { this.toast("請先辨識資訊"); return; }
                 const draftContainer = document.getElementById("emailDraftContainer");
                 const loadingOverlay = document.getElementById("emailLoading");
                 const textArea = document.getElementById("field-emailDraft");
@@ -1346,18 +1438,12 @@
                 state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
                 state.base64Image = null;
                 state.currentHistoryId = null;
-                document.getElementById("previewImage").classList.add("hidden");
-                document.getElementById("uploadPlaceholder").classList.remove("hidden");
-                document.getElementById("fileInput").value = "";
+                this.elPreviewImage.classList.add("hidden");
+                this.elUploadPlaceholder.classList.remove("hidden");
+                this.elFileInput.value = "";
 
                 // 重置辨識按鈕為初始停用狀態
-                const identifyBtn = document.getElementById("identifyBtn");
-                if (identifyBtn) {
-                    identifyBtn.disabled = true;
-                    identifyBtn.classList.replace("bg-indigo-600", "bg-slate-100");
-                    identifyBtn.classList.replace("text-white", "text-slate-400");
-                    identifyBtn.classList.remove("shadow-xl", "hover:bg-indigo-700");
-                }
+                this.setIdentifyBtnState(false);
 
                 this.resetEmailDraft(); syncDataToUI(); this.toast("已清空資料");
             },
@@ -1367,7 +1453,7 @@
              * @returns {void}
              */
             openGoogleMaps() {
-                MapService.openGoogleMaps(state.cardData);
+                Utils.openGoogleMaps(state.cardData);
             },
 
             /** 
@@ -1407,7 +1493,7 @@
              * @returns {void}
              */
             setLoading(isLoading, text = "處理中...") {
-                const btn = document.getElementById("identifyBtn");
+                const btn = this.elIdentifyBtn;
                 if (btn) btn.disabled = isLoading;
 
                 const overlay = document.getElementById("globalLoadingOverlay");
@@ -1488,11 +1574,10 @@
             showError(msg) {
                 const err = document.getElementById("errorMessage");
                 const text = document.getElementById("errorText");
-                const debugBtn = document.getElementById("debugPanel1");
 
                 if (text) text.textContent = msg;
                 if (err) err.classList.remove("hidden");
-                if (debugBtn) debugBtn.classList.remove("hidden");
+                if (this.elDebugPanel1) this.elDebugPanel1.classList.remove("hidden");
             },
 
             /**
@@ -1555,7 +1640,7 @@
             sync(data, keys) {
                 keys.forEach(key => {
                     const el = document.getElementById(`field-${key}`);
-                    if (el) el.value = isValid(data[key]) ? data[key] : "";
+                    if (el) el.value = Utils.isValid(data[key]) ? data[key] : "";
                 });
             },
 
@@ -1579,33 +1664,7 @@
         };
 
         /**
-         * 模組 6：地圖服務模組 (Map Service)
-         * 負責處理地址格式化與地圖跳轉邏輯。
-         */
-        const MapService = {
-            /**
-             * 根據名片資料合成 Google Maps 搜尋 URL
-             * @param {Object} d - 聯絡人資料物件
-             * @returns {string} 完整的 Google Maps 搜尋連結
-             */
-            getGoogleMapsUrl(d) {
-                const fullAddress = [d.country, d.region, d.locality, d.streetAddress].filter(v => isValid(v)).join(", ");
-                if (!fullAddress) return "";
-                return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
-            },
-            /** 
-             * 開啟地圖頁面
-             * @param {Object} d - 聯絡人資料物件
-             * @returns {void} 
-             */
-            openGoogleMaps(d) {
-                const url = this.getGoogleMapsUrl(d);
-                if (url) window.open(url, "_blank");
-            }
-        };
-
-        /**
-         * 模組 7：導出服務模組 (Export Service)
+         * 模組 6：導出服務模組 (Export Service)
          * 負責處理檔案下載、剪貼簿複製等與外部匯出相關的瀏覽器行為。
          */
         const ExportService = {
@@ -1650,7 +1709,7 @@
         };
 
         /**
-         * 模組 8：本地資料庫服務模組 (Database Service)
+         * 模組 7：本地資料庫服務模組 (Database Service)
          * 負責使用 IndexedDB 在瀏覽器端自動保存已辨識的名片歷史紀錄。
          */
         const DatabaseService = {
@@ -1781,7 +1840,7 @@
         };
 
         /**
-         * 模組 9：歷史紀錄介面模組 (History Manager)
+         * 模組 8：歷史紀錄介面模組 (History Manager)
          * 負責處理歷史紀錄選單的開關、渲染、載入、刪除等與 UI 之互動邏輯。
          */
         const HistoryManager = {
@@ -1847,18 +1906,18 @@
                         const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><i data-lucide="image" class="w-4 h-4 text-slate-400"></i></div>`;
 
                         return `
-                            <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group flex items-center gap-3 cursor-pointer" onclick="HistoryManager.loadItem(${c.id})">
-                                ${imgPreview}
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
-                                    <p class="text-xs text-slate-500 truncate">${org}</p>
-                                    <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
-                                </div>
-                                <button onclick="event.stopPropagation(); HistoryManager.deleteItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group flex items-center gap-3 cursor-pointer" onclick="HistoryManager.loadItem(${c.id})">
+                            ${imgPreview}
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
+                                <p class="text-xs text-slate-500 truncate">${org}</p>
+                                <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
                             </div>
-                        `;
+                            <button onclick="event.stopPropagation(); HistoryManager.deleteItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    `;
                     }).join("");
                     lucide.createIcons({ root: listEl });
                 } catch (err) {
@@ -1888,9 +1947,8 @@
                         }
 
                         // 恢復圖片預覽或退回選取狀態
-                        const preview = document.getElementById("previewImage");
-                        const placeholder = document.getElementById("uploadPlaceholder");
-                        const btn = document.getElementById("identifyBtn");
+                        const preview = UXManager.elPreviewImage;
+                        const placeholder = UXManager.elUploadPlaceholder;
 
                         if (state.base64Image) {
                             if (preview) {
@@ -1898,13 +1956,7 @@
                                 preview.classList.remove("hidden");
                             }
                             if (placeholder) placeholder.classList.add("hidden");
-
-                            if (btn) {
-                                btn.disabled = false;
-                                btn.classList.replace("bg-slate-100", "bg-indigo-600");
-                                btn.classList.replace("text-slate-400", "text-white");
-                                btn.classList.add("shadow-xl", "hover:bg-indigo-700");
-                            }
+                            UXManager.setIdentifyBtnState(true);
                         } else {
                             // 若無影像，則清空預覽並恢復占位符
                             if (preview) {
@@ -1912,13 +1964,7 @@
                                 preview.classList.add("hidden");
                             }
                             if (placeholder) placeholder.classList.remove("hidden");
-
-                            if (btn) {
-                                btn.disabled = true;
-                                btn.classList.replace("bg-indigo-600", "bg-slate-100");
-                                btn.classList.replace("text-white", "text-slate-400");
-                                btn.classList.remove("shadow-xl", "hover:bg-indigo-700");
-                            }
+                            UXManager.setIdentifyBtnState(false);
                         }
 
                         syncDataToUI();
@@ -1957,36 +2003,6 @@
                     UXManager.toast("所有歷史紀錄已清空");
                 } catch (err) {
                     UXManager.toast("清空失敗: " + err.message);
-                }
-            }
-        };
-
-        /**
-         * 模組 10：表單驗證模組 (Validator Service)
-         * 負責檢查 Email、網址是否符合基本格式。
-         */
-        const Validator = {
-            /**
-             * 檢查電子郵件格式是否有效
-             * @param {string} email - 電子郵件字串
-             * @returns {boolean} 是否為有效格式
-             */
-            isValidEmail(email) {
-                if (!email) return true; // 允許空白
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            },
-            /**
-             * 檢查網址格式是否有效
-             * @param {string} url - 網址字串
-             * @returns {boolean} 是否為有效網址
-             */
-            isValidURL(url) {
-                if (!url) return true; // 允許空白
-                try {
-                    new URL(url.startsWith("http") ? url : `https://${url}`);
-                    return true;
-                } catch {
-                    return false;
                 }
             }
         };
@@ -2064,6 +2080,7 @@
          */
         function setupDragAndDrop() {
             const dropZone = document.getElementById("dropZone");
+            const fileInput = document.getElementById("fileInput");
 
             // 點擊上傳區域觸發隱藏的 file input
             dropZone.addEventListener("click", () => fileInput.click());
@@ -2082,8 +2099,6 @@
                 dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
                 if (e.dataTransfer.files && e.dataTransfer.files.length > 0) await processFile(e.dataTransfer.files[0]);
             });
-
-            const fileInput = document.getElementById("fileInput");
 
             // 處理檔案選擇變更
             fileInput.addEventListener("change", async (e) => {
@@ -2123,24 +2138,29 @@
                 UXManager.toast("請上傳有效的圖片檔案");
                 return;
             }
-            UXManager.resetEmailDraft();
+
+            // 若已有辨識資料或歷史紀錄，先重置以維持介面一致性
+            const hasExistingData = state.base64Image || Utils.isValid(state.cardData.fn) || Utils.isValid(state.cardData.orgName);
+            if (hasExistingData) {
+                state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
+                state.currentHistoryId = null;
+                UXManager.resetEmailDraft();
+                document.getElementById("summaryContainer").classList.add("hidden");
+                syncDataToUI();
+            }
+
             try {
                 // 1. 影像壓縮與 Base64 轉換
                 const base64 = await ImageProcessor.compress(file, 1200);
                 state.base64Image = base64;
 
                 // 2. 更新預覽 UI
-                const preview = document.getElementById("previewImage");
-                preview.src = `data:image/png;base64,${base64}`;
-                preview.classList.remove("hidden");
-                document.getElementById("uploadPlaceholder").classList.add("hidden");
+                UXManager.elPreviewImage.src = `data:image/png;base64,${base64}`;
+                UXManager.elPreviewImage.classList.remove("hidden");
+                UXManager.elUploadPlaceholder.classList.add("hidden");
 
                 // 3. 解鎖並強化辨識按鈕樣式
-                const btn = document.getElementById("identifyBtn");
-                btn.disabled = false;
-                btn.classList.replace("bg-slate-100", "bg-indigo-600");
-                btn.classList.replace("text-slate-400", "text-white");
-                btn.classList.add("shadow-xl", "hover:bg-indigo-700");
+                UXManager.setIdentifyBtnState(true);
 
                 UXManager.toast("影像準備就緒");
             } catch (err) {
@@ -2160,9 +2180,9 @@
             FormBinder.sync(d, STATIC_FIELDS);
 
             // 2. 處理摘要顯示邏輯
-            const hasCompany = isValid(d.companySummary);
-            const hasPersonal = isValid(d.personalSummary);
-            const hasEmailDraft = isValid(d.emailDraft);
+            const hasCompany = Utils.isValid(d.companySummary);
+            const hasPersonal = Utils.isValid(d.personalSummary);
+            const hasEmailDraft = Utils.isValid(d.emailDraft);
 
             if (hasCompany || hasPersonal || hasEmailDraft) {
                 document.getElementById("summaryContainer").classList.remove("hidden");
@@ -2196,10 +2216,10 @@
             if (d.sources && d.sources.length > 0) {
                 sourcesBlock.classList.remove("hidden");
                 sourcesList.innerHTML = d.sources.map(s => `
-                    <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
-                        <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
-                    </a >
-                    `).join("");
+                <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
+                    <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
+                </a >
+                `).join("");
                 lucide.createIcons();
             } else { sourcesBlock.classList.add("hidden"); }
 
@@ -2243,14 +2263,14 @@
                 let validationMsg = "";
                 if (type === "phones" || type === "faxes") {
                     inputsHTML = `
-                    <input type="text" value="${item[valKey] || ""}" placeholder="號碼" data-update-list="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                        <input type="text" value="${item.ext || ""}" placeholder="分機" data-update-list="${type},${idx},ext" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
-                            `;
+                <input type="text" value="${item[valKey] || ""}" placeholder="號碼" data-update-list="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                    <input type="text" value="${item.ext || ""}" placeholder="分機" data-update-list="${type},${idx},ext" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
+                        `;
                 } else {
                     let ph = type === "emails" ? "信箱地址" : "網址";
                     let isValid = true;
                     if (item[valKey]) {
-                        isValid = type === "emails" ? Validator.isValidEmail(item[valKey]) : Validator.isValidURL(item[valKey]);
+                        isValid = type === "emails" ? Utils.isValidEmail(item[valKey]) : Utils.isValidURL(item[valKey]);
                     }
                     let errorClass = isValid ? "border-slate-200 focus:ring-indigo-500" : "border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50";
                     let msgHidden = isValid ? "hidden" : '';
@@ -2259,13 +2279,12 @@
                 }
 
                 div.innerHTML = `
-                                <div class="flex items-center gap-2 w-full">
-                                    <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] rounded-lg px-1.5 py-2 outline-none">${optionsHTML}</select>
-                                    ${inputsHTML}
-                                    <button data-remove-item="${type},${idx}" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-                                </div>
-                                ${validationMsg}
-                                `;
+                <div class="flex items-center gap-2 w-full">
+                    <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] rounded-lg px-1.5 py-2 outline-none">${optionsHTML}</select>
+                    ${inputsHTML}
+                    <button data-remove-item="${type},${idx}" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                ${validationMsg}`;
                 container.appendChild(div);
             });
             lucide.createIcons({ root: container });
@@ -2304,7 +2323,7 @@
             if (el && (listType === 'emails' || listType === 'urls') && key === 'value') {
                 let isValid = true;
                 if (val) {
-                    isValid = listType === 'emails' ? Validator.isValidEmail(val) : Validator.isValidURL(val);
+                    isValid = listType === 'emails' ? Utils.isValidEmail(val) : Utils.isValidURL(val);
                 }
                 const errorMsgEl = el.parentElement.parentElement.querySelector('.validation-msg');
                 if (isValid) {
@@ -2366,7 +2385,7 @@
             const d = state.cardData;
             const vcf = vCardFormatter.generate(d);
             state.vCardString = vcf;
-            const hasContent = isValid(d.fn) || isValid(d.lastName) || isValid(d.orgName);
+            const hasContent = Utils.isValid(d.fn) || Utils.isValid(d.lastName) || Utils.isValid(d.orgName);
             const qrImage = document.getElementById('qrImage');
 
             if (hasContent) {
@@ -2393,7 +2412,7 @@
                 document.getElementById("qrStatus").textContent = "等待資料輸入...";
             }
             // 若地址有任何內容，則顯示 Google Maps 按鈕
-            document.getElementById("openMapsBtn").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => isValid(v)));
+            document.getElementById("openMapsBtn").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => Utils.isValid(v)));
 
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
@@ -2403,7 +2422,7 @@
             }
         }
 
-        const debouncedUpdateVCardPreview = debounce(updateVCardPreview, DEFAULT_DEBOUNCE_DELAY);
+        const debouncedUpdateVCardPreview = Utils.debounce(updateVCardPreview, DEFAULT_DEBOUNCE_DELAY);
 
     </script>
 </body>
