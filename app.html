@@ -1145,7 +1145,7 @@
                     }
                 });
 
-                // 處理多組傳真 (faxes)
+                // 8b. 處理多組傳真 (faxes)
                 (d.faxes || []).forEach(f => {
                     if (Utils.isValid(f.value)) {
                         let type = f.type === "home" ? "HOME" : "WORK";
@@ -1213,7 +1213,7 @@
                 this.elDebugPanel1 = document.getElementById("debugPanel1");
 
                 // 1. 綁定 textarea 自動調整高度
-                const textareas = ["field-companySummary", "field-personalSummary", "emailDraftText", "field-note"];
+                const textareas = ["field-companySummary", "field-personalSummary", "field-emailDraft", "field-note"];
                 textareas.forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.addEventListener("input", () => this.autoResize(el));
@@ -1431,6 +1431,7 @@
              * [功能] 清空表單與影像狀態
              * - 恢復為 `DEFAULT_CARD_DATA`
              * - 重置圖片預覽、Debug 面板與草稿
+             * - 需彈出確認對話框等待使用者確認，故為非同步操作
              * @returns {Promise<void>}
              */
             async clearForm() {
@@ -1457,7 +1458,7 @@
             },
 
             /** 
-             * 切換除錯面版顯示 
+             * 切換除錯面板顯示 
              * @param {string} panelId - 面板 DOM ID
              * @param {string} textId - 按鈕文字 DOM ID
              * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
@@ -2131,7 +2132,9 @@
         /**
          * [處理流程] 處理選取的影像檔案
          * 包含壓縮、預覽顯示以及解鎖辨識按鈕。
+         * 若已有既有資料（圖片或表單內容），會先重置表單再處理新圖片。
          * @param {File} file - 圖片檔案物件
+         * @returns {Promise<void>}
          */
         async function processFile(file) {
             if (!file || !file.type.startsWith('image/')) {
