@@ -9,7 +9,7 @@
         content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/), CC BY-NC-SA 4.0">
     <title>名片快手</title>
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M17 18a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2'/><rect width='18' height='18' x='3' y='4' rx='2'/><circle cx='12' cy='10' r='2'/><line x1='8' x2='8' y1='2' y2='4'/><line x1='16' x2='16' y1='2' y2='4'/></svg>"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 7V5a2 2 0 0 1 2-2h2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 3h2a2 2 0 0 1 2 2v2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 17v2a2 2 0 0 1-2 2h-2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 21H6a2 2 0 0 1-2-2v-2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='12' cy='10' r='3' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>"
         type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -62,7 +62,20 @@
         <header class="mb-8 text-center">
             <h1
                 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-3">
-                <i data-lucide="contact" class="w-10 h-10 text-indigo-600"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-10 h-10 text-indigo-600">
+                    <path d="M4 7V5a2 2 0 0 1 2-2h2" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 3h2a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M20 17v2a2 2 0 0 1-2 2h-2" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8 21H6a2 2 0 0 1-2-2v-2" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="12" cy="10" r="3" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" stroke="currentColor" fill="none"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
                 名片快手
             </h1>
         </header>
@@ -108,11 +121,11 @@
                     class="hidden bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold flex items-center gap-2 text-indigo-700">
-                            <i data-lucide="sparkles" class="w-5 h-5"></i> AI 洞察 (AI Insights)
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-indigo-600">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i> AI 洞察
                         </h2>
                         <button id="generateEmailBtn"
-                            class="text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors shadow-sm active:scale-95">
+                            class="text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors shadow-sm active:scale-95">
                             <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
                         </button>
                     </div>
@@ -122,8 +135,8 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="companySummaryContent" data-toggle-icon="companySummaryIcon">
                                 <h3
-                                    class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
-                                    <i data-lucide="building" class="w-4 h-4"></i> 公司摘要 (Company Summary)
+                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                    <i data-lucide="building" class="w-4 h-4"></i> 公司摘要
                                 </h3>
                                 <i data-lucide="chevron-up" id="companySummaryIcon"
                                     class="w-4 h-4 text-indigo-400 transition-transform duration-300"></i>
@@ -131,7 +144,7 @@
                             <div id="companySummaryContent"
                                 class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-50 transition-all">
                                 <textarea id="field-companySummary" rows="1"
-                                    class="w-full bg-transparent outline-none text-sm text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-indigo-300"
+                                    class="w-full bg-transparent outline-none text-base text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-indigo-300"
                                     placeholder="AI 將上網搜尋公司背景並摘要..."></textarea>
                             </div>
                         </div>
@@ -140,8 +153,8 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="personalSummaryContent" data-toggle-icon="personalSummaryIcon">
                                 <h3
-                                    class="text-xs font-black text-purple-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-purple-800 transition-colors">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要 (Personal Summary)
+                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                    <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要
                                 </h3>
                                 <i data-lucide="chevron-up" id="personalSummaryIcon"
                                     class="w-4 h-4 text-purple-400 transition-transform duration-300"></i>
@@ -149,7 +162,7 @@
                             <div id="personalSummaryContent"
                                 class="bg-purple-50/50 p-4 rounded-xl border border-purple-50 transition-all">
                                 <textarea id="field-personalSummary" rows="1"
-                                    class="w-full bg-transparent outline-none text-sm text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-purple-300"
+                                    class="w-full bg-transparent outline-none text-base text-slate-700 leading-relaxed font-medium resize-none overflow-hidden placeholder:text-purple-300"
                                     placeholder="AI 將上網搜尋個人背景並摘要..."></textarea>
                             </div>
                         </div>
@@ -159,8 +172,8 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="sourcesListWrapper" data-toggle-icon="sourcesIcon">
                                 <h3
-                                    class="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1 group-hover:text-slate-600 transition-colors">
-                                    <i data-lucide="link" class="w-3 h-3"></i> 參考來源 (Sources)
+                                    class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-1 group-hover:text-slate-600 transition-colors">
+                                    <i data-lucide="link" class="w-3 h-3"></i> 參考來源
                                 </h3>
                                 <i data-lucide="chevron-up" id="sourcesIcon"
                                     class="w-3 h-3 text-slate-300 transition-transform duration-300"></i>
@@ -176,13 +189,13 @@
                                 <div class="flex items-center gap-2 cursor-pointer flex-1 group"
                                     data-toggle-target="emailDraftContent" data-toggle-icon="emailDraftIcon">
                                     <h3
-                                        class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
-                                        <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤 (Follow-up)
+                                        class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                        <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
                                     </h3>
                                     <i data-lucide="chevron-up" id="emailDraftIcon"
                                         class="w-4 h-4 text-indigo-400 transition-transform duration-300"></i>
                                 </div>
-                                <button onclick="copyEmailDraft()"
+                                <button id="copyEmailDraftBtn"
                                     class="text-xs text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded transition-colors ml-2 shrink-0">
                                     <i data-lucide="copy" class="w-3 h-3"></i> 複製
                                 </button>
@@ -195,7 +208,7 @@
                                     <span class="text-sm font-bold text-indigo-600">AI 撰寫中...</span>
                                 </div>
                                 <textarea id="field-emailDraft" rows="1"
-                                    class="w-full text-sm text-slate-700 outline-none resize-none overflow-hidden bg-transparent"
+                                    class="w-full text-base text-slate-700 outline-none resize-none overflow-hidden bg-transparent"
                                     placeholder="AI 將在此生成郵件草稿..."></textarea>
                             </div>
                         </div>
@@ -216,6 +229,28 @@
                             </div>
                             <!-- QR Code 圖片 -->
                             <img id="qrImage" class="hidden w-48 h-48" alt="vCard QR Code" />
+                            <!-- 中間 Icon -->
+                            <div id="qrCenterIcon"
+                                class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-white rounded-md shadow-sm p-1 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                        class="w-5 h-5 text-indigo-600">
+                                        <path d="M4 7V5a2 2 0 0 1 2-2h2" stroke="currentColor" fill="none"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M16 3h2a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M20 17v2a2 2 0 0 1-2 2h-2" stroke="currentColor" fill="none"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M8 21H6a2 2 0 0 1-2-2v-2" stroke="currentColor" fill="none"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" fill="none" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" stroke="currentColor"
+                                            fill="none" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                         <p id="qrStatus" class="text-sm font-black text-slate-400 uppercase tracking-widest">等待資料輸入...
                         </p>
@@ -237,7 +272,7 @@
             <div class="lg:col-span-7 space-y-6">
                 <div class="bg-white p-6 md:p-8 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-8">
-                        <h2 class="text-2xl font-black flex items-center gap-2 text-slate-800">
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
                             <i data-lucide="file-edit" class="text-indigo-600 w-6 h-6"></i> 編輯名片資料
                         </h2>
                         <button id="clearFormBtn"
@@ -280,7 +315,7 @@
                                         class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-bold text-slate-500 mb-1">頭銜後綴 (Suffix)</label>
+                                    <label class="block text-xs font-bold text-slate-500 mb-1">後綴 (Suffix)</label>
                                     <input type="text" id="field-suffix" placeholder="如：Ph.D., Jr., M.D."
                                         class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                                 </div>
@@ -367,7 +402,7 @@
                                     class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
                                     <i data-lucide="map-pin" class="w-4 h-4"></i> 地址 (Address)
                                 </h3>
-                                <button id="btn-maps"
+                                <button id="openMapsBtn"
                                     class="text-xs font-bold text-slate-500 hover:text-indigo-600 flex items-center gap-1 hidden">
                                     <i data-lucide="map" class="w-3 h-3"></i> Google Maps
                                 </button>
@@ -495,24 +530,6 @@
         </div>
     </div>
 
-    <!-- 全域確認對話框 -->
-    <div id="globalConfirmOverlay"
-        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-6 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
-            id="globalConfirmModal">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
-                <i data-lucide="alert-circle" class="w-6 h-6"></i>
-            </div>
-            <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
-            <div class="flex gap-3 w-full mt-2">
-                <button id="globalConfirmCancelBtn"
-                    class="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">取消</button>
-                <button id="globalConfirmOkBtn"
-                    class="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all active:scale-95">確定</button>
-            </div>
-        </div>
-    </div>
-
     <!-- 全域載入遮罩 -->
     <div id="globalLoadingOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
@@ -571,7 +588,7 @@
 
     <script>
         /**
-         * 名片快手 1.03
+         * 名片快手 1.04
          */
 
         /**
@@ -580,8 +597,12 @@
         const apiKey = "";
         const MODEL_NAME = "gemini-2.0-flash";
         const MODEL_API = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
-        const DEBOUNCE_DELAY_MS = 1000; // QR Code 與 UI 更新的防抖延遲 (毫秒)
-        const DEFAULT_CATEGORY_NAME = "名片快手"; // 匯出名片時，強制加入的分類標籤 (Categories)
+
+        const DEFAULT_BASE_DELAY = 1000;  // GeminiService: API 重試時的基礎延遲 (毫秒)
+        const DEFAULT_MAX_RETRIES = 5;    // GeminiService: API 失敗時最大重試次數
+        const DEFAULT_CANVAS = document.createElement("canvas"); // ImageProcessor: 共用 Canvas 實例
+        const DEFAULT_CATEGORY_NAME = "名片快手"; // vCardFormatter: 匯出名片時，強制加入的分類標籤 (Categories)
+        const DEFAULT_DEBOUNCE_DELAY = 1000; // QR Code 與 UI 更新的防抖延遲 (毫秒)
 
         /** [提示詞] 名片 OCR、規格化與上網深度搜尋 */
         const PROMPT_OCR = `
@@ -598,8 +619,8 @@
    - 職稱 (TITLE): 對應 json 的 title。
    - 地址 (ADR): 依序對應 json 的 poBox, extendedAddress, streetAddress, locality, region, postalCode, country。
      - 台灣地址 **務必** 遵守以下規則:
-       - "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共6個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共3個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
-       - "鄉、鎮、市、區" (如: 湖口鄉、苑裡鎮、竹北市、大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
+       - "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共 6 個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共 3 個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
+       - "鄉、鎮、市、區" (如: 新竹縣的湖口鄉、苗栗縣的苑裡鎮、新竹縣的竹北市、台北市的大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
        - "路、街、段、巷、弄、號、樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
        - "台灣" 為 country 的預設值。
        - streetAddress 中，"段" 前的數字使用中文，如: "○○路二段" 而不是 "○○路2段"。
@@ -617,9 +638,9 @@
      - 對應 json 的 urls: [{"type":"work"|"home", "value":"..."}]。公司網站、個人網站分別對應 work、home。
      - 務必將所有網站都納入。
 4. 檢查
-   - locality 中，"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，嚴禁猜測。
-   - streetAddress 中，"段" 前的數字嚴禁使用阿拉伯數字，務必使用中文。
-   - streetAddress 中，"巷、弄、號、樓" 前的數字嚴禁使用中文，務必使用阿拉伯數字。
+   - locality 欄位，"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，嚴禁猜測。
+   - streetAddress 欄位，"段" 前的數字嚴禁使用阿拉伯數字，務必使用中文。
+   - streetAddress 欄位，"巷、弄、號、樓" 前的數字嚴禁使用中文，務必使用阿拉伯數字。
 
 【任務二: 網路深度搜尋】
 1. 根據 "任務一" 取得的 "組織名稱 (orgName)"、"人員全名 (fn)" 及 "職稱 (title)"，啟動 Google Search:
@@ -640,10 +661,11 @@
 - 客戶專業: ${personalSummary}
 
 請撰寫一封簡短的商務拜訪後的致謝電子郵件，內容需包含:
+- 主旨：感謝今日接待 - [您的公司] / [您的姓名]
 - 簡短的問候。
 - 提及今日拜訪的愉快經驗。
 - 提及客戶的組織背景。
-- 提及客戶的專業能力。
+- 提及客戶專業。
 - 提及未來保持聯繫及合作的意願。
 
 語氣需專業、誠懇、熱情，並符合台灣商務禮儀。文字流暢即可，不要過於生硬、不要使用過於制式的問候語。`;
@@ -719,15 +741,16 @@
             /** @property {string} modelApi - 當前使用的 API 端點網址 */
             modelApi: MODEL_API,
             /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
-            baseDelay: 1000,
+            baseDelay: DEFAULT_BASE_DELAY,
             /** @property {number} maxRetries - API 呼叫失敗時的最大重試次數 */
-            maxRetries: 5,
+            maxRetries: DEFAULT_MAX_RETRIES,
 
             /**
              * 動態更新 API 金鑰與重試延遲等設定
              * @param {string} [api=MODEL_API] - 完整的 API 端點網址 (包含金鑰)
              * @param {number} [delay=1000] - 發生錯誤時的基礎等待時間 (毫秒)
              * @param {number} [retries=5] - 允許的最大重試次數
+             * @returns {void}
              */
             init(api, delay, retries) {
                 if (api !== undefined) this.modelApi = api;
@@ -865,11 +888,12 @@
          */
         const ImageProcessor = {
             /** @property {HTMLCanvasElement} canvas - 共用的 Canvas 實例，避免重複建立導致記憶體碎片化 */
-            canvas: document.createElement("canvas"),
+            canvas: DEFAULT_CANVAS,
 
             /**
              * 處理 ImageProcessor 的初始化，可動態綁定或替換共用的 Canvas 實體
              * @param {HTMLCanvasElement} [canvas] - (選填) 自訂的 Canvas DOM 節點。若未提供，則維持預設建立的實例
+             * @returns {void}
              */
             init(canvas) {
                 if (canvas !== undefined) this.canvas = canvas;
@@ -956,6 +980,7 @@
             /**
              * 初始化 vCardFormatter 的組態
              * @param {string} category - 欲加入的分類標記名稱
+             * @returns {void}
              */
             init(category) {
                 if (category !== undefined) this.categoryName = category;
@@ -1111,8 +1136,8 @@
         const UXManager = {
             /** 
              * 初始化模組，綁定 textarea 自動調整高度事件與 UI 區塊收合事件
-         * @returns {void}
-         */
+             * @returns {void}
+             */
             init() {
                 // 1. 綁定 textarea 自動調整高度
                 const textareas = ["field-companySummary", "field-personalSummary", "emailDraftText", "field-note"];
@@ -1121,7 +1146,7 @@
                     if (el) el.addEventListener("input", () => this.autoResize(el));
                 });
 
-                // 2. 綁定 UI 區塊收合/展開 (移除 HTML 內的 onclick)
+                // 2. 綁定 UI 區塊收合/展開
                 document.querySelectorAll("[data-toggle-target]").forEach(btn => {
                     btn.addEventListener("click", () => {
                         const targetId = btn.getAttribute("data-toggle-target");
@@ -1129,33 +1154,258 @@
                         this.toggleSection(targetId, iconId);
                     });
                 });
+
+                // 3. 綁定主要操作按鈕
+                const identifyBtn = document.getElementById("identifyBtn");
+                if (identifyBtn) identifyBtn.addEventListener("click", () => this.identifyCard());
+
+                const generateEmailBtn = document.getElementById("generateEmailBtn");
+                if (generateEmailBtn) generateEmailBtn.addEventListener("click", () => this.generateEmailDraft());
+
+                const copyEmailDraftBtn = document.getElementById("copyEmailDraftBtn");
+                if (copyEmailDraftBtn) copyEmailDraftBtn.addEventListener("click", () => this.copyEmailDraft());
+
+                const saveVcfBtn = document.getElementById("saveVcfBtn");
+                if (saveVcfBtn) saveVcfBtn.addEventListener("click", () => this.downloadVCard());
+
+                const copyVcfBtn = document.getElementById("copyVcfBtn");
+                if (copyVcfBtn) copyVcfBtn.addEventListener("click", () => this.copyVCardContent());
+
+                const clearFormBtn = document.getElementById("clearFormBtn");
+                if (clearFormBtn) clearFormBtn.addEventListener("click", () => this.clearForm());
+
+                const btnMaps = document.getElementById("openMapsBtn");
+                if (btnMaps) btnMaps.addEventListener("click", () => this.openGoogleMaps());
+
+                const toggleDebugBtn = document.getElementById("toggleDebugBtn");
+                if (toggleDebugBtn) {
+                    toggleDebugBtn.addEventListener("click", () => {
+                        this.toggleDebug(
+                            toggleDebugBtn.getAttribute("data-toggle-debug"),
+                            toggleDebugBtn.getAttribute("data-toggle-text"),
+                            toggleDebugBtn.getAttribute("data-toggle-phase")
+                        );
+                    });
+                }
             },
+
+            /**
+             * [核心邏輯] AI 辨識主程序
+             * 包含影像 OCR 辨識與上網深度搜尋。
+             * - 依賴 `state.base64Image` 作為分析來源
+             * - 呼叫 Gemini API 取得結構化 JSON 聯絡人資料
+             * - 處理容錯機制與清單資料初始化
+             * - 呼叫 `syncDataToUI()` 更新畫面
+             * @async
+             * @returns {Promise<void>}
+             */
+            async identifyCard() {
+                if (!state.base64Image) return;
+                this.resetEmailDraft();
+                this.setLoading(true, "影像辨識與上網搜尋中...");
+
+                // 清空舊的 Debug 資訊
+                document.getElementById('debugPanel1').textContent = "";
+
+                try {
+                    // 執行 OCR 與上網搜尋
+                    const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
+                    document.getElementById("debugPanel1").textContent = JSON.stringify(result1, null, 2);
+
+                    const text1 = GeminiService.extractText(result1);
+                    const parsedData = GeminiService.parseJSON(text1);
+
+                    // 防呆容錯處理：確保所有的清單資料型態為陣列
+                    ["phones", "faxes", "emails", "urls"].forEach(key => {
+                        if (!Array.isArray(parsedData[key])) parsedData[key] = [];
+                    });
+
+                    // 預先處理號碼格式
+                    if (parsedData.phones.length > 0) parsedData.phones = parsedData.phones.map(p => ({ ...p, value: vCardFormatter.normalizePhone(p.value) }));
+                    if (parsedData.faxes.length > 0) parsedData.faxes = parsedData.faxes.map(f => ({ ...f, value: vCardFormatter.normalizePhone(f.value) }));
+
+                    // 提取來源連結
+                    const candidate1 = result1.candidates?.[0];
+                    const metadata = candidate1?.groundingMetadata;
+                    const rawSources = metadata?.groundingChunks || metadata?.groundingAttributions || [];
+                    const sources = rawSources.map(a => ({ uri: a.web?.uri, title: a.web?.title })).filter(s => s.uri && s.title);
+
+                    parsedData.sources = sources;
+
+                    // 更新狀態並同步 UI
+                    state.cardData = { ...JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)), ...parsedData };
+                    syncDataToUI();
+
+                    // 成功載入與渲染後，非同步儲存到 IndexedDB
+                    DatabaseService.saveCard(state.cardData, state.base64Image)
+                        .then(id => {
+                            state.currentHistoryId = id;
+                            HistoryManager.render();
+                        })
+                        .catch(err => console.warn("歷史紀錄存檔失敗", err));
+
+                    this.toast("影像辨識與上網搜尋完成！");
+                } catch (err) {
+                    this.showError("處理失敗：" + err.message);
+                } finally {
+                    this.setLoading(false);
+                }
+            },
+
+            /**
+             * [非同步] 根據目前的辨識與搜尋結果，自動撰寫跟進郵件
+             * - 依賴 `state.cardData` 中的 orgName, fn, companySummary, personalSummary
+             * - 呼叫 API 並將結果填入 textArea
+             * @async
+             * @returns {Promise<void>}
+             */
+            async generateEmailDraft() {
+                const d = state.cardData;
+                if (!isValid(d.fn) && !isValid(d.orgName)) { this.toast("請先辨識資訊"); return; }
+                const draftContainer = document.getElementById("emailDraftContainer");
+                const loadingOverlay = document.getElementById("emailLoading");
+                const textArea = document.getElementById("field-emailDraft");
+
+                // 1. 確保區塊顯示並打開收合
+                draftContainer.classList.remove("hidden");
+                const content = document.getElementById("emailDraftContent");
+                if (content && content.classList.contains("hidden")) {
+                    this.toggleSection("emailDraftContent", "emailDraftIcon");
+                }
+
+                // 2. 清空舊內容並顯示 Loading
+                textArea.value = "";
+                this.autoResize(textArea);
+                loadingOverlay.classList.remove("hidden");
+
+                // 3. 滾動到區塊位置
+                draftContainer.scrollIntoView({
+                    behavior: "smooth", block: "center"
+                });
+
+                const prompt = PROMPT_EMAIL(d.orgName, d.fn, d.companySummary, d.personalSummary);
+
+                try {
+                    const result = await GeminiService.ask(prompt);
+                    const text = GeminiService.extractText(result);
+                    textArea.value = text ? text.trim() : "生成失敗";
+                    state.cardData.emailDraft = textArea.value;
+                    this.autoResize(textArea);
+
+                    // 自動儲存信件草稿到歷史紀錄中
+                    if (state.currentHistoryId) {
+                        DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
+                            .then(() => HistoryManager.render())
+                            .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
+                    }
+
+                } catch (err) {
+                    textArea.value = "發生錯誤：" + err.message;
+                    state.cardData.emailDraft = "";
+                } finally {
+                    loadingOverlay.classList.add("hidden");
+                }
+            },
+
+            /**
+             * [功能] 複製郵件草稿至剪貼簿
+             * @returns {void}
+             */
+            copyEmailDraft() {
+                const text = document.getElementById("field-emailDraft").value;
+                if (ExportService.copyToClipboard(text)) this.toast("草稿已複製！");
+            },
+
+            /**
+             * [功能] 下載 vCard 檔案 (.vcf)
+             * 將記憶體中的 `state.vCardString` 直接轉檔下載
+             * @returns {void}
+             */
+            downloadVCard() {
+                const filename = `${state.cardData.fn || 'contact'}.vcf`;
+                ExportService.download(filename, state.vCardString);
+                this.toast("下載成功");
+            },
+
+            /**
+             * [功能] 複製 vCard 文本內容至剪貼簿
+             * @returns {void}
+             */
+            copyVCardContent() {
+                if (ExportService.copyToClipboard(state.vCardString)) this.toast("內容已複製");
+            },
+
+            /**
+             * [功能] 清空表單與影像狀態
+             * - 恢復為 `DEFAULT_CARD_DATA`
+             * - 重置圖片預覽、Debug 面板與草稿
+             * @returns {Promise<void>}
+             */
+            async clearForm() {
+                if (!(await this.confirm("確定要清空嗎？"))) return;
+                state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
+                state.base64Image = null;
+                state.currentHistoryId = null;
+                document.getElementById("previewImage").classList.add("hidden");
+                document.getElementById("uploadPlaceholder").classList.remove("hidden");
+                document.getElementById("fileInput").value = "";
+
+                // 重置辨識按鈕為初始停用狀態
+                const identifyBtn = document.getElementById("identifyBtn");
+                if (identifyBtn) {
+                    identifyBtn.disabled = true;
+                    identifyBtn.classList.replace("bg-indigo-600", "bg-slate-100");
+                    identifyBtn.classList.replace("text-white", "text-slate-400");
+                    identifyBtn.classList.remove("shadow-xl", "hover:bg-indigo-700");
+                }
+
+                this.resetEmailDraft(); syncDataToUI(); this.toast("已清空資料");
+            },
+
+            /**
+             * [功能] 開啟 Google Maps 搜尋當前地址
+             * @returns {void}
+             */
+            openGoogleMaps() {
+                MapService.openGoogleMaps(state.cardData);
+            },
+
             /** 
-             * 顯示 Toast 訊息 
-             * @param {string} msg - 要顯示的訊息內容
-             * @param {number} [duration=3000] - 訊息顯示時間 (毫秒)
-         * @returns {void}
-         */
-            toast(msg, duration = 3000) {
-                const toast = document.getElementById("toast");
-                if (!toast) return;
+             * 切換除錯面版顯示 
+             * @param {string} panelId - 面板 DOM ID
+             * @param {string} textId - 按鈕文字 DOM ID
+             * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
+             * @returns {void}
+             */
+            toggleDebug(panelId, textId, phaseName) {
+                const panel = document.getElementById(panelId);
+                if (!panel) return;
 
-                toast.textContent = msg;
-                toast.classList.remove("opacity-0", "pointer-events-none");
-
-                // 清除前一次的計時器，避免連續觸發時 Toast 提早消失
-                if (this._toastTimeout) clearTimeout(this._toastTimeout);
-
-                this._toastTimeout = setTimeout(() => {
-                    toast.classList.add("opacity-0", "pointer-events-none");
-                }, duration);
+                const isHidden = panel.classList.toggle("hidden");
+                const textEl = document.getElementById(textId);
+                if (textEl) {
+                    textEl.textContent = isHidden ? `顯示 ${phaseName} 原始回應` : `隱藏 ${phaseName} 原始回應`;
+                }
             },
+
+            /**
+             * [功能] 重置郵件草稿區域並隱藏
+             * @returns {void}
+             */
+            resetEmailDraft() {
+                state.cardData.emailDraft = "";
+                const draftContainer = document.getElementById("emailDraftContainer");
+                if (draftContainer) draftContainer.classList.add("hidden");
+                const textArea = document.getElementById("field-emailDraft");
+                if (textArea) { textArea.value = ""; textArea.style.height = 'auto'; }
+            },
+
             /** 
              * 設定按鈕的全域載入遮罩狀態 
              * @param {boolean} isLoading - 是否處於載入狀態
              * @param {string} [text="處理中..."] - 載入時欲顯示的文字
-         * @returns {void}
-         */
+             * @returns {void}
+             */
             setLoading(isLoading, text = "處理中...") {
                 const btn = document.getElementById("identifyBtn");
                 if (btn) btn.disabled = isLoading;
@@ -1176,53 +1426,24 @@
                     }
                 }
             },
-            /** 
-             * 顯示錯誤訊息區塊 
-             * @param {string} msg - 錯誤訊息內容
-         * @returns {void}
-         */
-            showError(msg) {
-                const err = document.getElementById("errorMessage");
-                const text = document.getElementById("errorText");
-                const debugBtn = document.getElementById("debugPanel1");
 
-                if (text) text.textContent = msg;
-                if (err) err.classList.remove("hidden");
-                if (debugBtn) debugBtn.classList.remove("hidden");
-            },
             /** 
              * 文字框自動依內容調整高度 
              * @param {HTMLElement} el - 需要被調整高度的 textarea 元素
-         * @returns {void}
-         */
+             * @returns {void}
+             */
             autoResize(el) {
                 if (!el) return;
                 el.style.height = "auto";
                 el.style.height = (el.scrollHeight) + "px";
             },
-            /** 
-             * 切換除錯面版顯示 
-             * @param {string} panelId - 面板 DOM ID
-             * @param {string} textId - 按鈕文字 DOM ID
-             * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
-         * @returns {void}
-         */
-            toggleDebug(panelId, textId, phaseName) {
-                const panel = document.getElementById(panelId);
-                if (!panel) return;
 
-                const isHidden = panel.classList.toggle("hidden");
-                const textEl = document.getElementById(textId);
-                if (textEl) {
-                    textEl.textContent = isHidden ? `顯示 ${phaseName} 原始回應` : `隱藏 ${phaseName} 原始回應`;
-                }
-            },
             /** 
              * 切換 UI 區塊展開或收合狀態 
              * @param {string} contentId - 內容區塊 DOM ID
              * @param {string} iconId - 圖示 DOM ID
-         * @returns {void}
-         */
+             * @returns {void}
+             */
             toggleSection(contentId, iconId) {
                 const content = document.getElementById(contentId);
                 if (!content) return;
@@ -1237,6 +1458,43 @@
                     }, 10);
                 }
             },
+
+            /** 
+             * 顯示 Toast 訊息 
+             * @param {string} msg - 要顯示的訊息內容
+             * @param {number} [duration=3000] - 訊息顯示時間 (毫秒)
+             * @returns {void}
+             */
+            toast(msg, duration = 3000) {
+                const toast = document.getElementById("toast");
+                if (!toast) return;
+
+                toast.textContent = msg;
+                toast.classList.remove("opacity-0", "pointer-events-none");
+
+                // 清除前一次的計時器，避免連續觸發時 Toast 提早消失
+                if (this._toastTimeout) clearTimeout(this._toastTimeout);
+
+                this._toastTimeout = setTimeout(() => {
+                    toast.classList.add("opacity-0", "pointer-events-none");
+                }, duration);
+            },
+
+            /** 
+             * 顯示錯誤訊息區塊 
+             * @param {string} msg - 錯誤訊息內容
+             * @returns {void}
+             */
+            showError(msg) {
+                const err = document.getElementById("errorMessage");
+                const text = document.getElementById("errorText");
+                const debugBtn = document.getElementById("debugPanel1");
+
+                if (text) text.textContent = msg;
+                if (err) err.classList.remove("hidden");
+                if (debugBtn) debugBtn.classList.remove("hidden");
+            },
+
             /**
              * 顯示全域確認對話框並等待使用者回應
              * @param {string} msg - 顯示的確認訊息
@@ -1292,6 +1550,7 @@
              * [單向同步] 將資料物件的內容填入對應的 UI 欄位。
              * @param {Object} data - 來源資料物件。
              * @param {Array<string>} keys - 要同步的欄位鍵值清單。
+             * @returns {void}
              */
             sync(data, keys) {
                 keys.forEach(key => {
@@ -1304,6 +1563,7 @@
              * [雙向綁定] 為所有欄位註冊輸入事件，自動更新狀態物件並觸發回呼。
              * @param {Array<string>} keys - 欄位鍵值清單。
              * @param {Function} onUpdate - 資料更新後的回呼函數 (例如更新預覽)。
+             * @returns {void}
              */
             bind(keys, onUpdate) {
                 keys.forEach(key => {
@@ -1354,6 +1614,7 @@
              * @param {string} filename - 存檔檔名
              * @param {string} content - 檔案內容
              * @param {string} [mimeType="text/vcard"] - MIME 類型
+             * @returns {void}
              */
             download(filename, content, mimeType = "text/vcard") {
                 if (!content) return;
@@ -1526,14 +1787,15 @@
         const HistoryManager = {
             /**
              * 初始化歷史紀錄面板的事件監聽
-         * @returns {void}
-         */
+             * @returns {void}
+             */
             init() {
                 // 歷史紀錄面版開關事件
                 const toggleHistoryBtn = document.getElementById("toggleHistoryBtn");
                 const closeHistoryBtn = document.getElementById("closeHistoryBtn");
                 const historyOverlay = document.getElementById("historyOverlay");
                 const historyPanel = document.getElementById("historyPanel");
+                const clearAllHistoryBtn = document.getElementById("clearAllHistoryBtn");
 
                 this.toggleHistoryPanel = () => {
                     const isHidden = historyOverlay.classList.contains("hidden");
@@ -1551,9 +1813,10 @@
                     }
                 };
 
-                if (toggleHistoryBtn) toggleHistoryBtn.onclick = this.toggleHistoryPanel;
-                if (closeHistoryBtn) closeHistoryBtn.onclick = this.toggleHistoryPanel;
-                if (historyOverlay) historyOverlay.onclick = this.toggleHistoryPanel;
+                if (toggleHistoryBtn) toggleHistoryBtn.addEventListener("click", () => this.toggleHistoryPanel());
+                if (closeHistoryBtn) closeHistoryBtn.addEventListener("click", () => this.toggleHistoryPanel());
+                if (historyOverlay) historyOverlay.addEventListener("click", () => this.toggleHistoryPanel());
+                if (clearAllHistoryBtn) clearAllHistoryBtn.addEventListener("click", () => HistoryManager.clearAll());
             },
 
             /**
@@ -1597,7 +1860,7 @@
                             </div>
                         `;
                     }).join("");
-                    lucide.createIcons();
+                    lucide.createIcons({ root: listEl });
                 } catch (err) {
                     console.error("讀取歷史紀錄失敗:", err);
                 }
@@ -1729,13 +1992,12 @@
         };
 
         window.onload = async () => {
-            lucide.createIcons();
+            // 1. 初始化核心服務模組
             GeminiService.init();
             ImageProcessor.init();
             vCardFormatter.init();
-            UXManager.init();
 
-            // 初始化本地資料庫並載入歷史清單
+            // 2. 初始化本地資料庫並載入歷史清單
             try {
                 await DatabaseService.init();
                 HistoryManager.init();
@@ -1744,17 +2006,16 @@
                 console.warn("無法啟動本地歷史紀錄功能:", err);
             }
 
-            // 初始化表單雙向綁定：取代原本分散的 setupFormListeners 邏輯
+            // 3. 初始化 UI 事件綁定
+            UXManager.init();
+
+            // 4. 初始化表單雙向綁定
             FormBinder.bind(STATIC_FIELDS, debouncedUpdateVCardPreview);
 
+            // 5. 初始化拖放與檔案上傳事件
             setupDragAndDrop();
 
-            document.getElementById("identifyBtn").onclick = identifyCard;
-            document.getElementById("saveVcfBtn").onclick = downloadVCard;
-            document.getElementById("copyVcfBtn").onclick = copyVCardContent;
-            document.getElementById("generateEmailBtn").onclick = generateEmailDraft;
-
-            // 綁定列表操作按鈕 (新增)
+            // 6. 綁定列表操作按鈕 (新增)
             document.querySelectorAll("[data-add-item]").forEach(btn => {
                 btn.addEventListener("click", (e) => {
                     const type = e.target.closest("button").getAttribute("data-add-item");
@@ -1762,7 +2023,7 @@
                 });
             });
 
-            // 使用事件委派綁定動態生成的列表項目事件 (移除、更新)
+            // 7. 使用事件委派綁定動態生成的列表項目事件 (移除、更新)
             const rightPanel = document.getElementById("fieldsContainer");
             if (rightPanel) {
                 rightPanel.addEventListener("click", (e) => {
@@ -1791,51 +2052,46 @@
                 });
             }
 
-            // 綁定其他獨立按鈕
-            const clearFormBtn = document.getElementById("clearFormBtn");
-            if (clearFormBtn) clearFormBtn.onclick = clearForm;
-
-            const btnMaps = document.getElementById("btn-maps");
-            if (btnMaps) btnMaps.onclick = () => openGoogleMaps();
-
-            const clearAllHistoryBtn = document.getElementById("clearAllHistoryBtn");
-            if (clearAllHistoryBtn) clearAllHistoryBtn.onclick = HistoryManager.clearAll;
-
-            const toggleDebugBtn = document.getElementById("toggleDebugBtn");
-            if (toggleDebugBtn) {
-                toggleDebugBtn.onclick = () => {
-                    UXManager.toggleDebug(
-                        toggleDebugBtn.getAttribute("data-toggle-debug"),
-                        toggleDebugBtn.getAttribute("data-toggle-text"),
-                        toggleDebugBtn.getAttribute("data-toggle-phase")
-                    );
-                };
-            }
+            // 8. 所有 DOM 結構確定後，統一渲染 Lucide 圖示
+            lucide.createIcons();
         };
 
         /**
          * [初始化] 設定拖放上傳與點擊上傳的事件監聽
-         * - 處理 `dropZone` 的 onClick, onDragOver, onDragLeave, onDrop 事件
-         * - 處理隱藏的 `fileInput` 的 onChange 事件
+         * - 處理 `dropZone` 的 click, dragover, dragleave, drop 事件
+         * - 處理隱藏的 `fileInput` 的 change 事件
          * - 處理全域的剪貼簿 `paste` 事件以支援 Ctrl+V 貼上圖片
          */
         function setupDragAndDrop() {
             const dropZone = document.getElementById("dropZone");
-            const fileInput = document.getElementById("fileInput");
 
             // 點擊上傳區域觸發隱藏的 file input
-            dropZone.onclick = () => fileInput.click();
+            dropZone.addEventListener("click", () => fileInput.click());
 
             // 處理拖曳進入、離開與放開事件
-            dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add("border-indigo-500", "bg-indigo-50/30"); };
-            dropZone.ondragleave = (e) => { e.preventDefault(); dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30"); };
-            dropZone.ondrop = async (e) => {
-                e.preventDefault(); dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
+            dropZone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZone.classList.add("border-indigo-500", "bg-indigo-50/30");
+            });
+            dropZone.addEventListener("dragleave", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
+            });
+            dropZone.addEventListener("drop", async (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
                 if (e.dataTransfer.files && e.dataTransfer.files.length > 0) await processFile(e.dataTransfer.files[0]);
-            };
+            });
+
+            const fileInput = document.getElementById("fileInput");
 
             // 處理檔案選擇變更
-            fileInput.onchange = async (e) => { if (e.target.files && e.target.files.length > 0) await processFile(e.target.files[0]); };
+            fileInput.addEventListener("change", async (e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    await processFile(e.target.files[0]);
+                }
+                e.target.value = ""; // 重設 input 值，允許再次選擇同名檔案觸發 change
+            });
 
             // 處理全域剪貼簿貼上事件 (Ctrl+V / Cmd+V)
             document.addEventListener('paste', async (e) => {
@@ -1863,8 +2119,11 @@
          * @param {File} file - 圖片檔案物件
          */
         async function processFile(file) {
-            if (!file || !file.type.startsWith('image/')) { UXManager.toast("請上傳有效的圖片檔案"); return; }
-            resetEmailDraft();
+            if (!file || !file.type.startsWith('image/')) {
+                UXManager.toast("請上傳有效的圖片檔案");
+                return;
+            }
+            UXManager.resetEmailDraft();
             try {
                 // 1. 影像壓縮與 Base64 轉換
                 const base64 = await ImageProcessor.compress(file, 1200);
@@ -1884,142 +2143,10 @@
                 btn.classList.add("shadow-xl", "hover:bg-indigo-700");
 
                 UXManager.toast("影像準備就緒");
-            } catch (err) { UXManager.showError("影像處理失敗：" + err.message); }
-        }
-
-        /**
-         * [核心邏輯] AI 辨識主程序
-         * 包含影像 OCR 辨識與上網深度搜尋。
-         * - 依賴 `state.base64Image` 作為分析來源
-         * - 呼叫 Gemini API 取得結構化 JSON 聯絡人資料
-         * - 處理容錯機制與清單資料初始化
-         * - 呼叫 `syncDataToUI()` 更新畫面
-         * @async
-         * @returns {Promise<void>}
-         */
-        async function identifyCard() {
-            if (!state.base64Image) return;
-            resetEmailDraft();
-            UXManager.setLoading(true, "AI 影像辨識與上網搜尋中...");
-
-            // 清空舊的 Debug 資訊
-            document.getElementById('debugPanel1').textContent = "";
-
-            try {
-                // 執行 OCR 與上網搜尋
-                const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
-                document.getElementById("debugPanel1").textContent = JSON.stringify(result1, null, 2);
-
-                const text1 = GeminiService.extractText(result1);
-                const parsedData = GeminiService.parseJSON(text1);
-
-                // 防呆容錯處理：確保所有的清單資料型態為陣列
-                ["phones", "faxes", "emails", "urls"].forEach(key => {
-                    if (!Array.isArray(parsedData[key])) parsedData[key] = [];
-                });
-
-                // 預先處理號碼格式
-                if (parsedData.phones.length > 0) parsedData.phones = parsedData.phones.map(p => ({ ...p, value: vCardFormatter.normalizePhone(p.value) }));
-                if (parsedData.faxes.length > 0) parsedData.faxes = parsedData.faxes.map(f => ({ ...f, value: vCardFormatter.normalizePhone(f.value) }));
-
-                // 提取來源連結
-                const candidate1 = result1.candidates?.[0];
-                const metadata = candidate1?.groundingMetadata;
-                const rawSources = metadata?.groundingChunks || metadata?.groundingAttributions || [];
-                const sources = rawSources.map(a => ({ uri: a.web?.uri, title: a.web?.title })).filter(s => s.uri && s.title);
-
-                parsedData.sources = sources;
-
-                // 更新狀態並同步 UI
-                state.cardData = { ...JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)), ...parsedData };
-                syncDataToUI();
-
-                // 成功載入與渲染後，非同步儲存到 IndexedDB
-                DatabaseService.saveCard(state.cardData, state.base64Image)
-                    .then(id => {
-                        state.currentHistoryId = id;
-                        HistoryManager.render();
-                    })
-                    .catch(err => console.warn("歷史紀錄存檔失敗", err));
-
-                UXManager.toast("影像辨識與上網搜尋完成！");
-            } catch (err) { UXManager.showError("處理失敗：" + err.message); }
-            finally { UXManager.setLoading(false); }
-        }
-
-        /**
-         * [功能] 重置郵件草稿區域並隱藏
-         */
-        function resetEmailDraft() {
-            state.cardData.emailDraft = "";
-            const draftContainer = document.getElementById("emailDraftContainer");
-            if (draftContainer) draftContainer.classList.add("hidden");
-            const textArea = document.getElementById("field-emailDraft");
-            if (textArea) { textArea.value = ""; textArea.style.height = 'auto'; }
-        }
-
-        /**
-         * [非同步] 根據目前的辨識與搜尋結果，自動撰寫跟進郵件
-         * - 依賴 `state.cardData` 中的 orgName, fn, companySummary, personalSummary
-         * - 呼叫 API 並將結果填入 textArea
-         * @async
-         * @returns {Promise<void>}
-         */
-        async function generateEmailDraft() {
-            const d = state.cardData;
-            if (!isValid(d.fn) && !isValid(d.orgName)) { UXManager.toast("請先辨識資訊"); return; }
-            const draftContainer = document.getElementById("emailDraftContainer");
-            const loadingOverlay = document.getElementById("emailLoading");
-            const textArea = document.getElementById("field-emailDraft");
-
-            // 1. 確保區塊顯示並打開收合
-            draftContainer.classList.remove("hidden");
-            const content = document.getElementById("emailDraftContent");
-            if (content && content.classList.contains("hidden")) {
-                UXManager.toggleSection("emailDraftContent", "emailDraftIcon");
-            }
-
-            // 2. 清空舊內容並顯示 Loading
-            textArea.value = "";
-            UXManager.autoResize(textArea);
-            loadingOverlay.classList.remove("hidden");
-
-            // 3. 滾動到區塊位置
-            draftContainer.scrollIntoView({
-                behavior: "smooth", block: "center"
-            });
-
-            const prompt = PROMPT_EMAIL(d.orgName, d.fn, d.companySummary, d.personalSummary);
-
-            try {
-                const result = await GeminiService.ask(prompt);
-                const text = GeminiService.extractText(result);
-                textArea.value = text ? text.trim() : "生成失敗";
-                state.cardData.emailDraft = textArea.value;
-                UXManager.autoResize(textArea);
-
-                // 自動儲存信件草稿到歷史紀錄中
-                if (state.currentHistoryId) {
-                    DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
-                        .then(() => HistoryManager.render())
-                        .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
-                }
-
-            } catch (err) { textArea.value = "發生錯誤：" + err.message; state.cardData.emailDraft = ""; }
-            finally {
-                loadingOverlay.classList.add("hidden");
+            } catch (err) {
+                UXManager.showError("影像處理失敗：" + err.message);
             }
         }
-
-        /**
-         * [功能] 複製郵件草稿至剪貼簿
-         */
-        window.copyEmailDraft = () => {
-            const text = document.getElementById("field-emailDraft").value;
-            if (ExportService.copyToClipboard(text)) {
-                UXManager.toast("草稿已複製！");
-            }
-        };
 
         /**
          * [資料流] 將當前狀態資料同步渲染至 UI 畫面
@@ -2141,7 +2268,7 @@
                                 `;
                 container.appendChild(div);
             });
-            lucide.createIcons();
+            lucide.createIcons({ root: container });
         }
 
         /**
@@ -2223,7 +2350,11 @@
          * @param {number} idx - 要移除的項目索引
          * @returns {void}
          */
-        window.removeListItem = (listType, idx) => { state.cardData[listType].splice(idx, 1); renderList(listType); debouncedUpdateVCardPreview(); };
+        window.removeListItem = (listType, idx) => {
+            state.cardData[listType].splice(idx, 1);
+            renderList(listType);
+            debouncedUpdateVCardPreview();
+        };
 
         /**
          * [UI 更新] 更新 vCard 預覽狀態
@@ -2250,19 +2381,19 @@
                     });
 
                     qrImage.src = qr.toDataURL();
-                    qrImage.classList.remove("hidden"); document.getElementById("qrPlaceholder").classList.add("hidden");
+                    qrImage.classList.remove("hidden"); document.getElementById("qrCenterIcon")?.classList.remove("hidden"); document.getElementById("qrPlaceholder").classList.add("hidden");
                     document.getElementById("qrStatus").textContent = "掃描加入聯絡人";
                 } catch (err) {
                     console.error("QR 產生錯誤:", err);
                     document.getElementById("qrStatus").textContent = "太多資料無法產生 QR Code";
-                    qrImage.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
+                    qrImage.classList.add("hidden"); document.getElementById("qrCenterIcon")?.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
                 }
             } else {
-                qrImage.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
+                qrImage.classList.add("hidden"); document.getElementById("qrCenterIcon")?.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
                 document.getElementById("qrStatus").textContent = "等待資料輸入...";
             }
             // 若地址有任何內容，則顯示 Google Maps 按鈕
-            document.getElementById("btn-maps").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => isValid(v)));
+            document.getElementById("openMapsBtn").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => isValid(v)));
 
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
@@ -2272,53 +2403,7 @@
             }
         }
 
-        const debouncedUpdateVCardPreview = debounce(updateVCardPreview, DEBOUNCE_DELAY_MS);
-
-        /**
-         * [功能] 下載 vCard 檔案 (.vcf)
-         * 將記憶體中的 `state.vCardString` 直接轉檔下載
-         * @returns {void}
-         */
-        function downloadVCard() {
-            const filename = `${state.cardData.fn || 'contact'}.vcf`;
-            ExportService.download(filename, state.vCardString);
-            UXManager.toast("下載成功");
-        }
-
-        /**
-         * [功能] 複製 vCard 文本內容至剪貼簿
-         * @returns {void}
-         */
-        function copyVCardContent() {
-            if (ExportService.copyToClipboard(state.vCardString)) {
-                UXManager.toast("內容已複製");
-            }
-        }
-
-        /**
-         * [功能] 開啟 Google Maps 搜尋當前地址
-         * @returns {void}
-         */
-        window.openGoogleMaps = () => {
-            MapService.openGoogleMaps(state.cardData);
-        };
-
-        /**
-         * [功能] 清空表單與影像狀態
-         * - 恢復為 `DEFAULT_CARD_DATA`
-         * - 重置圖片預覽、Debug 面板與草稿
-         * @returns {void}
-         */
-        window.clearForm = async () => {
-            if (!(await UXManager.confirm("確定要清空嗎？"))) return;
-            state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
-            state.base64Image = null;
-            state.currentHistoryId = null;
-            document.getElementById("previewImage").classList.add("hidden");
-            document.getElementById("uploadPlaceholder").classList.remove("hidden");
-            document.getElementById("fileInput").value = "";
-            resetEmailDraft(); syncDataToUI(); UXManager.toast("已清空資料");
-        };
+        const debouncedUpdateVCardPreview = debounce(updateVCardPreview, DEFAULT_DEBOUNCE_DELAY);
 
     </script>
 </body>
