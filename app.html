@@ -105,8 +105,7 @@
 
                     <button id="identifyBtn" disabled
                         class="w-full mt-6 py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all bg-slate-100 text-slate-400 shadow-indigo-600/10">
-                        <i data-lucide="sparkles" id="btnIcon" class="w-5 h-5"></i>
-                        <span id="btnText">啟動 AI 智慧辨識</span>
+                        <i data-lucide="sparkles" class="w-5 h-5"></i> AI 智慧辨識
                     </button>
 
                     <div id="errorMessage"
@@ -262,7 +261,7 @@
                         </button>
                         <button id="copyVcfBtn"
                             class="flex-1 py-4 bg-white border-2 border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <i data-lucide="copy"></i> <span id="copyVcfText">複製內容</span>
+                            <i data-lucide="copy"></i> 複製內容
                         </button>
                     </div>
                 </div>
@@ -465,13 +464,13 @@
                 <!-- 除錯區 -->
                 <div class="mt-8 pt-4 border-t border-dashed border-slate-300 space-y-4">
                     <div>
-                        <button id="toggleDebugBtn" data-toggle-debug="debugPanel1" data-toggle-text="debugToggleText1"
+                        <button id="toggleDebugBtn" data-toggle-debug="DebugPanel" data-toggle-text="debugToggleText"
                             data-toggle-phase="OCR與上網搜尋"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText1">顯示 OCR與上網搜尋
+                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText">顯示 OCR與上網搜尋
                                 原始回應</span>
                         </button>
-                        <pre id="debugPanel1"
+                        <pre id="DebugPanel"
                             class="hidden mt-4 bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono whitespace-pre-wrap break-all shadow-inner overflow-y-auto max-h-96"></pre>
                     </div>
                 </div>
@@ -551,7 +550,7 @@
         <i data-lucide="history" class="w-6 h-6 group-hover:-rotate-12 transition-transform"></i>
     </button>
 
-    <!-- 歷史紀錄側邊面版 -->
+    <!-- 歷史紀錄側邊面板 -->
     <div id="historyOverlay"
         class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300">
     </div>
@@ -575,7 +574,7 @@
         </div>
 
         <!-- 歷史紀錄列表區 -->
-        <div id="historyListContainer" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <div class="flex-1 overflow-y-auto p-4 space-y-3">
             <div id="historyEmptyState" class="hidden h-full flex flex-col items-center justify-center text-slate-400">
                 <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
                 <p class="text-sm">尚無任何紀錄</p>
@@ -588,7 +587,7 @@
 
     <script>
         /**
-         * 名片快手 1.04
+         * 名片快手 1.05
          */
 
         /**
@@ -674,7 +673,7 @@
         const DEFAULT_CARD_DATA = {
             fn: "", lastName: "", firstName: "", middleName: "", prefix: "", suffix: "",
             orgName: "", orgUnit: "", title: "",
-            region: "", locality: "", streetAddress: "", extendedAddress: "", poBox: "", postalCode: "", country: "台灣",
+            region: "", locality: "", streetAddress: "", extendedAddress: "", poBox: "", postalCode: "", country: "",
             note: "", companySummary: "", personalSummary: "", emailDraft: "",
             phones: [], faxes: [], emails: [], urls: [],
             sources: []
@@ -695,6 +694,7 @@
          * @property {string} vCardString - 生成的 vCard 3.0 字串
          * @property {string} rawResponse - AI 原始回傳內容 (Debug 用)
          * @property {boolean} isLoading - 是否正在執行非同步任務
+         * @property {number|null} currentHistoryId - 目前載入的歷史紀錄 ID；null 表示尚未辨識或未從歷史載入
          */
         let state = {
             cardData: JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)),
@@ -801,10 +801,10 @@
             maxRetries: DEFAULT_MAX_RETRIES,
 
             /**
-             * 動態更新 API 金鑰與重試延遲等設定
-             * @param {string} [api=MODEL_API] - 完整的 API 端點網址 (包含金鑰)
-             * @param {number} [delay=1000] - 發生錯誤時的基礎等待時間 (毫秒)
-             * @param {number} [retries=5] - 允許的最大重試次數
+             * 動態更新 API 端點與重試設定；未傳入的參數保持原值不變
+             * @param {string} [api] - 完整的 API 端點網址 (包含金鑰)；預設為 `MODEL_API`
+             * @param {number} [delay] - 發生錯誤時的基礎等待時間 (毫秒)；預設為 `DEFAULT_BASE_DELAY`
+             * @param {number} [retries] - 允許的最大重試次數；預設為 `DEFAULT_MAX_RETRIES`
              * @returns {void}
              */
             init(api, delay, retries) {
@@ -819,7 +819,7 @@
              * 
              * @param {Object} payload - 傳送給 API 的完整 JSON 負載 (如 contents, tools)
              * @returns {Promise<Object>} API 解析成功後回傳的 JSON 物件
-             * @throws {Error} 當達到最大重試次數，或遇到無法重試的 HTTP 客戶端錯誤時拋出例外
+             * @throws {Error} 當達到最大重試次數時丟出；遇到 4xx 用戶端錯誤時也會立即丟出，且連帶 `error.status` HTTP 狀態碼
              */
             async fetch(payload) {
                 let currentDelay = this.baseDelay;
@@ -838,19 +838,16 @@
                             const status = response.status;
                             const msg = errorBody.error?.message || `API 狀態碼 ${status}`;
 
-                            // 客戶端授權或輸入參數錯誤 (4xx 但不包含 429 Too Many Requests) 
-                            // 不需重試，因為再試也不會成功，直接拋出錯誤中斷流程。
-                            if (status >= 400 && status < 500 && status !== 429) {
-                                throw new Error(msg);
-                            }
-
-                            // 若是伺服器錯誤 (5xx) 或 429 則觸發例外，進入下方 catch 展開重試循環
-                            throw new Error(msg);
+                            // 為 Error 物件附加 HTTP 狀態碼，讓 catch 區塊可精確判斷是否需要重試
+                            const err = new Error(msg);
+                            err.status = status;
+                            throw err;
                         }
                         return await response.json();
                     } catch (error) {
-                        // 檢查若是稍早強制拋出的 4xx 客戶端錯誤，或已達重試次數上限：直接拋出不重試
-                        if (error.message && error.message.includes("狀態碼 4") && !error.message.includes("429")) {
+                        // 客戶端錯誤 (4xx 但不含 429)：無論重試幾次都不會成功，直接拋出放棄
+                        const s = error.status;
+                        if (s !== undefined && s >= 400 && s < 500 && s !== 429) {
                             throw error;
                         }
                         if (i === retries - 1) throw error;
@@ -864,7 +861,7 @@
 
             /**
              * 安全地從 API 回應物件中提取 AI 的文字回應。
-             * 會將所有包含內容的部位 (parts) 給串接起來，防止被截斷。
+             * 會將所有包含內容的片段 (parts) 給串接起來，防止被截斷。
              * 
              * @param {Object} response - fetch 回傳的物件
              * @returns {string} 提取並組合好的文字內容 (如果沒有則回傳空字串)
@@ -919,7 +916,7 @@
              * [高階封裝] 快速組織對話請求，簡化與 API 的互動流程。
              * 支援額外的圖片上傳 (如名片 OCR) 與工具擴充 (如 Google Search 深度搜尋)。
              * 
-             * @param {string} prompt - 提問內容與要求 (System Prompt)
+             * @param {string} prompt - 提問內容與要求 (以 user 角色傳送給 Gemini API)
              * @param {string|null} [imageBase64=null] - (可選) 影像檔案的 Base64 格式編碼字串
              * @param {Array} [tools=null] - (可選) 授權給 API 呼叫的額外工具功能清單
              * @returns {Promise<Object>} API 回傳的完整原始物件
@@ -1033,8 +1030,8 @@
             categoryName: DEFAULT_CATEGORY_NAME,
 
             /**
-             * 初始化 vCardFormatter 的組態
-             * @param {string} category - 欲加入的分類標記名稱
+             * 初始化 vCardFormatter 的組態；未傳入的參數保持原值不變
+             * @param {string} [category] - (選填) 欲加入的分類標記名稱；預設為 `DEFAULT_CATEGORY_NAME`
              * @returns {void}
              */
             init(category) {
@@ -1178,7 +1175,7 @@
                     parts.push(`NOTE${getUtf8(cleanNote)}:${cleanNote}`);
                 }
 
-                // 12. 結束標記並過濾掉因為少欄位產生的無效行 (例如只有冒號沒有值的行)，最後合併為字串
+                // 12. 結束標記，過濾掉值為空的無效行（例如地址全空時的 ADR;TYPE=WORK: 這類以冒號結尾的行），並合併為字串
                 parts.push("END:VCARD");
                 return parts.filter(line => line && line.includes(":") && !line.endsWith(":")).join("\n");
             }
@@ -1197,8 +1194,8 @@
             elUploadPlaceholder: null,
             /** @property {HTMLElement|null} elFileInput - 快取隱藏 file input */
             elFileInput: null,
-            /** @property {HTMLElement|null} elDebugPanel1 - 快取 Debug 面板 */
-            elDebugPanel1: null,
+            /** @property {HTMLElement|null} elDebugPanel - 快取 Debug 面板 */
+            elDebugPanel: null,
 
             /** 
              * 初始化模組，快取常用 DOM 元素、綁定 textarea 自動調整高度事件與 UI 區塊收合事件
@@ -1210,7 +1207,7 @@
                 this.elPreviewImage = document.getElementById("previewImage");
                 this.elUploadPlaceholder = document.getElementById("uploadPlaceholder");
                 this.elFileInput = document.getElementById("fileInput");
-                this.elDebugPanel1 = document.getElementById("debugPanel1");
+                this.elDebugPanel = document.getElementById("DebugPanel");
 
                 // 1. 綁定 textarea 自動調整高度
                 const textareas = ["field-companySummary", "field-personalSummary", "field-emailDraft", "field-note"];
@@ -1294,15 +1291,15 @@
             async identifyCard() {
                 if (!state.base64Image) return;
                 this.resetEmailDraft();
-                this.setLoading(true, "影像辨識與上網搜尋中...");
+                this.setLoading(true, "影像辨識與上網搜尋中");
 
                 // 清空舊的 Debug 資訊
-                this.elDebugPanel1.textContent = "";
+                this.elDebugPanel.textContent = "";
 
                 try {
                     // 執行 OCR 與上網搜尋
                     const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
-                    this.elDebugPanel1.textContent = JSON.stringify(result1, null, 2);
+                    this.elDebugPanel.textContent = JSON.stringify(result1, null, 2);
 
                     const text1 = GeminiService.extractText(result1);
                     const parsedData = GeminiService.parseJSON(text1);
@@ -1488,8 +1485,8 @@
             },
 
             /** 
-             * 設定按鈕的全域載入遮罩狀態 
-             * @param {boolean} isLoading - 是否處於載入狀態
+             * 停用／啟用辨識按鈕，並同步顯示／隱藏全局載入遮罩 
+             * @param {boolean} isLoading - true 為載入中（停用按鈕、顯示遮罩）；false 為載入完成（恢復按鈕、隱藏遮罩）
              * @param {string} [text="處理中..."] - 載入時欲顯示的文字
              * @returns {void}
              */
@@ -1578,13 +1575,13 @@
 
                 if (text) text.textContent = msg;
                 if (err) err.classList.remove("hidden");
-                if (this.elDebugPanel1) this.elDebugPanel1.classList.remove("hidden");
+                if (this.elDebugPanel) this.elDebugPanel.classList.remove("hidden");
             },
 
             /**
              * 顯示全域確認對話框並等待使用者回應
              * @param {string} msg - 顯示的確認訊息
-             * @param {Object} [options] - 其他設定：okText, cancelText
+             * @param {{ okText?: string, cancelText?: string }} [options={}] - 客製按鈕文字；okText 確認鈕，cancelText 取消鈕
              * @returns {Promise<boolean>} 回傳 boolean 表示是否確認
              */
             confirm(msg, options = {}) {
@@ -1714,9 +1711,13 @@
          * 負責使用 IndexedDB 在瀏覽器端自動保存已辨識的名片歷史紀錄。
          */
         const DatabaseService = {
+            /** @property {string} dbName - IndexedDB 資料庫名稱 */
             dbName: "NCS_HistoryDB",
+            /** @property {string} storeName - IndexedDB 物件儲存區 (Object Store) 名稱 */
             storeName: "cards",
+            /** @property {number} version - 資料庫版本號；變更 schema 時需遞增 */
             version: 1,
+            /** @property {IDBDatabase|null} db - 開啟後的資料庫連線實例；初始為 null */
             db: null,
 
             /**
@@ -1751,7 +1752,7 @@
             /**
              * 儲存單筆名片紀錄 (支援更新既有紀錄)
              * @param {Object} cardData - 名片 JSON 資料
-             * @param {string} base64Image - 原始影像字串
+             * @param {string|null} base64Image - 原始影像的 Base64 字串；沒有影像時傳入 null
              * @param {number|null} [existingId=null] - 既有紀錄 ID
              * @returns {Promise<number>} 回傳建立的 ID
              */
@@ -1850,7 +1851,7 @@
              * @returns {void}
              */
             init() {
-                // 歷史紀錄面版開關事件
+                // 歷史紀錄面板開關事件
                 const toggleHistoryBtn = document.getElementById("toggleHistoryBtn");
                 const closeHistoryBtn = document.getElementById("closeHistoryBtn");
                 const historyOverlay = document.getElementById("historyOverlay");
@@ -1939,7 +1940,7 @@
                         state.base64Image = target.base64Image;
                         state.currentHistoryId = id;
 
-                        // 關閉歷史面版
+                        // 關閉歷史面板
                         if (this.toggleHistoryPanel) {
                             const overlay = document.getElementById("historyOverlay");
                             if (overlay && !overlay.classList.contains("hidden")) {
@@ -2381,7 +2382,7 @@
         /**
          * [UI 更新] 更新 vCard 預覽狀態
          * 包含產生 QR Code 與切換 Google Maps 按鈕顯示。
-         * (為了避免快速輸入短時間內對 API 頻繁發送請求，所以外面會有 Debounce 包裝)
+         * (經由 Debounce 包裝，避免快速連續輸入時頻繁重繪 QR Code 造成不必要的計算量)
          * @returns {void}
          */
         function updateVCardPreview() {
