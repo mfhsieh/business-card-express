@@ -8,9 +8,13 @@
     <meta name="copyright"
         content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/), CC BY-NC-SA 4.0">
     <title>名片快手</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M4 7V5a2 2 0 0 1 2-2h2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 3h2a2 2 0 0 1 2 2v2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 17v2a2 2 0 0 1-2 2h-2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 21H6a2 2 0 0 1-2-2v-2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='12' cy='10' r='3' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2' stroke='%234f46e5' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>"
-        type="image/svg+xml">
+    <script>
+        // 單一來源的 Logo SVG 路徑定義 (用於 Favicon 與樣式)
+        const LOGO_SVG_PATH = `<path d='M4 7V5a2 2 0 0 1 2-2h2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 3h2a2 2 0 0 1 2 2v2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 17v2a2 2 0 0 1-2 2h-2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 21H6a2 2 0 0 1-2-2v-2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='12' cy='10' r='3' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>`;
+        const LOGO_FAVICON_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>${LOGO_SVG_PATH.replaceAll('currentColor', '%234f46e5')}</svg>`;
+
+        document.write(`<link rel="icon" href="data:image/svg+xml,${LOGO_FAVICON_SVG}" type="image/svg+xml">`);
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
@@ -58,23 +62,23 @@
 
 <body class="min-h-screen bg-slate-50 text-slate-900 p-2 md:p-6 lg:p-8">
 
+    <!-- 可複用的 SVG 圖示定義 -->
+    <script>
+        document.write(`
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="logo-icon" viewBox="0 0 24 24">
+                    ${LOGO_SVG_PATH}
+                </symbol>
+            </svg>
+        `);
+    </script>
+
     <div class="max-w-[1400px] mx-auto">
         <header class="mb-8 text-center">
             <h1
                 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-10 h-10 text-indigo-600">
-                    <path d="M4 7V5a2 2 0 0 1 2-2h2" stroke="currentColor" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M16 3h2a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M20 17v2a2 2 0 0 1-2 2h-2" stroke="currentColor" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M8 21H6a2 2 0 0 1-2-2v-2" stroke="currentColor" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <circle cx="12" cy="10" r="3" stroke="currentColor" fill="none" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" stroke="currentColor" fill="none"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <svg class="w-10 h-10 text-indigo-600">
+                    <use href="#logo-icon" />
                 </svg>
                 名片快手
             </h1>
@@ -232,21 +236,8 @@
                             <div id="qrCenterIcon"
                                 class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="bg-white rounded-md shadow-sm p-1 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                        class="w-5 h-5 text-indigo-600">
-                                        <path d="M4 7V5a2 2 0 0 1 2-2h2" stroke="currentColor" fill="none"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M16 3h2a2 2 0 0 1 2 2v2" stroke="currentColor" fill="none"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M20 17v2a2 2 0 0 1-2 2h-2" stroke="currentColor" fill="none"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M8 21H6a2 2 0 0 1-2-2v-2" stroke="currentColor" fill="none"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" stroke="currentColor" fill="none" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" stroke="currentColor"
-                                            fill="none" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                    <svg class="w-5 h-5 text-indigo-600">
+                                        <use href="#logo-icon" />
                                     </svg>
                                 </div>
                             </div>
@@ -587,7 +578,7 @@
 
     <script>
         /**
-         * 名片快手 1.05
+         * 名片快手 1.06
          */
 
         /**
@@ -699,7 +690,6 @@
         let state = {
             cardData: JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)),
             base64Image: null,
-            vCardString: "",
             rawResponse: "",
             isLoading: false,
             currentHistoryId: null
@@ -1407,12 +1397,12 @@
 
             /**
              * [功能] 下載 vCard 檔案 (.vcf)
-             * 將記憶體中的 `state.vCardString` 直接轉檔下載
              * @returns {void}
              */
             downloadVCard() {
+                const vcf = vCardFormatter.generate(state.cardData);
                 const filename = `${state.cardData.fn || 'contact'}.vcf`;
-                ExportService.download(filename, state.vCardString);
+                ExportService.download(filename, vcf);
                 this.toast("下載成功");
             },
 
@@ -1421,7 +1411,8 @@
              * @returns {void}
              */
             copyVCardContent() {
-                if (ExportService.copyToClipboard(state.vCardString)) this.toast("內容已複製");
+                const vcf = vCardFormatter.generate(state.cardData);
+                if (ExportService.copyToClipboard(vcf)) this.toast("內容已複製");
             },
 
             /**
@@ -1721,123 +1712,85 @@
             db: null,
 
             /**
+             * [私用] 將 IndexedDB 請求轉裝為 Promise
+             * @param {IDBRequest} request 
+             * @returns {Promise<any>}
+             */
+            _req(request) {
+                return new Promise((resolve, reject) => {
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = (e) => reject(e.target.error);
+                });
+            },
+
+            /**
              * 初始化並開啟 IndexedDB
              * @returns {Promise<void>}
              */
             async init() {
-                return new Promise((resolve, reject) => {
-                    const request = indexedDB.open(this.dbName, this.version);
-
-                    request.onupgradeneeded = (event) => {
-                        const db = event.target.result;
-                        if (!db.objectStoreNames.contains(this.storeName)) {
-                            // 使用 timestamp 作為 keyPath 確保唯一與排序
-                            const store = db.createObjectStore(this.storeName, { keyPath: "id" });
-                            store.createIndex("timestamp", "timestamp", { unique: false });
-                        }
-                    };
-
-                    request.onsuccess = (event) => {
-                        this.db = event.target.result;
-                        resolve();
-                    };
-
-                    request.onerror = (event) => {
-                        console.error("IndexedDB 初始化失敗:", event.target.error);
-                        reject(event.target.error);
-                    };
-                });
+                const request = indexedDB.open(this.dbName, this.version);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(this.storeName)) {
+                        const store = db.createObjectStore(this.storeName, { keyPath: "id" });
+                        store.createIndex("timestamp", "timestamp", { unique: false });
+                    }
+                };
+                this.db = await this._req(request);
             },
 
             /**
              * 儲存單筆名片紀錄 (支援更新既有紀錄)
-             * @param {Object} cardData - 名片 JSON 資料
-             * @param {string|null} base64Image - 原始影像的 Base64 字串；沒有影像時傳入 null
-             * @param {number|null} [existingId=null] - 既有紀錄 ID
-             * @returns {Promise<number>} 回傳建立的 ID
              */
             async saveCard(cardData, base64Image, existingId = null) {
                 if (!this.db) return null;
-                return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], "readwrite");
-                    const store = transaction.objectStore(this.storeName);
-                    const now = Date.now();
-                    const record = {
-                        id: existingId || now, // 沿用舊 ID 或產生新 ID
-                        timestamp: existingId || now, // 保持原本建檔排序
-                        cardData: JSON.parse(JSON.stringify(cardData)), // 深度拷貝避免參照修改
-                        base64Image: base64Image
-                    };
-                    const request = store.put(record);
-                    request.onsuccess = () => resolve(record.id);
-                    request.onerror = (e) => reject(e.target.error);
-                });
+                const store = this.db.transaction([this.storeName], "readwrite").objectStore(this.storeName);
+                const now = Date.now();
+                const record = {
+                    id: existingId || now,
+                    timestamp: existingId || now,
+                    cardData: JSON.parse(JSON.stringify(cardData)),
+                    base64Image: base64Image
+                };
+                await this._req(store.put(record));
+                return record.id;
             },
 
             /**
              * 取得所有歷史紀錄，依照時間降序排列
-             * @returns {Promise<Array>} 歷史紀錄陣列
              */
             async getAllCards() {
                 if (!this.db) return [];
-                return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], "readonly");
-                    const store = transaction.objectStore(this.storeName);
-                    const request = store.getAll();
-                    request.onsuccess = () => {
-                        const list = request.result || [];
-                        list.sort((a, b) => b.timestamp - a.timestamp); // 降序：最新的在前面
-                        resolve(list);
-                    };
-                    request.onerror = (e) => reject(e.target.error);
-                });
+                const store = this.db.transaction([this.storeName], "readonly").objectStore(this.storeName);
+                const list = await this._req(store.getAll()) || [];
+                return list.sort((a, b) => b.timestamp - a.timestamp);
             },
 
             /**
              * 取得單筆歷史紀錄
-             * @param {number} id - 紀錄 ID
-             * @returns {Promise<Object|null>}
              */
             async getCard(id) {
                 if (!this.db) return null;
-                return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], "readonly");
-                    const store = transaction.objectStore(this.storeName);
-                    const request = store.get(id);
-                    request.onsuccess = () => resolve(request.result || null);
-                    request.onerror = (e) => reject(e.target.error);
-                });
+                const store = this.db.transaction([this.storeName], "readonly").objectStore(this.storeName);
+                return await this._req(store.get(id)) || null;
             },
 
             /**
              * 刪除指定歷史紀錄
-             * @param {number} id - 紀錄 ID
-             * @returns {Promise<void>}
              */
             async deleteCard(id) {
                 if (!this.db) return;
-                return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], "readwrite");
-                    const store = transaction.objectStore(this.storeName);
-                    const request = store.delete(id);
-                    request.onsuccess = () => resolve();
-                    request.onerror = (e) => reject(e.target.error);
-                });
+                const store = this.db.transaction([this.storeName], "readwrite").objectStore(this.storeName);
+                await this._req(store.delete(id));
             },
 
             /**
              * 清空所有歷史紀錄
-             * @returns {Promise<void>}
              */
             async clearAll() {
                 if (!this.db) return;
-                return new Promise((resolve, reject) => {
-                    const transaction = this.db.transaction([this.storeName], "readwrite");
-                    const store = transaction.objectStore(this.storeName);
-                    const request = store.clear();
-                    request.onsuccess = () => resolve();
-                    request.onerror = (e) => reject(e.target.error);
-                });
+                const store = this.db.transaction([this.storeName], "readwrite").objectStore(this.storeName);
+                await this._req(store.clear());
             }
         };
 
@@ -2243,10 +2196,15 @@
          */
         function renderList(type) {
             const container = document.getElementById(`list-${type}`);
-            if (!container) return; container.innerHTML = "";
+            if (!container) return;
             const items = state.cardData[type] || [];
-            if (items.length === 0) { container.innerHTML = `<div class="text-xs text-slate-400 italic py-1 px-2"> 無資料</div>`; return; }
 
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-xs text-slate-400 italic py-1 px-2"> 無資料</div>`;
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
             items.forEach((item, idx) => {
                 let valKey = "value";
                 let div = document.createElement("div");
@@ -2289,8 +2247,11 @@
                     <button data-remove-item="${type},${idx}" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
                 </div>
                 ${validationMsg}`;
-                container.appendChild(div);
+                fragment.appendChild(div);
             });
+
+            container.innerHTML = "";
+            container.appendChild(fragment);
             lucide.createIcons({ root: container });
         }
 
@@ -2388,7 +2349,6 @@
         function updateVCardPreview() {
             const d = state.cardData;
             const vcf = vCardFormatter.generate(d);
-            state.vCardString = vcf;
             const hasContent = Utils.isValid(d.fn) || Utils.isValid(d.lastName) || Utils.isValid(d.orgName);
             const qrImage = document.getElementById('qrImage');
 
