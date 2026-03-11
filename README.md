@@ -68,7 +68,7 @@
 
 - **方式 A：直接複製原始碼（最簡單）**
 
-  專案只有一個 `app.html` 檔案。在 GitHub 上開啟 [`app.html`](app.html)，點擊右上角「Copy raw file」，在本機建立 `app.html` 並貼上存檔即可。
+  專案只有一個 `index.html` 檔案。在 GitHub 上開啟 [`index.html`](index.html)，點擊右上角「Copy raw file」，在本機建立 `index.html` 並貼上存檔即可。
 
 - **方式 B：Clone 整個專案**
 
@@ -78,7 +78,7 @@
 
 ### 2. 直接執行與設定 API 金鑰
 
-無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `app.html`，接著：
+無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `index.html`，接著：
 
 1. 點擊畫面上方的 **設定圖示 (⚙️)** 展開設定區塊。
 2. 填入您的 [Google Gemini API 金鑰](https://aistudio.google.com/app/apikey)。
