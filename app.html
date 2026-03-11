@@ -91,9 +91,32 @@
                 <!-- 上傳區 -->
                 <div
                     class="bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-4 md:p-8">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
-                        <i data-lucide="upload-cloud" class="text-indigo-600"></i> 上傳與辨識
-                    </h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
+                            <i data-lucide="upload-cloud" class="text-indigo-600"></i> 上傳與辨識
+                        </h2>
+                        <button id="settingsBtn" class="p-2 -mr-2 rounded-full transition-all focus:outline-none"
+                            title="設定 API Key">
+                            <i data-lucide="settings" id="settingsIcon" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- API Key 輸入區 -->
+                    <div id="apiKeyContainer" class="hidden mb-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Google Gemini API Key</label>
+                        <div class="relative">
+                            <input type="password" id="apiKeyInput" placeholder="請輸入 API Key (僅儲存於本地)"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 font-medium bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all pr-10 text-sm">
+                            <button id="toggleApiKeyVisibility"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                title="顯示/隱藏">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                            class="text-[10px] text-indigo-500 hover:text-indigo-700 mt-2 flex items-center gap-1"><i
+                                data-lucide="external-link" class="w-3 h-3"></i> 取得 API Key</a>
+                    </div>
 
                     <div id="dropZone"
                         class="group border-2 border-dashed rounded-2xl aspect-[1.6/1] flex flex-col items-center justify-center transition-all overflow-hidden border-slate-200 hover:border-indigo-400 cursor-pointer hover:bg-slate-50 relative">
@@ -578,15 +601,15 @@
 
     <script>
         /**
-         * 名片快手 1.06
+         * 名片快手 1.10
+         * 
+         * 2026/03/11: 使用者需自行輸入 api key，api key 只儲存於 localStorage 中。
          */
 
         /**
          * 系統設定與預設值
          */
-        const apiKey = "";
-        const MODEL_NAME = "gemini-2.0-flash";
-        const MODEL_API = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
+        const MODEL_NAME = "gemini-2.5-flash";
 
         const DEFAULT_BASE_DELAY = 1000;  // GeminiService: API 重試時的基礎延遲 (毫秒)
         const DEFAULT_MAX_RETRIES = 5;    // GeminiService: API 失敗時最大重試次數
@@ -783,8 +806,11 @@
          * 封裝 Google Gemini API 的通訊邏輯、提問處理、JSON 解析與重試機制。
          */
         const GeminiService = {
-            /** @property {string} modelApi - 當前使用的 API 端點網址 */
-            modelApi: MODEL_API,
+            /** @property {string} modelApi - 動態取得目前使用的 API 端點網址 */
+            get modelApi() {
+                const apiKey = localStorage.getItem("geminiApiKey") || "";
+                return `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
+            },
             /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
             baseDelay: DEFAULT_BASE_DELAY,
             /** @property {number} maxRetries - API 呼叫失敗時的最大重試次數 */
@@ -798,7 +824,9 @@
              * @returns {void}
              */
             init(api, delay, retries) {
-                if (api !== undefined) this.modelApi = api;
+                if (api !== undefined) {
+                    Object.defineProperty(this, 'modelApi', { value: api, writable: true, configurable: true });
+                }
                 if (delay !== undefined) this.baseDelay = delay;
                 if (retries !== undefined) this.maxRetries = retries;
             },
@@ -1194,6 +1222,91 @@
             init() {
                 // 0. 快取常用 DOM 元素（集中在此，避免各方法重複 getElementById）
                 this.elIdentifyBtn = document.getElementById("identifyBtn");
+
+                // 綁定 API Key 相關事件
+                const apiKeyInput = document.getElementById("apiKeyInput");
+                const settingsBtn = document.getElementById("settingsBtn");
+                const apiKeyContainer = document.getElementById("apiKeyContainer");
+
+                const updateSettingsIconState = () => {
+                    if (!settingsBtn) return;
+                    const hasKey = !!localStorage.getItem("geminiApiKey");
+                    const dropZone = document.getElementById("dropZone");
+
+                    if (hasKey) {
+                        settingsBtn.className = "p-2 -mr-2 rounded-full transition-all text-slate-400 hover:text-slate-600 hover:bg-slate-100";
+                        if (dropZone) {
+                            dropZone.classList.remove("opacity-50", "cursor-not-allowed", "hover:bg-slate-50", "hover:border-indigo-400");
+                            dropZone.classList.add("cursor-pointer", "hover:bg-slate-50", "hover:border-indigo-400");
+                        }
+                    } else {
+                        settingsBtn.className = "p-2 -mr-2 rounded-full transition-all text-amber-500 bg-amber-50 hover:bg-amber-100 shadow-sm animate-pulse";
+                        if (dropZone) {
+                            dropZone.classList.remove("cursor-pointer", "hover:bg-slate-50", "hover:border-indigo-400");
+                            dropZone.classList.add("opacity-50", "cursor-not-allowed");
+                        }
+                    }
+                };
+
+                if (settingsBtn && apiKeyContainer) {
+                    settingsBtn.addEventListener("click", () => {
+                        apiKeyContainer.classList.toggle("hidden");
+                        if (!apiKeyContainer.classList.contains("hidden") && apiKeyInput) {
+                            apiKeyInput.focus();
+                        }
+                    });
+                }
+
+                if (apiKeyInput) {
+                    apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
+                    updateSettingsIconState();
+
+                    // 自動隱藏邏輯：當焦點或點擊離開輸入區塊時隱藏
+                    const autoHideContainer = (e) => {
+                        if (!apiKeyContainer || apiKeyContainer.classList.contains("hidden") || !apiKeyInput.value.trim()) {
+                            return;
+                        }
+
+                        // 若是經由點擊設定按鈕觸發，則交由設定按鈕的 click 事件處理
+                        if (e && settingsBtn && (e.target === settingsBtn || settingsBtn.contains(e.target))) return;
+
+                        // 使用 composedPath() 檢查點擊是否發生在 apiKeyContainer 內部，這能避免因為 Lucide 替換 SVG 圖示造成節點脫離 DOM 的誤判
+                        const path = e.composedPath ? e.composedPath() : [];
+                        if (e && e.type === "click" && !path.includes(apiKeyContainer)) {
+                            apiKeyContainer.classList.add("hidden");
+                        }
+                    };
+
+                    document.addEventListener("click", autoHideContainer);
+
+                    apiKeyInput.addEventListener("input", (e) => {
+                        localStorage.setItem("geminiApiKey", e.target.value.trim());
+                        updateSettingsIconState();
+                    });
+
+                    apiKeyInput.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") {
+                            if (apiKeyInput.value.trim() && apiKeyContainer && !apiKeyContainer.classList.contains("hidden")) {
+                                apiKeyContainer.classList.add("hidden");
+                            }
+                        }
+                    });
+
+                    const toggleBtn = document.getElementById("toggleApiKeyVisibility");
+                    if (toggleBtn) {
+                        toggleBtn.addEventListener("click", () => {
+                            const type = apiKeyInput.getAttribute("type") === "password" ? "text" : "password";
+                            apiKeyInput.setAttribute("type", type);
+                            toggleBtn.innerHTML = type === "password"
+                                ? '<i data-lucide="eye" class="w-5 h-5"></i>'
+                                : '<i data-lucide="eye-off" class="w-5 h-5"></i>';
+                            // 重新渲染 Lucide 圖標
+                            if (window.lucide) window.lucide.createIcons({
+                                root: toggleBtn
+                            });
+                        });
+                    }
+                }
                 this.elPreviewImage = document.getElementById("previewImage");
                 this.elUploadPlaceholder = document.getElementById("uploadPlaceholder");
                 this.elFileInput = document.getElementById("fileInput");
@@ -1279,6 +1392,14 @@
              * @returns {Promise<void>}
              */
             async identifyCard() {
+                if (!localStorage.getItem("geminiApiKey")) {
+                    const container = document.getElementById("apiKeyContainer");
+                    if (container && container.classList.contains("hidden")) {
+                        container.classList.remove("hidden");
+                    }
+                    this.showError("請先輸入 Google Gemini API Key 以啟用人工智慧服務。");
+                    return;
+                }
                 if (!state.base64Image) return;
                 this.resetEmailDraft();
                 this.setLoading(true, "影像辨識與上網搜尋中");
@@ -2037,13 +2158,34 @@
             const dropZone = document.getElementById("dropZone");
             const fileInput = document.getElementById("fileInput");
 
+            const checkApiKey = () => {
+                const hasKey = !!localStorage.getItem("geminiApiKey");
+                if (!hasKey) {
+                    UXManager.toast("請先點擊右上角齒輪設定 API Key");
+                    const container = document.getElementById("apiKeyContainer");
+                    if (container && container.classList.contains("hidden")) {
+                        const settingsBtn = document.getElementById("settingsBtn");
+                        if (settingsBtn) settingsBtn.click();
+                    }
+                    return false;
+                }
+                return true;
+            };
+
             // 點擊上傳區域觸發隱藏的 file input
-            dropZone.addEventListener("click", () => fileInput.click());
+            dropZone.addEventListener("click", () => {
+                if (!checkApiKey()) return;
+                fileInput.click();
+            });
 
             // 處理拖曳進入、離開與放開事件
             dropZone.addEventListener("dragover", (e) => {
                 e.preventDefault();
-                dropZone.classList.add("border-indigo-500", "bg-indigo-50/30");
+                if (!localStorage.getItem("geminiApiKey")) e.dataTransfer.dropEffect = "none";
+                else {
+                    e.dataTransfer.dropEffect = "copy";
+                    dropZone.classList.add("border-indigo-500", "bg-indigo-50/30");
+                }
             });
             dropZone.addEventListener("dragleave", (e) => {
                 e.preventDefault();
@@ -2052,6 +2194,7 @@
             dropZone.addEventListener("drop", async (e) => {
                 e.preventDefault();
                 dropZone.classList.remove("border-indigo-500", "bg-indigo-50/30");
+                if (!checkApiKey()) return;
                 if (e.dataTransfer.files && e.dataTransfer.files.length > 0) await processFile(e.dataTransfer.files[0]);
             });
 
@@ -2075,6 +2218,7 @@
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].type.indexOf('image') !== -1) {
                         e.preventDefault();
+                        if (!checkApiKey()) return;
                         const file = items[i].getAsFile();
                         if (file) await processFile(file);
                         break; // 找到第一張圖片就處理並退出

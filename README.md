@@ -32,6 +32,10 @@
 
   利用瀏覽器 IndexedDB 自動保存已辨識的名片紀錄；從歷史紀錄載入後，手動修改欄位亦可自動寫回儲存。
 
+- **🔐 API 金鑰本機儲存**
+
+  API 金鑰僅儲存於瀏覽器的 Local Storage 中，不會寫死在程式碼內，大幅提升網頁部署與分享的安全性。
+
 ## 🖱️ 圖片上傳方式
 
 支援三種方式上傳名片影像：
@@ -54,6 +58,7 @@
 | [Lucide Icons](https://lucide.dev/) | 介面圖示庫 |
 | [Google Fonts – Noto Sans TC](https://fonts.google.com/) | 中文字體 |
 | 瀏覽器原生 IndexedDB | 本機歷史紀錄儲存 |
+| 瀏覽器原生 Local Storage | API 金鑰本機儲存 |
 
 ## 🚀 快速開始
 
@@ -71,46 +76,31 @@
   git clone https://github.com/mfhsieh/business-card-express.git
   ```
 
-### 2. 設定 Gemini API 金鑰
+### 2. 直接執行與設定 API 金鑰
 
-在 `app.html` 找到以下常數並填入您的 [Google Gemini API 金鑰](https://aistudio.google.com/app/apikey)：
+無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `app.html`，接著：
 
-```javascript
-const apiKey = "YOUR_GEMINI_API_KEY_HERE";
-```
+1. 點擊畫面上方的 **設定圖示 (⚙️)** 展開設定區塊。
+2. 填入您的 [Google Gemini API 金鑰](https://aistudio.google.com/app/apikey)。
 
-> ⚠️ **安全性警告**
+> 🔒 **安全性說明**
 >
-> 若您將此專案部署至公開環境（如 GitHub Pages、Vercel 或 Netlify），前端程式碼會暴露您的 API 金鑰。正式環境建議將 Gemini API 呼叫移至後端 proxy，或使用帶有金鑰保護機制的部署方式。
-
-### 3. 直接執行
-
-無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `app.html` 即可！
-
-### 4. 透過 Gemini Canvas 執行（免設定 API 金鑰）
-
-若不想手動設定 API 金鑰，可直接在 Gemini Canvas 中執行：
-
-1. 設定 Gemini 為 Canvas 模式，輸入「`建立一個空白的網頁`」
-2. 將 `app.html` 的原始碼貼至 Canvas 編輯視窗，取代原有內容
-
-Gemini Canvas 會自動帶入驗證資源，無須額外提供 API 金鑰。
-
-> 💡 若預覽畫面太小，可透過右上角「分享」按鈕取得連結，在瀏覽器中開啟以獲得較大螢幕操作空間。
+> 為了保護您的資訊安全，**API 金鑰僅會儲存於您目前使用的瀏覽器 Local Storage 中**，不會上傳至任何伺服器。
 
 ## 💡 使用說明
 
-1. 以任一方式（點擊 / 拖放 / 貼上）上傳名片圖片（支援 JPG、PNG 等常見格式）
-2. 點擊「**AI 智慧辨識**」按鈕
-3. 等候 AI 辨識與上網搜尋完成（通常約 5–20 秒）
-4. 右側表單自動填入聯絡人資訊，可手動修正任意欄位
-5. 查看「AI 洞察」區塊的公司與個人背景摘要、參考來源連結
-6. 點擊「**後續追蹤**」讓 AI 自動撰寫感謝信草稿
-7. 以 QR Code 掃描加入聯絡人、下載 `.vcf`，或複製 vCard 內容
+1. 確保已於設定區域輸入正確的 Gemini API 金鑰。
+2. 以任一方式（點擊 / 拖放 / 貼上）上傳名片圖片（支援 JPG、PNG 等常見格式）。
+3. 點擊「**AI 智慧辨識**」按鈕。
+4. 等候 AI 辨識與上網搜尋完成（通常約 5–20 秒）。
+5. 右側表單自動填入聯絡人資訊，可手動修正任意欄位。
+6. 查看「AI 洞察」區塊的公司與個人背景摘要、參考來源連結。
+7. 點擊「**後續追蹤**」讓 AI 自動撰寫感謝信草稿。
+8. 以 QR Code 掃描加入聯絡人、下載 `.vcf`，或複製 vCard 內容。
 
 ## 🔒 隱私與安全性聲明
 
-- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB。除 Google Gemini API 之外，不上傳資料至任何第三方伺服器。
+- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Google Gemini API 之外，不上傳資料至任何第三方伺服器。
 - 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Google Gemini API 辨識，不經由中間伺服器轉發。
 
 ## 📄 授權條款
@@ -127,5 +117,6 @@ Gemini Canvas 會自動帶入驗證資源，無須額外提供 API 金鑰。
 
 ## 📦 Release Notes
 
+- 2026-03-11：1.10 版發佈。改為由使用者於網頁介面動態輸入 API 金鑰，並儲存於瀏覽器 Local Storage 中，免除在原始碼中硬編碼金鑰，進一步提升安全性。
+- 2026-02-27：1.06 版發佈。
 - 2026-02-22：1.01 版發佈。
-- 2026-02-27：1.06 版發佈：
