@@ -7,6 +7,14 @@
     <meta name="author" content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/)">
     <meta name="copyright"
         content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/), CC BY-NC-SA 4.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <!-- PWA / Mobile 支援 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="名片快手">
     <title>名片快手</title>
     <script>
         // 單一來源的 Logo SVG 路徑定義 (用於 Favicon 與樣式)
@@ -16,7 +24,7 @@
         document.write(`<link rel="icon" href="data:image/svg+xml,${LOGO_FAVICON_SVG}" type="image/svg+xml">`);
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
         rel="stylesheet">
@@ -103,9 +111,10 @@
 
                     <!-- API Key 輸入區 -->
                     <div id="apiKeyContainer" class="hidden mb-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                        <label class="block text-xs font-bold text-slate-500 mb-1">Google Gemini API Key</label>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Google Gemini API Key
+                            (僅儲存於本機端)</label>
                         <div class="relative">
-                            <input type="password" id="apiKeyInput" placeholder="請輸入 API Key (僅儲存於本地)"
+                            <input type="password" id="apiKeyInput" placeholder="請輸入 API Key (僅儲存於本機端)"
                                 class="w-full px-4 py-3 rounded-xl border border-slate-200 font-medium bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all pr-10 text-sm">
                             <button id="toggleApiKeyVisibility"
                                 class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
@@ -901,32 +910,41 @@
                 if (!text) return {};
                 let parsed = null;
                 try {
-                    // 第一重解析：嘗試抓取最外層的 "{" 與 "}" 範圍，精準切出 JSON 的核心本體
-                    const startIdx = text.indexOf("{");
-                    const endIdx = text.lastIndexOf("}");
+                    // [防護核心] 使用正規表達式找出所有可能的大括號 {} 區塊
+                    // 針對 AI 可能回傳多個 JSON 區塊的情況 (例如 Chain of Thought 或重複輸出)，
+                    // 我們通常優先採納「最後一個」或是「內容最豐富」的一個。
+                    const jsonRegex = /{[^]*?}/g;
+                    const matches = text.match(jsonRegex);
 
-                    if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
-                        const jsonStr = text.substring(startIdx, endIdx + 1);
-                        try {
-                            parsed = JSON.parse(jsonStr);
-                        } catch (e) {
-                            // [防護機制] 若提取的 jsonStr 不是合法 JSON (例如中間參雜了干擾字元)，
-                            // JSON.parse() 會拋出例外。此處刻意 catch 並忽略錯誤，
-                            // 是為了避免整個 function 崩潰，讓程式能繼續執行下方的 Fallback (第二重備用方案)。
+                    if (matches && matches.length > 0) {
+                        // 嘗試由後往前解析，因為通常最後一個才是最終結果
+                        for (let i = matches.length - 1; i >= 0; i--) {
+                            try {
+                                const candidate = JSON.parse(matches[i]);
+                                // 檢查是否包含關鍵欄位 (如姓名)，若是則採納並退出
+                                if (candidate.fn || candidate.orgName) {
+                                    parsed = candidate;
+                                    break;
+                                }
+                            } catch (e) { /* 繼續嘗試上一個區塊 */ }
                         }
                     }
 
+                    // Fallback：若正則解析失敗，嘗試原本的頭尾裁切法
                     if (!parsed) {
-                        // 第二重解析：如果第一步抓括號失敗 (例如根本沒有大括號，或是上述 try-catch 攔截了錯誤)
-                        // 退回到移除首尾 Markdown 格式符號 ( ```json 與 ``` ) 後重新強行轉換
-                        const cleanText = text.replace(/^```[a-z]*\n?/i, "").replace(/\n?```$/i, "").trim();
-                        parsed = JSON.parse(cleanText);
+                        const startIdx = text.indexOf("{");
+                        const endIdx = text.lastIndexOf("}");
+                        if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
+                            const jsonStr = text.substring(startIdx, endIdx + 1);
+                            try { parsed = JSON.parse(jsonStr); } catch (e) { }
+                        }
                     }
 
+                    if (!parsed) throw new Error("找不到有效的 JSON 內容");
                     return parsed;
                 } catch (e) {
                     console.error("GeminiService.parseJSON 失敗:", e, "內容:", text);
-                    throw new Error("AI 回傳格式異常。");
+                    throw new Error("AI 回傳格式異常，無法解析資料。");
                 }
             },
 
@@ -2508,19 +2526,27 @@
                     });
 
                     qrImage.src = qr.toDataURL();
-                    qrImage.classList.remove("hidden"); document.getElementById("qrCenterIcon")?.classList.remove("hidden"); document.getElementById("qrPlaceholder").classList.add("hidden");
+                    qrImage.classList.remove("hidden");
+                    document.getElementById("qrCenterIcon")?.classList.remove("hidden");
+                    document.getElementById("qrPlaceholder").classList.add("hidden");
                     document.getElementById("qrStatus").textContent = "掃描加入聯絡人";
                 } catch (err) {
                     console.error("QR 產生錯誤:", err);
                     document.getElementById("qrStatus").textContent = "太多資料無法產生 QR Code";
-                    qrImage.classList.add("hidden"); document.getElementById("qrCenterIcon")?.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
+                    qrImage.classList.add("hidden");
+                    document.getElementById("qrCenterIcon")?.classList.add("hidden");
+                    document.getElementById("qrPlaceholder").classList.remove("hidden");
                 }
             } else {
-                qrImage.classList.add("hidden"); document.getElementById("qrCenterIcon")?.classList.add("hidden"); document.getElementById("qrPlaceholder").classList.remove("hidden");
+                qrImage.classList.add("hidden");
+                document.getElementById("qrCenterIcon")?.classList.add("hidden");
+                document.getElementById("qrPlaceholder").classList.remove("hidden");
                 document.getElementById("qrStatus").textContent = "等待資料輸入...";
             }
             // 若地址有任何內容，則顯示 Google Maps 按鈕
-            document.getElementById("openMapsBtn").classList.toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress].some(v => Utils.isValid(v)));
+            document.getElementById("openMapsBtn").classList
+                .toggle("hidden", ![d.country, d.region, d.locality, d.streetAddress]
+                    .some(v => Utils.isValid(v)));
 
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
@@ -2531,7 +2557,18 @@
         }
 
         const debouncedUpdateVCardPreview = Utils.debounce(updateVCardPreview, DEFAULT_DEBOUNCE_DELAY);
-
+    </script>
+    <script>
+        // PWA Service Worker 註冊
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(registration => {
+                    console.log('PWA SW registered:', registration.scope);
+                }).catch(err => {
+                    console.log('PWA SW registration failed:', err);
+                });
+            });
+        }
     </script>
 </body>
 

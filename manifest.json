@@ -1,0 +1,27 @@
+{
+  "name": "名片快手",
+  "short_name": "名片快手",
+  "description": "將實體名片轉換為數位聯絡人",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
