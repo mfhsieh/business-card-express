@@ -618,6 +618,9 @@
         /**
          * 系統設定與預設值
          */
+        // const apiKey = process.env.GEMINI_API_KEY;
+        // localStorage.setItem("geminiApiKey", apiKey);
+
         const MODEL_NAME = "gemini-2.5-flash";
 
         const DEFAULT_BASE_DELAY = 1000;  // GeminiService: API 重試時的基礎延遲 (毫秒)
@@ -817,8 +820,8 @@
         const GeminiService = {
             /** @property {string} modelApi - 動態取得目前使用的 API 端點網址 */
             get modelApi() {
-                const apiKey = localStorage.getItem("geminiApiKey") || "";
-                return `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
+                const key = localStorage.getItem("geminiApiKey") || "";
+                return `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${key}`;
             },
             /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
             baseDelay: DEFAULT_BASE_DELAY,
