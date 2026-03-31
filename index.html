@@ -621,7 +621,7 @@
 
         // 如果要設定預設的 api key，請取消下面兩行註解，並填入你的 api key
         // const apiKey = ""; // 在 AI Studio 可使用 process.env.GEMINI_API_KEY 取得 apiKey;
-        // localStorage.setItem("geminiApiKey", apiKey);
+        // if (!localStorage.getItem("geminiApiKey")) localStorage.setItem("geminiApiKey", apiKey);
 
         const MODEL_NAME = "gemini-2.5-flash";
 
