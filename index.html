@@ -915,33 +915,59 @@
                 if (!text) return {};
                 let parsed = null;
                 try {
-                    // [防護核心] 使用正規表達式找出所有可能的大括號 {} 區塊
-                    // 針對 AI 可能回傳多個 JSON 區塊的情況 (例如 Chain of Thought 或重複輸出)，
-                    // 我們通常優先採納「最後一個」或是「內容最豐富」的一個。
-                    const jsonRegex = /{[^]*?}/g;
-                    const matches = text.match(jsonRegex);
-
-                    if (matches && matches.length > 0) {
-                        // 嘗試由後往前解析，因為通常最後一個才是最終結果
-                        for (let i = matches.length - 1; i >= 0; i--) {
+                    // 1. 優先嘗試擷取 Markdown 程式碼區塊中的 JSON (```json ... ```)
+                    // 由於 AI 的回覆經常包含說明文字，直接鎖定程式碼區塊是最安全的做法
+                    const codeBlockRegex = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+                    let match;
+                    const jsonBlocks = [];
+                    while ((match = codeBlockRegex.exec(text)) !== null) {
+                        jsonBlocks.push(match[1]);
+                    }
+                    
+                    if (jsonBlocks.length > 0) {
+                        // 從最後一個區塊開始嘗試
+                        for (let i = jsonBlocks.length - 1; i >= 0; i--) {
                             try {
-                                const candidate = JSON.parse(matches[i]);
-                                // 檢查是否包含關鍵欄位 (如姓名)，若是則採納並退出
+                                const candidate = JSON.parse(jsonBlocks[i]);
                                 if (candidate.fn || candidate.orgName) {
                                     parsed = candidate;
                                     break;
                                 }
-                            } catch (e) { /* 繼續嘗試上一個區塊 */ }
+                            } catch (e) { }
                         }
                     }
 
-                    // Fallback：若正則解析失敗，嘗試原本的頭尾裁切法
+                    // 2. 若沒有 markdown 區塊或解析失敗，嘗試回退到原本的頭尾大括號裁切法
+                    // 這是處理 AI 直接回傳沒有包裝的 JSON 字串
                     if (!parsed) {
                         const startIdx = text.indexOf("{");
                         const endIdx = text.lastIndexOf("}");
                         if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
-                            const jsonStr = text.substring(startIdx, endIdx + 1);
-                            try { parsed = JSON.parse(jsonStr); } catch (e) { }
+                            // 過濾掉第一個大括號前面的非不可見字元，減少因為包含說明文字的開頭導致的錯誤
+                            let potentialJsonStr = text.substring(startIdx, endIdx + 1);
+                            try { 
+                                const candidate = JSON.parse(potentialJsonStr);
+                                if (candidate.fn || candidate.orgName) {
+                                    parsed = candidate;
+                                }
+                            } catch (e) { }
+                        }
+                    }
+
+                    // 3. 最後的 Fallback：使用正規表達式找出所有可能的大括號 {} 區塊
+                    if (!parsed) {
+                        const jsonRegex = /{[^]*?}/g;
+                        const matches = text.match(jsonRegex);
+                        if (matches && matches.length > 0) {
+                            for (let i = matches.length - 1; i >= 0; i--) {
+                                try {
+                                    const candidate = JSON.parse(matches[i]);
+                                    if (candidate.fn || candidate.orgName) {
+                                        parsed = candidate;
+                                        break;
+                                    }
+                                } catch (e) { }
+                            }
                         }
                     }
 
@@ -1424,6 +1450,7 @@
                     return;
                 }
                 if (!state.base64Image) return;
+                this.hideError();
                 this.resetEmailDraft();
                 this.setLoading(true, "影像辨識與上網搜尋中");
 
@@ -1711,6 +1738,16 @@
                 if (text) text.textContent = msg;
                 if (err) err.classList.remove("hidden");
                 if (this.elDebugPanel) this.elDebugPanel.classList.remove("hidden");
+            },
+
+            /**
+             * 隱藏錯誤訊息區塊
+             * @returns {void}
+             */
+            hideError() {
+                const err = document.getElementById("errorMessage");
+                if (err) err.classList.add("hidden");
+                if (this.elDebugPanel) this.elDebugPanel.classList.add("hidden");
             },
 
             /**
@@ -2037,6 +2074,8 @@
                         state.base64Image = target.base64Image;
                         state.currentHistoryId = id;
 
+                        UXManager.hideError();
+
                         // 關閉歷史面板
                         if (this.toggleHistoryPanel) {
                             const overlay = document.getElementById("historyOverlay");
@@ -2272,6 +2311,8 @@
                 document.getElementById("summaryContainer").classList.add("hidden");
                 syncDataToUI();
             }
+
+            UXManager.hideError();
 
             try {
                 // 1. 影像壓縮與 Base64 轉換
