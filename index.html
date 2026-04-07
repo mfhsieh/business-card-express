@@ -610,9 +610,7 @@
 
     <script>
         /**
-         * 名片快手 1.20
-         * 
-         * 2026-03-30：1.20 版發佈。新增 PWA 功能。
+         * 名片快手 1.22
          */
 
         /**
@@ -623,7 +621,8 @@
         // const apiKey = ""; // 在 AI Studio 可使用 process.env.GEMINI_API_KEY 取得 apiKey;
         // if (!localStorage.getItem("geminiApiKey")) localStorage.setItem("geminiApiKey", apiKey);
 
-        const MODEL_NAME = "gemini-2.5-flash";
+        // const MODEL_NAME = "gemini-2.5-flash";
+        const MODEL_NAME = "gemma-4-31b-it";  // 改用 Gemma 4 免費 API，每日 3,000 次
 
         const DEFAULT_BASE_DELAY = 1000;  // GeminiService: API 重試時的基礎延遲 (毫秒)
         const DEFAULT_MAX_RETRIES = 5;    // GeminiService: API 失敗時最大重試次數
@@ -923,7 +922,7 @@
                     while ((match = codeBlockRegex.exec(text)) !== null) {
                         jsonBlocks.push(match[1]);
                     }
-                    
+
                     if (jsonBlocks.length > 0) {
                         // 從最後一個區塊開始嘗試
                         for (let i = jsonBlocks.length - 1; i >= 0; i--) {
@@ -945,7 +944,7 @@
                         if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
                             // 過濾掉第一個大括號前面的非不可見字元，減少因為包含說明文字的開頭導致的錯誤
                             let potentialJsonStr = text.substring(startIdx, endIdx + 1);
-                            try { 
+                            try {
                                 const candidate = JSON.parse(potentialJsonStr);
                                 if (candidate.fn || candidate.orgName) {
                                     parsed = candidate;
