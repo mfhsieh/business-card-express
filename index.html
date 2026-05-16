@@ -109,23 +109,7 @@
                         </button>
                     </div>
 
-                    <!-- API Key 輸入區 -->
-                    <div id="apiKeyContainer" class="hidden mb-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl">
-                        <label class="block text-xs font-bold text-slate-500 mb-1">Google Gemini API Key
-                            (僅儲存於本機端)</label>
-                        <div class="relative">
-                            <input type="password" id="apiKeyInput" placeholder="請輸入 API Key (僅儲存於本機端)"
-                                class="w-full px-4 py-3 rounded-xl border border-slate-200 font-medium bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all pr-10 text-sm">
-                            <button id="toggleApiKeyVisibility"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                                title="顯示/隱藏">
-                                <i data-lucide="eye" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                        <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                            class="text-[10px] text-indigo-500 hover:text-indigo-700 mt-2 flex items-center gap-1"><i
-                                data-lucide="external-link" class="w-3 h-3"></i> 取得 API Key</a>
-                    </div>
+
 
                     <div id="dropZone"
                         class="group border-2 border-dashed rounded-2xl aspect-[1.6/1] flex flex-col items-center justify-center transition-all overflow-hidden border-slate-200 hover:border-indigo-400 cursor-pointer hover:bg-slate-50 relative">
@@ -214,6 +198,7 @@
                                     class="w-3 h-3 text-slate-300 transition-transform duration-300"></i>
                             </div>
                             <div id="sourcesListWrapper" class="transition-all">
+                                <div id="searchEntryPoint" class="mb-3 empty:hidden"></div>
                                 <div id="sourcesList" class="flex flex-wrap gap-2"></div>
                             </div>
                         </div>
@@ -534,6 +519,67 @@
         class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold opacity-0 pointer-events-none transition-opacity duration-300 w-max max-w-[90vw] text-center">
     </div>
 
+    <!-- API Key 設定 Modal -->
+    <div id="apiKeyModalOverlay"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
+        <div class="bg-white px-8 py-8 rounded-3xl shadow-2xl flex flex-col items-center gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw]"
+            id="apiKeyModal">
+            <div class="w-full flex justify-between items-center mb-2">
+                <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="key" class="text-indigo-600 w-5 h-5"></i> API 設定
+                </h3>
+                <button id="closeApiKeyModalBtn" class="p-1 text-slate-400 hover:text-slate-600 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="w-full space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">選擇 AI 模型</label>
+                    <div class="relative">
+                        <select id="modelSelect"
+                            class="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm appearance-none cursor-pointer pr-12">
+                            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                            <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
+                            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                            <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+                            <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
+                            <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
+                            <option value="gemma-4-31b-it">gemma-4-31b-it</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">Google Gemini API Key</label>
+                    <div class="relative">
+                        <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
+                            class="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-sm">
+                        <button id="toggleApiKeyVisibility"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                            title="顯示/隱藏">
+                            <i data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                        class="text-[12px] text-indigo-500 hover:text-indigo-700 mt-3 ml-1 flex items-center gap-1 font-bold">
+                        <i data-lucide="external-link" class="w-3 h-3"></i> 取得 API Key (Google AI Studio)
+                    </a>
+                    <p class="text-[12px] text-indigo-400 mt-1.5 ml-1 font-medium leading-relaxed">
+                        註：若選用 Gemma 4 系列模型，可至 Google AI Studio 申請免費額度的 API Key 進行測試。
+                    </p>
+                </div>
+                <button id="confirmApiKeyBtn"
+                    class="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base rounded-2xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95 mt-4">
+                    確認儲存
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
     <!-- 全域確認對話框 -->
     <div id="globalConfirmOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
@@ -621,8 +667,7 @@
         // const apiKey = ""; // 在 AI Studio 可使用 process.env.GEMINI_API_KEY 取得 apiKey;
         // if (!localStorage.getItem("geminiApiKey")) localStorage.setItem("geminiApiKey", apiKey);
 
-        // const MODEL_NAME = "gemini-2.5-flash";
-        const MODEL_NAME = "gemma-4-31b-it";  // 改用 Gemma 4 免費 API，每日 3,000 次
+        const MODEL_NAME = "gemini-2.0-flash"; // 預設使用您的 Key 最穩定且快速的模型 (支援 OCR + 搜尋)
 
         const DEFAULT_BASE_DELAY = 1000;  // GeminiService: API 重試時的基礎延遲 (毫秒)
         const DEFAULT_MAX_RETRIES = 5;    // GeminiService: API 失敗時最大重試次數
@@ -819,11 +864,6 @@
          * 封裝 Google Gemini API 的通訊邏輯、提問處理、JSON 解析與重試機制。
          */
         const GeminiService = {
-            /** @property {string} modelApi - 動態取得目前使用的 API 端點網址 */
-            get modelApi() {
-                const key = localStorage.getItem("geminiApiKey") || "";
-                return `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${key}`;
-            },
             /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
             baseDelay: DEFAULT_BASE_DELAY,
             /** @property {number} maxRetries - API 呼叫失敗時的最大重試次數 */
@@ -856,34 +896,64 @@
                 let currentDelay = this.baseDelay;
                 const retries = this.maxRetries;
 
+                // 動態決定 API URL 的輔助函式
+                const getUrl = (version) => {
+                    const key = localStorage.getItem("geminiApiKey") || "";
+                    const model = localStorage.getItem("geminiModel") || MODEL_NAME;
+                    return `https://generativelanguage.googleapis.com/${version}/models/${model}:generateContent?key=${key}`;
+                };
+
+                let apiVersion = "v1beta"; // 優先嘗試 v1beta (因為支援 Google Search 聯網搜尋)
+                let retryWithNoTools = false;
+
                 for (let i = 0; i < retries; i++) {
                     try {
-                        const response = await window.fetch(this.modelApi, {
+                        // 建立深拷貝，避免修改原始 payload
+                        let currentPayload = JSON.parse(JSON.stringify(payload));
+                        if (retryWithNoTools && currentPayload.tools) {
+                            delete currentPayload.tools; // 若 API 不支援聯網搜尋，則移除該欄位
+                        }
+
+                        const response = await window.fetch(getUrl(apiVersion), {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(payload)
+                            body: JSON.stringify(currentPayload)
                         });
 
-                        if (!response.ok) {
-                            const errorBody = await response.json().catch(() => ({}));
-                            const status = response.status;
-                            const msg = errorBody.error?.message || `API 狀態碼 ${status}`;
+                        const responseData = await response.json().catch(() => ({}));
 
-                            // 為 Error 物件附加 HTTP 狀態碼，讓 catch 區塊可精確判斷是否需要重試
+                        if (!response.ok) {
+                            const status = response.status;
+                            const msg = responseData.error?.message || `API 狀態碼 ${status}`;
+
+                            // [自我修復邏輯 1] 如果 v1beta 找不到模型 (404)，可能是該區域僅支援 v1 穩定版
+                            if (status === 404 && apiVersion === "v1beta") {
+                                console.warn("v1beta 找不到模型，嘗試切換至 v1 穩定版...");
+                                apiVersion = "v1";
+                                i--; // 不計入正式重試次數，立即執行切換嘗試
+                                continue;
+                            }
+
+                            // [自我修復邏輯 2] 如果 API 回報不支援 "tools" 聯網功能，嘗試移除後重試
+                            if (status === 400 && (msg.includes("tools") || msg.includes("google_search_retrieval") || msg.includes("not enabled")) && !retryWithNoTools) {
+                                console.warn("該模型或版本不支援 tools 聯網功能，嘗試移除後重試...");
+                                retryWithNoTools = true;
+                                i--; // 不計入正式重試次數，立即執行切換嘗試
+                                continue;
+                            }
+
                             const err = new Error(msg);
                             err.status = status;
                             throw err;
                         }
-                        return await response.json();
+                        return responseData;
                     } catch (error) {
-                        // 客戶端錯誤 (4xx 但不含 429)：無論重試幾次都不會成功，直接拋出放棄
                         const s = error.status;
+                        // 4xx 錯誤 (除 429 外) 通常是設定問題，不需要指數退避重試
                         if (s !== undefined && s >= 400 && s < 500 && s !== 429) {
                             throw error;
                         }
                         if (i === retries - 1) throw error;
-
-                        // 等待一段時間後再重試，延遲時間隨失敗次數倍增
                         await new Promise(res => setTimeout(res, currentDelay));
                         currentDelay *= 2;
                     }
@@ -915,57 +985,59 @@
                 let parsed = null;
                 try {
                     // 1. 優先嘗試擷取 Markdown 程式碼區塊中的 JSON (```json ... ```)
-                    // 由於 AI 的回覆經常包含說明文字，直接鎖定程式碼區塊是最安全的做法
-                    const codeBlockRegex = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+                    // 1. 優先嘗試擷取 Markdown 程式碼區塊中的 JSON (```json ... ```)
+                    // 支援未閉合的程式碼區塊 (處理被截斷的情況)
+                    const codeBlockRegex = /```(?:json)?\s*([\s\S]*?)(?:```|$)/gi;
                     let match;
                     const jsonBlocks = [];
                     while ((match = codeBlockRegex.exec(text)) !== null) {
-                        jsonBlocks.push(match[1]);
+                        if (match[1]) jsonBlocks.push(match[1].trim());
                     }
 
+                    // 輔助函式：嘗試修復被截斷的 JSON (處理斷頭、補齊括號)
+                    const tryRepairAndParse = (str) => {
+                        if (!str) return null;
+                        let clean = str.trim();
+
+                        // 1. 嘗試直接解析
+                        try { return JSON.parse(clean); } catch (e) { }
+
+                        // 2. 處理常見截斷：移除結尾的 ,"key": 或 "key":
+                        clean = clean.replace(/,\s*\"[^\"]*\"\s*:\s*$/, ""); // 移除末尾斷掉的欄位名
+                        clean = clean.replace(/\"[^\"]*\"\s*:\s*$/, "");
+                        clean = clean.trim().replace(/,$/, "");             // 移除末尾逗號
+
+                        // 3. 嘗試暴力補齊大括號 (針對被截斷的情況)
+                        let base = clean.replace(/,\s*([}\]])/g, "$1").replace(/\/\/.*/g, "").replace(/\/\*[\s\S]*?\*\//g, "");
+                        let repaired = base;
+                        for (let j = 0; j < 10; j++) {
+                            try { return JSON.parse(repaired); } catch (e) { }
+                            try { return JSON.parse(repaired.replace(/([^"])$/, '$1"}')); } catch (e) { }
+                            repaired += "}";
+                        }
+                        return null;
+                    };
+
                     if (jsonBlocks.length > 0) {
-                        // 從最後一個區塊開始嘗試
                         for (let i = jsonBlocks.length - 1; i >= 0; i--) {
-                            try {
-                                const candidate = JSON.parse(jsonBlocks[i]);
-                                if (candidate.fn || candidate.orgName) {
-                                    parsed = candidate;
-                                    break;
-                                }
-                            } catch (e) { }
+                            const candidate = tryRepairAndParse(jsonBlocks[i]);
+                            if (candidate && (candidate.fn || candidate.orgName || candidate.name)) {
+                                parsed = candidate;
+                                break;
+                            }
                         }
                     }
 
                     // 2. 若沒有 markdown 區塊或解析失敗，嘗試回退到原本的頭尾大括號裁切法
-                    // 這是處理 AI 直接回傳沒有包裝的 JSON 字串
                     if (!parsed) {
                         const startIdx = text.indexOf("{");
                         const endIdx = text.lastIndexOf("}");
-                        if (startIdx !== -1 && endIdx !== -1 && endIdx >= startIdx) {
-                            // 過濾掉第一個大括號前面的非不可見字元，減少因為包含說明文字的開頭導致的錯誤
-                            let potentialJsonStr = text.substring(startIdx, endIdx + 1);
-                            try {
-                                const candidate = JSON.parse(potentialJsonStr);
-                                if (candidate.fn || candidate.orgName) {
-                                    parsed = candidate;
-                                }
-                            } catch (e) { }
-                        }
-                    }
-
-                    // 3. 最後的 Fallback：使用正規表達式找出所有可能的大括號 {} 區塊
-                    if (!parsed) {
-                        const jsonRegex = /{[^]*?}/g;
-                        const matches = text.match(jsonRegex);
-                        if (matches && matches.length > 0) {
-                            for (let i = matches.length - 1; i >= 0; i--) {
-                                try {
-                                    const candidate = JSON.parse(matches[i]);
-                                    if (candidate.fn || candidate.orgName) {
-                                        parsed = candidate;
-                                        break;
-                                    }
-                                } catch (e) { }
+                        if (startIdx !== -1) {
+                            const actualEndIdx = endIdx === -1 ? text.length : endIdx + 1;
+                            const potentialJsonStr = text.substring(startIdx, actualEndIdx);
+                            const candidate = tryRepairAndParse(potentialJsonStr);
+                            if (candidate && (candidate.fn || candidate.orgName || candidate.name)) {
+                                parsed = candidate;
                             }
                         }
                     }
@@ -973,8 +1045,9 @@
                     if (!parsed) throw new Error("找不到有效的 JSON 內容");
                     return parsed;
                 } catch (e) {
+                    const snippet = text ? text.substring(0, 100) + "..." : "(無內容)";
                     console.error("GeminiService.parseJSON 失敗:", e, "內容:", text);
-                    throw new Error("AI 回傳格式異常，無法解析資料。");
+                    throw new Error(`AI 回傳格式異常，無法解析資料。\n(回傳片段：${snippet})`);
                 }
             },
 
@@ -993,7 +1066,13 @@
                     parts.push({ inlineData: { mimeType: "image/png", data: imageBase64 } });
                 }
 
-                const payload = { contents: [{ role: "user", parts }] };
+                const payload = {
+                    contents: [{ role: "user", parts }],
+                    generationConfig: {
+                        maxOutputTokens: 8192,
+                        temperature: 0.1 // 降低隨機性，讓 JSON 輸出更穩定
+                    }
+                };
                 if (tools) payload.tools = tools;
 
                 return await this.fetch(payload);
@@ -1273,8 +1352,12 @@
 
                 // 綁定 API Key 相關事件
                 const apiKeyInput = document.getElementById("apiKeyInput");
+                const modelSelect = document.getElementById("modelSelect");
                 const settingsBtn = document.getElementById("settingsBtn");
-                const apiKeyContainer = document.getElementById("apiKeyContainer");
+                const apiKeyModalOverlay = document.getElementById("apiKeyModalOverlay");
+                const apiKeyModal = document.getElementById("apiKeyModal");
+                const closeBtn = document.getElementById("closeApiKeyModalBtn");
+                const confirmBtn = document.getElementById("confirmApiKeyBtn");
 
                 const updateSettingsIconState = () => {
                     if (!settingsBtn) return;
@@ -1296,36 +1379,43 @@
                     }
                 };
 
-                if (settingsBtn && apiKeyContainer) {
-                    settingsBtn.addEventListener("click", () => {
-                        apiKeyContainer.classList.toggle("hidden");
-                        if (!apiKeyContainer.classList.contains("hidden") && apiKeyInput) {
-                            apiKeyInput.focus();
-                        }
+                const toggleModal = (show) => {
+                    if (!apiKeyModalOverlay || !apiKeyModal) return;
+                    if (show) {
+                        apiKeyModalOverlay.classList.remove("hidden");
+                        setTimeout(() => {
+                            apiKeyModalOverlay.classList.remove("opacity-0");
+                            apiKeyModal.classList.remove("scale-95");
+                            if (apiKeyInput) apiKeyInput.focus();
+                        }, 10);
+                    } else {
+                        apiKeyModal.classList.add("scale-95");
+                        apiKeyModalOverlay.classList.add("opacity-0");
+                        setTimeout(() => apiKeyModalOverlay.classList.add("hidden"), 200);
+                    }
+                };
+
+                if (settingsBtn) {
+                    settingsBtn.addEventListener("click", () => toggleModal(true));
+                }
+
+                if (closeBtn) closeBtn.addEventListener("click", () => toggleModal(false));
+                if (confirmBtn) confirmBtn.addEventListener("click", () => toggleModal(false));
+                if (apiKeyModalOverlay) {
+                    apiKeyModalOverlay.addEventListener("click", (e) => {
+                        if (e.target === apiKeyModalOverlay) toggleModal(false);
                     });
                 }
 
                 if (apiKeyInput) {
                     apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
+                    if (modelSelect) {
+                        modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
+                        modelSelect.addEventListener("change", (e) => {
+                            localStorage.setItem("geminiModel", e.target.value);
+                        });
+                    }
                     updateSettingsIconState();
-
-                    // 自動隱藏邏輯：當焦點或點擊離開輸入區塊時隱藏
-                    const autoHideContainer = (e) => {
-                        if (!apiKeyContainer || apiKeyContainer.classList.contains("hidden") || !apiKeyInput.value.trim()) {
-                            return;
-                        }
-
-                        // 若是經由點擊設定按鈕觸發，則交由設定按鈕的 click 事件處理
-                        if (e && settingsBtn && (e.target === settingsBtn || settingsBtn.contains(e.target))) return;
-
-                        // 使用 composedPath() 檢查點擊是否發生在 apiKeyContainer 內部，這能避免因為 Lucide 替換 SVG 圖示造成節點脫離 DOM 的誤判
-                        const path = e.composedPath ? e.composedPath() : [];
-                        if (e && e.type === "click" && !path.includes(apiKeyContainer)) {
-                            apiKeyContainer.classList.add("hidden");
-                        }
-                    };
-
-                    document.addEventListener("click", autoHideContainer);
 
                     apiKeyInput.addEventListener("input", (e) => {
                         localStorage.setItem("geminiApiKey", e.target.value.trim());
@@ -1334,9 +1424,7 @@
 
                     apiKeyInput.addEventListener("keydown", (e) => {
                         if (e.key === "Enter") {
-                            if (apiKeyInput.value.trim() && apiKeyContainer && !apiKeyContainer.classList.contains("hidden")) {
-                                apiKeyContainer.classList.add("hidden");
-                            }
+                            toggleModal(false);
                         }
                     });
 
@@ -1355,6 +1443,9 @@
                         });
                     }
                 }
+                // 暴露方法給其他模組使用
+                this.toggleApiKeyModal = toggleModal;
+
                 this.elPreviewImage = document.getElementById("previewImage");
                 this.elUploadPlaceholder = document.getElementById("uploadPlaceholder");
                 this.elFileInput = document.getElementById("fileInput");
@@ -1441,10 +1532,7 @@
              */
             async identifyCard() {
                 if (!localStorage.getItem("geminiApiKey")) {
-                    const container = document.getElementById("apiKeyContainer");
-                    if (container && container.classList.contains("hidden")) {
-                        container.classList.remove("hidden");
-                    }
+                    this.toggleApiKeyModal(true);
                     this.showError("請先輸入 Google Gemini API Key 以啟用人工智慧服務。");
                     return;
                 }
@@ -1461,10 +1549,27 @@
                     const result1 = await GeminiService.ask(PROMPT_OCR, state.base64Image, [{ googleSearch: {} }]);
                     this.elDebugPanel.textContent = JSON.stringify(result1, null, 2);
 
-                    const text1 = GeminiService.extractText(result1);
-                    const parsedData = GeminiService.parseJSON(text1);
+                    // [優先處理] 提取搜尋來源與渲染入口 (即使後續 JSON 解析失敗也能顯示)
+                    const candidate1 = result1.candidates?.[0];
+                    const metadata = candidate1?.groundingMetadata;
+                    const searchHtml = metadata?.searchEntryPoint?.renderedContent || "";
+                    const rawSources = metadata?.groundingChunks || metadata?.groundingAttributions || [];
+                    const sources = rawSources.map(a => ({ uri: a.web?.uri, title: a.web?.title })).filter(s => s.uri && s.title);
 
-                    // 防呆容錯處理：確保所有的清單資料型態為陣列
+                    // 執行 JSON 解析 (加上錯誤保護)
+                    let parsedData = {};
+                    try {
+                        const text1 = GeminiService.extractText(result1);
+                        parsedData = GeminiService.parseJSON(text1);
+                    } catch (parseErr) {
+                        console.warn("JSON 解析失敗，但仍將顯示搜尋結果", parseErr);
+                        this.toast("資訊解析不完整，但已為您搜尋背景資料", 5000);
+                    }
+
+                    // 合併資料與防呆處理
+                    parsedData.sources = sources;
+                    parsedData.searchHtml = searchHtml;
+
                     ["phones", "faxes", "emails", "urls"].forEach(key => {
                         if (!Array.isArray(parsedData[key])) parsedData[key] = [];
                     });
@@ -1473,16 +1578,20 @@
                     if (parsedData.phones.length > 0) parsedData.phones = parsedData.phones.map(p => ({ ...p, value: vCardFormatter.normalizePhone(p.value) }));
                     if (parsedData.faxes.length > 0) parsedData.faxes = parsedData.faxes.map(f => ({ ...f, value: vCardFormatter.normalizePhone(f.value) }));
 
-                    // 提取來源連結
-                    const candidate1 = result1.candidates?.[0];
-                    const metadata = candidate1?.groundingMetadata;
-                    const rawSources = metadata?.groundingChunks || metadata?.groundingAttributions || [];
-                    const sources = rawSources.map(a => ({ uri: a.web?.uri, title: a.web?.title })).filter(s => s.uri && s.title);
-
-                    parsedData.sources = sources;
-
                     // 更新狀態並同步 UI
                     state.cardData = { ...JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)), ...parsedData };
+
+                    // [保險機制] 針對 gemini-3.1-flash-lite 的搜尋晶片進行強制渲染
+                    const sep = document.getElementById("searchEntryPoint");
+                    const sb = document.getElementById("sourcesBlock");
+                    const sc = document.getElementById("summaryContainer");
+                    if (parsedData.searchHtml && sep && sb && sc) {
+                        sep.innerHTML = parsedData.searchHtml;
+                        sb.classList.remove("hidden");
+                        sc.classList.remove("hidden");
+                        console.log("已強制渲染搜尋入口，長度：", parsedData.searchHtml.length);
+                    }
+
                     syncDataToUI();
 
                     // 成功載入與渲染後，非同步儲存到 IndexedDB
@@ -1495,7 +1604,11 @@
 
                     this.toast("影像辨識與上網搜尋完成！");
                 } catch (err) {
-                    this.showError("處理失敗：" + err.message);
+                    let msg = err.message;
+                    if (msg.includes("not found") || msg.includes("not supported")) {
+                        msg += "\n\n(提示：您選擇的模型可能尚未在您的帳號或地區開放，請嘗試點擊右上角設定切換至 Gemini 1.5 Flash)";
+                    }
+                    this.showError("處理失敗：" + msg);
                 } finally {
                     this.setLoading(false);
                 }
@@ -2223,11 +2336,7 @@
                 const hasKey = !!localStorage.getItem("geminiApiKey");
                 if (!hasKey) {
                     UXManager.toast("請先點擊右上角齒輪設定 API Key");
-                    const container = document.getElementById("apiKeyContainer");
-                    if (container && container.classList.contains("hidden")) {
-                        const settingsBtn = document.getElementById("settingsBtn");
-                        if (settingsBtn) settingsBtn.click();
-                    }
+                    UXManager.toggleApiKeyModal(true);
                     return false;
                 }
                 return true;
@@ -2376,16 +2485,35 @@
 
             // 3. 渲染參考來源標籤
             const sourcesList = document.getElementById("sourcesList");
+            const searchEntryPoint = document.getElementById("searchEntryPoint");
             const sourcesBlock = document.getElementById("sourcesBlock");
-            if (d.sources && d.sources.length > 0) {
+
+            const hasSources = (d.sources && d.sources.length > 0);
+            const hasSearchHtml = !!d.searchHtml;
+
+            if (hasSources || hasSearchHtml) {
                 sourcesBlock.classList.remove("hidden");
-                sourcesList.innerHTML = d.sources.map(s => `
-                <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
-                    <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
-                </a >
-                `).join("");
+                document.getElementById("summaryContainer").classList.remove("hidden");
+
+                // 渲染 HTML 搜尋入口 (Google Search Chip)
+                if (searchEntryPoint && hasSearchHtml) {
+                    searchEntryPoint.innerHTML = d.searchHtml;
+                    searchEntryPoint.classList.remove("hidden");
+                }
+
+                // 渲染傳統連結
+                if (sourcesList) {
+                    sourcesList.innerHTML = (d.sources || []).map(s => `
+                    <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
+                        <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
+                    </a >
+                    `).join("");
+                }
                 lucide.createIcons();
-            } else { sourcesBlock.classList.add("hidden"); }
+            } else {
+                sourcesBlock.classList.add("hidden");
+                if (searchEntryPoint) searchEntryPoint.innerHTML = "";
+            }
 
             // 4. 渲染所有動態清單
             renderList("phones"); renderList("faxes"); renderList("emails"); renderList("urls");
