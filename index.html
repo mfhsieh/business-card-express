@@ -714,19 +714,19 @@
    - 職稱 (TITLE): 對應 json 的 title。
    - 地址 (ADR): 依序對應 json 的 poBox, extendedAddress, streetAddress, locality, region, postalCode, country。
      - 台灣地址 **務必** 遵守以下規則:
-       - 中文的地址 **務必** 使用繁體中文。
-       - 英文的地址 **務必** 使用英文。不要翻譯。
-       - "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共 6 個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共 3 個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
-       - "鄉、鎮、市、區" (如: 新竹縣的湖口鄉、苗栗縣的苑裡鎮、新竹縣的竹北市、台北市的大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
-       - "路、街、段、巷、弄、號、樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
-       - "台灣" 為 country 的預設值。
-       - streetAddress 中，"段" 前的數字使用中文，如: "○○路二段" 而不是 "○○路2段"。
-       - streetAddress 中，"巷、弄、號、樓" 前的數字使用阿拉伯數字，如: "12巷3弄4號5樓"。
+       - 中文地址 **務必** 使用繁體中文。
+       - 英文或其它語言地址 **務必** 保留原文。不要翻譯。
+       - 台灣的 "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共 6 個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共 3 個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
+       - 台灣的 "鄉、鎮、市、區" (如: 新竹縣的湖口鄉、苗栗縣的苑裡鎮、新竹縣的竹北市、台北市的大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
+       - 台灣的 "路、街、段、巷、弄、號、樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
+       - country: 中文地址的預設值為 "台灣", 英文地址的預設值為 "Taiwan"。
+       - streetAddress: 中文地址的 "段" 前的數字使用中文，如: "○○路二段" 而不是 "○○路2段"。
+       - streetAddress: 中文地址的 "巷、弄、號、樓" 前的數字使用阿拉伯數字，如: "12巷3弄4號5樓"。
    - 電話 (TEL):
      - 對應 json 的 phones: [{"type":"work"|"cell"|"home", "value":"...", "ext":"..."}]。公司電話、手機、住家電話分別對應 work、cell、home。
      - 對應 json 的 faxes: [{"type":"work"|"home", "value":"...", "ext":"..."}]。公司傳真、住家傳真分別對應 work、home。
      - 分機務必放在 ext 欄位。
-     - 台灣電話格式不加國碼 (如: 02-1234-5678, 0910-123-456)，非台灣電話務必加國碼 (如: +1-555-123-4567)。
+     - 台灣電話依原始格式決定是否加國碼 (如: 02-1234-5678, +886-2-1234-5678)，非台灣電話務必加國碼 (如: +1-555-123-4567)。
      - 務必將所有電話號碼都納入。
    - 電子郵件 (EMAIL):
      - 對應 json 的 emails: [{"type":"work"|"home", "value":"..."}]。公司郵件、個人郵件分別對應 work、home。
@@ -736,8 +736,8 @@
      - 務必將所有網站都納入。
 4. 檢查
    - locality 欄位，"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，嚴禁猜測。
-   - streetAddress 欄位，"段" 前的數字嚴禁使用阿拉伯數字，務必使用中文。
-   - streetAddress 欄位，"巷、弄、號、樓" 前的數字嚴禁使用中文，務必使用阿拉伯數字。
+   - streetAddress 欄位，中文的台灣地址的 "段" 前的數字嚴禁使用阿拉伯數字，務必使用中文。
+   - streetAddress 欄位，中文的台灣地址的 "巷、弄、號、樓" 前的數字嚴禁使用中文，務必使用阿拉伯數字。
 
 【任務二: 網路深度搜尋】
 1. 根據 "任務一" 取得的 "組織名稱 (orgName)"、"人員全名 (fn)" 及 "職稱 (title)"，啟動 Google Search:
@@ -1212,7 +1212,7 @@
 
             /**
              * 台灣電話號碼格式化 (Phone Normalization)
-             * 自動移除雜訊，並將 +886 或 886 轉為 0，接著自動補上符合台灣習慣的破折號 (-) 分隔。
+             * 自動移除雜訊，並進行格式重整。若使用者輸入 +886，則保留完整的含國碼電話號碼，不強制改為 0 開頭。
              * 
              * @param {string} phone - 原始電話或手機字串
              * @returns {string} 格式化後的電話號碼 (處理失敗時回傳清理過數字的字串)
@@ -1220,39 +1220,74 @@
             normalizePhone(phone) {
                 if (!Utils.isValid(phone)) return phone || "";
 
-                // 1. 轉為字串並移除所有非數字與非加號內容
-                let cleaned = String(phone).trim().replace(/[^\d+]/g, "");
+                const trimmed = String(phone).trim();
+                // 1. 轉為字串並移除所有非數字與非加號內容，用來分析結構
+                let cleaned = trimmed.replace(/[^\d+]/g, "");
 
-                // 2. 處理國碼：將 +886 或 886 轉回台灣本地 0 開頭格式
-                if (cleaned.startsWith("+886")) cleaned = "0" + cleaned.slice(4);
-                else if (cleaned.startsWith("886")) cleaned = "0" + cleaned.slice(3);
+                // 如果是台灣國碼或本地號碼，才進行格式重整
+                if (cleaned.startsWith("+886") || cleaned.startsWith("886") || cleaned.startsWith("0")) {
+                    const hasPlus886 = cleaned.startsWith("+886");
 
-                // 3. 針對台灣本地號碼 (0 開頭) 進行格式化
-                if (cleaned.startsWith("0")) {
-                    // 3.1 手機號碼：09XX-XXX-XXX
-                    if (/^09\d{8}$/.test(cleaned)) return `${cleaned.slice(0, 4)}-${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
-
-                    // 3.2 特殊三碼區碼 (苗栗、南投、金門、澎湖、台東)
-                    const area3 = ["037", "049", "082", "069", "089"];
-                    if (area3.includes(cleaned.slice(0, 3))) return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
-
-                    // 3.3 特殊四碼區碼 (馬祖)
-                    if (cleaned.startsWith("0836")) return `${cleaned.slice(0, 4)}-${cleaned.slice(4)}`;
-
-                    // 3.4 標準二碼區碼 (大台北、桃園、台中、台南、高雄等各大城市)
-                    if (/^0[2-8]/.test(cleaned)) {
-                        let area = cleaned.slice(0, 2);
-                        let body = cleaned.slice(2);
-                        // 區碼為 2 碼且後方號碼為 8 碼時，多數統一格式為 0X-XXXX-XXXX
-                        if (body.length === 8) return `${area}-${body.slice(0, 4)}-${body.slice(4)}`;
-
-                        // 其餘為 0X-XXXXXXX 或其他長度
-                        return `${area}-${body}`;
+                    // 如果使用者正輸入到一半且尚未滿台灣標準長度 (例如只打 "+886"、"886" 等)，則暫不強制格式化
+                    if (hasPlus886 && cleaned.length < 11) {
+                        return trimmed;
                     }
+                    if (cleaned.startsWith("886") && !hasPlus886 && cleaned.length < 10) {
+                        return trimmed;
+                    }
+
+                    // 2. 處理國碼：將 +886 或 886 轉為台灣本地 0 開頭格式，以便共用本地格式化邏輯
+                    let formatTarget = cleaned;
+                    if (hasPlus886) {
+                        formatTarget = "0" + cleaned.slice(4);
+                    } else if (cleaned.startsWith("886")) {
+                        formatTarget = "0" + cleaned.slice(3);
+                    }
+
+                    // 3. 針對台灣本地號碼 (0 開頭) 進行格式化
+                    let formatted = formatTarget;
+                    if (formatTarget.startsWith("0")) {
+                        // 3.1 手機號碼：09XX-XXX-XXX
+                        if (/^09\d{8}$/.test(formatTarget)) {
+                            formatted = `${formatTarget.slice(0, 4)}-${formatTarget.slice(4, 7)}-${formatTarget.slice(7)}`;
+                        } else {
+                            // 3.2 特殊三碼區碼 (苗栗、南投、金門、澎湖、台東)
+                            const area3 = ["037", "049", "082", "069", "089"];
+                            if (area3.includes(formatTarget.slice(0, 3))) {
+                                formatted = `${formatTarget.slice(0, 3)}-${formatTarget.slice(3)}`;
+                            }
+                            // 3.3 特殊四碼區碼 (馬祖)
+                            else if (formatTarget.startsWith("0836")) {
+                                formatted = `${formatTarget.slice(0, 4)}-${formatTarget.slice(4)}`;
+                            }
+                            // 3.4 標準二碼區碼 (大台北、桃園、台中、台南、高雄等各大城市)
+                            else if (/^0[2-8]/.test(formatTarget)) {
+                                let area = formatTarget.slice(0, 2);
+                                let body = formatTarget.slice(2);
+                                // 區碼為 2 碼且後方號碼為 8 碼時，多數統一格式為 0X-XXXX-XXXX
+                                if (body.length === 8) {
+                                    formatted = `${area}-${body.slice(0, 4)}-${body.slice(4)}`;
+                                } else {
+                                    // 其餘為 0X-XXXXXXX 或其他長度
+                                    formatted = `${area}-${body}`;
+                                }
+                            }
+                        }
+                    }
+
+                    // 4. 如果原本為含 +886 國碼，則將格式化後開頭的 0 還原為 +886 國碼格式 (例如：+886-9XX-XXX-XXX)
+                    if (hasPlus886) {
+                        if (formatted.startsWith("0")) {
+                            return "+886-" + formatted.slice(1);
+                        }
+                        return trimmed;
+                    }
+
+                    return formatted;
                 }
 
-                // 4. 若非 0 開頭或不符合任何台灣已知規則，回傳清理後的原始字串
-                return cleaned;
+                // 對於非台灣本地/非台灣國碼的號碼（例如美國 +1、日本 +81 號碼），保留使用者原本輸入的格式（含破折號與空白），不做破壞性清理
+                return trimmed;
             },
 
             /** 
@@ -2393,6 +2428,15 @@
                     if (e.target.hasAttribute("data-update-list-type")) {
                         const [type, idx] = e.target.getAttribute("data-update-list-type").split(",");
                         updateListItem(type, parseInt(idx, 10), "type", e.target.value);
+                    } else if (e.target.hasAttribute("data-update-list") || e.target.hasAttribute("data-update-list-validate")) {
+                        const attr = e.target.getAttribute("data-update-list") || e.target.getAttribute("data-update-list-validate");
+                        const [type, idx, key] = attr.split(",");
+                        if ((type === 'phones' || type === 'faxes') && key === 'value') {
+                            const normalized = vCardFormatter.normalizePhone(e.target.value);
+                            state.cardData[type][idx][key] = normalized;
+                            e.target.value = normalized;
+                            debouncedUpdateVCardPreview();
+                        }
                     }
                 });
             }
@@ -2699,8 +2743,8 @@
                 }
             }
 
-            // 更新並格式化號碼
-            state.cardData[listType][idx][key] = (key === 'value' && (listType === 'phones' || listType === 'faxes')) ? vCardFormatter.normalizePhone(val) : val;
+            // 直接存入濾除後的原文字串，輸入時不執行積極的格式規格化，避免輸入到一半跳字
+            state.cardData[listType][idx][key] = val;
 
             // 即時樣式驗證 (不重新渲染清單，避免失去焦點)
             if (el && (listType === 'emails' || listType === 'urls') && key === 'value') {
@@ -2720,11 +2764,11 @@
                 }
             }
 
-            // 同步回 UI 輸入框以反映過濾後的結果
+            // 同步回 UI 輸入框以反映過濾後的結果 (防止覆寫未更動的內容)
             if ((listType === 'phones' || listType === 'faxes') && (key === 'value' || key === 'ext')) {
                 const inputs = document.getElementById(`list-${listType}`).children[idx].querySelectorAll('input');
-                if (key === 'value' && inputs[0]) inputs[0].value = state.cardData[listType][idx][key];
-                if (key === 'ext' && inputs[1]) inputs[1].value = state.cardData[listType][idx][key];
+                if (key === 'value' && inputs[0] && inputs[0].value !== val) inputs[0].value = val;
+                if (key === 'ext' && inputs[1] && inputs[1].value !== val) inputs[1].value = val;
             }
 
             debouncedUpdateVCardPreview();
