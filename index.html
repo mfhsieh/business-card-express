@@ -595,10 +595,16 @@
                         註：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API Key 進行測試。但該系列免費模型的反應較慢，不建議作為正式使用。
                     </p>
                 </div>
-                <button id="confirmApiKeyBtn"
-                    class="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base rounded-2xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95 mt-4">
-                    確認儲存
-                </button>
+                <div class="flex gap-4 w-full mt-4">
+                    <button id="cancelApiKeyBtn"
+                        class="flex-1 py-5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-base rounded-2xl transition-all active:scale-95">
+                        取消
+                    </button>
+                    <button id="confirmApiKeyBtn"
+                        class="flex-1 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base rounded-2xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95">
+                        確認儲存
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -679,9 +685,9 @@
     </div>
 
     <script>
-        /**
-         * 名片快手 1.30
-         */
+         /**
+          * 名片快手 1.33
+          */
 
         /**
          * 系統設定與預設值
@@ -1488,15 +1494,38 @@
                     }
                 };
 
+                const handleCancel = () => {
+                    if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
+                    if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
+                    toggleModal(false);
+                };
+
+                const handleConfirm = () => {
+                    if (apiKeyInput) {
+                        localStorage.setItem("geminiApiKey", apiKeyInput.value.trim());
+                    }
+                    if (modelSelect) {
+                        localStorage.setItem("geminiModel", modelSelect.value);
+                    }
+                    updateSettingsIconState();
+                    toggleModal(false);
+                };
+
                 if (settingsBtn) {
-                    settingsBtn.addEventListener("click", () => toggleModal(true));
+                    settingsBtn.addEventListener("click", () => {
+                        if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
+                        if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
+                        toggleModal(true);
+                    });
                 }
 
-                if (closeBtn) closeBtn.addEventListener("click", () => toggleModal(false));
-                if (confirmBtn) confirmBtn.addEventListener("click", () => toggleModal(false));
+                const cancelBtn = document.getElementById("cancelApiKeyBtn");
+                if (closeBtn) closeBtn.addEventListener("click", handleCancel);
+                if (cancelBtn) cancelBtn.addEventListener("click", handleCancel);
+                if (confirmBtn) confirmBtn.addEventListener("click", handleConfirm);
                 if (apiKeyModalOverlay) {
                     apiKeyModalOverlay.addEventListener("click", (e) => {
-                        if (e.target === apiKeyModalOverlay) toggleModal(false);
+                        if (e.target === apiKeyModalOverlay) handleCancel();
                     });
                 }
 
@@ -1504,20 +1533,12 @@
                     apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
                     if (modelSelect) {
                         modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
-                        modelSelect.addEventListener("change", (e) => {
-                            localStorage.setItem("geminiModel", e.target.value);
-                        });
                     }
                     updateSettingsIconState();
 
-                    apiKeyInput.addEventListener("input", (e) => {
-                        localStorage.setItem("geminiApiKey", e.target.value.trim());
-                        updateSettingsIconState();
-                    });
-
                     apiKeyInput.addEventListener("keydown", (e) => {
                         if (e.key === "Enter") {
-                            toggleModal(false);
+                            handleConfirm();
                         }
                     });
 
