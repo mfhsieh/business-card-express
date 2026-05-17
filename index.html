@@ -705,7 +705,7 @@
 你的任務是從名片影像提取聯絡人資訊，搜尋該聯絡人的組織與該人的背景，最後合併輸出為 JSON 格式。
 
 【任務一: 名片 OCR 與 規格化】
-1. 分析影像，優先提取繁體中文 (zh-TW) 與英數字。排除裝飾性文字。
+1. 分析影像，優先提取中文與英數字。排除裝飾性文字。不要翻譯語言。
 2. 修正 OCR 辨識錯誤，如: "l"/"I"/"1"、"O"/"0" 混淆。
 3. 仿照 vCard 3.0 標準欄位 (如: FN, N) 進行資料處理:
    - 全名 (FN): 對應 json 的 fn。必要欄位。
@@ -714,6 +714,8 @@
    - 職稱 (TITLE): 對應 json 的 title。
    - 地址 (ADR): 依序對應 json 的 poBox, extendedAddress, streetAddress, locality, region, postalCode, country。
      - 台灣地址 **務必** 遵守以下規則:
+       - 中文的地址 **務必** 使用繁體中文。
+       - 英文的地址 **務必** 使用英文。不要翻譯。
        - "縣、市" (如: 新竹縣、台北市、基隆市) 對應 region。此處的 "市" 是指 "直轄市" (共 6 個: 台北市、高雄市、台中市、台南市、桃園市、新北市) 與 "省轄市" (共 3 個: 基隆市、新竹市、嘉義市)，"直轄市" 與 "省轄市" 的地址中，locality 非必要欄位。
        - "鄉、鎮、市、區" (如: 新竹縣的湖口鄉、苗栗縣的苑裡鎮、新竹縣的竹北市、台北市的大安區) 對應 locality。此處的 "市" 是指 "縣轄市" (如: 新竹縣的竹北市、彰化縣的員林市)；此處的 "區" 是指 "直轄市" 與 "省轄市" 的區 (如: 台北市的大安區、基隆市的中正區)。"直轄市" 與 "省轄市" 的 "區"，若名片地址中未明確寫出，則 locality 保持為空。
        - "路、街、段、巷、弄、號、樓" 對應 streetAddress。已拆解至 region 或 locality 的部分不用放入 streetAddress。
@@ -1262,6 +1264,21 @@
             },
 
             /**
+             * 安全跳脫 vCard 文字屬性中的特殊字元 (逗號、分號、反斜線、換行)
+             * 遵循 RFC 2426 / RFC 2425 規範
+             * @param {string} str - 原始文字
+             * @returns {string} 跳脫後的安全字串
+             */
+            escapeText(str) {
+                if (!Utils.isValid(str)) return "";
+                return String(str)
+                    .replace(/\\/g, "\\\\") // 優先跳脫反斜線
+                    .replace(/,/g, "\\,")   // 跳脫逗號
+                    .replace(/;/g, "\\;")   // 跳脫分號
+                    .replace(/\n/g, "\\n");  // 跳脫換行
+            },
+
+            /**
              * [核心轉換邏輯] 產生完整 vCard 3.0 字串
              * 
              * @param {Object} d - 當前的名片狀態資料 (cardData)
@@ -1273,33 +1290,44 @@
                 const getUtf8 = (str) => hasNonAscii(str) ? ";CHARSET=UTF-8" : "";
 
                 // 2. 初始化 vCard 陣列與 Header (遵循版本 3.0 規範)
-                const parts = ["BEGIN:VCARD", "VERSION:3.0", `REV:${this.formatREV()}`];
+                const parts = ["BEGIN:VCARD", "VERSION:3.0"];
 
                 // 只有在勾選「加入分類」時才寫入 CATEGORIES 欄位
                 if (d.useCategories && Utils.isValid(d.categories)) {
-                    parts.push(`CATEGORIES${getUtf8(d.categories)}:${d.categories}`);
+                    const escapedCat = this.escapeText(d.categories);
+                    parts.push(`CATEGORIES${getUtf8(escapedCat)}:${escapedCat}`);
                 }
 
                 // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則嘗試組合姓氏與名字，皆無則顯示 "聯絡人"
                 const fnValue = Utils.isValid(d.fn) ? d.fn : ((Utils.isValid(d.lastName) ? d.lastName : "") + (Utils.isValid(d.firstName) ? d.firstName : "") || "聯絡人");
-                parts.push(`FN${getUtf8(fnValue)}:${fnValue}`);
+                const escapedFn = this.escapeText(fnValue);
+                parts.push(`FN${getUtf8(escapedFn)}:${escapedFn}`);
 
                 // 4. 處理姓名結構 (N): vCard 格式嚴格要求為「姓;名;中間名;前綴;後綴」
-                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix].map(v => Utils.isValid(v) ? v : "").join(";");
+                const nValue = [d.lastName, d.firstName, d.middleName, d.prefix, d.suffix]
+                    .map(v => this.escapeText(v))
+                    .join(";");
                 parts.push(`N${getUtf8(nValue)}:${nValue}`);
 
                 // 5. 處理組織與部門 (ORG)
                 if (Utils.isValid(d.orgName) || Utils.isValid(d.orgUnit)) {
-                    let orgStr = (d.orgName || "");
-                    if (Utils.isValid(d.orgUnit)) orgStr += ";" + d.orgUnit;
+                    let orgParts = [];
+                    if (Utils.isValid(d.orgName)) orgParts.push(this.escapeText(d.orgName));
+                    if (Utils.isValid(d.orgUnit)) orgParts.push(this.escapeText(d.orgUnit));
+                    const orgStr = orgParts.join(";");
                     parts.push(`ORG${getUtf8(orgStr)}:${orgStr}`);
                 }
 
                 // 6. 處理職稱 (TITLE)
-                if (Utils.isValid(d.title)) parts.push(`TITLE${getUtf8(d.title)}:${d.title}`);
+                if (Utils.isValid(d.title)) {
+                    const escapedTitle = this.escapeText(d.title);
+                    parts.push(`TITLE${getUtf8(escapedTitle)}:${escapedTitle}`);
+                }
 
                 // 7. 處理地址 (ADR): vCard 格式嚴格要求為「郵政信箱;延伸地址;街道地址;城市;區域;郵遞區號;國家」
-                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country].map(v => Utils.isValid(v) ? v : "").join(";");
+                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country]
+                    .map(v => this.escapeText(v))
+                    .join(";");
                 parts.push(`ADR;TYPE=WORK${getUtf8(adrValue)}:${adrValue}`);
 
                 // 8. 處理多組電話 (phones)
@@ -1310,7 +1338,7 @@
 
                         // 若有分機號碼，以逗號區隔
                         if (Utils.isValid(p.ext)) num += `,${String(p.ext).trim()}`;
-                        parts.push(`TEL;TYPE=${type},VOICE:${num}`);
+                        parts.push(`TEL;TYPE=${type}:${num}`);
                     }
                 });
 
@@ -1341,9 +1369,8 @@
                 });
 
                 // 11. 處理備註 (NOTE)
-                // 根據 RFC 2426，換行必須被轉義為字面的 \n，且逗號有時也會被解析器切割，因此進行安全轉義。
                 if (Utils.isValid(d.note)) {
-                    const cleanNote = d.note.replace(/\n/g, "\\n").replace(/,/g, "\\,");
+                    const cleanNote = this.escapeText(d.note);
                     parts.push(`NOTE${getUtf8(cleanNote)}:${cleanNote}`);
                 }
 
