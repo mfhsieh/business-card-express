@@ -680,7 +680,7 @@
 
     <script>
         /**
-         * 名片快手 1.22
+         * 名片快手 1.30
          */
 
         /**
@@ -1360,10 +1360,14 @@
                 }
 
                 // 7. 處理地址 (ADR): vCard 格式嚴格要求為「郵政信箱;延伸地址;街道地址;城市;區域;郵遞區號;國家」
-                const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country]
-                    .map(v => this.escapeText(v))
-                    .join(";");
-                parts.push(`ADR;TYPE=WORK${getUtf8(adrValue)}:${adrValue}`);
+                const hasAddress = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country]
+                    .some(v => Utils.isValid(v));
+                if (hasAddress) {
+                    const adrValue = [d.poBox, d.extendedAddress, d.streetAddress, d.locality, d.region, d.postalCode, d.country]
+                        .map(v => this.escapeText(v))
+                        .join(";");
+                    parts.push(`ADR;TYPE=WORK${getUtf8(adrValue)}:${adrValue}`);
+                }
 
                 // 8. 處理多組電話 (phones)
                 (d.phones || []).forEach(p => {
@@ -1720,7 +1724,7 @@
                 } catch (err) {
                     let msg = err.message;
                     if (msg.includes("not found") || msg.includes("not supported")) {
-                        msg += "\n\n(提示：您選擇的模型可能尚未在您的帳號或地區開放，請嘗試點擊右上角設定切換至 Gemini 1.5 Flash)";
+                        msg += "\n\n(提示：您選擇的模型可能尚未在您的帳號或地區開放，請嘗試點擊右上角設定切換至預設的 gemini-2.0-flash 或其他支援模型)";
                     }
                     this.showError("處理失敗：" + msg);
                 } finally {
@@ -2740,7 +2744,7 @@
          * @param {HTMLElement} [el] - 觸發事件的輸入框元素 (用於即時驗證)
          * @returns {void}
          */
-        window.updateListItem = (listType, idx, key, val, el) => {
+        const updateListItem = (listType, idx, key, val, el) => {
             if (!state.cardData[listType][idx]) return;
 
             // 電話與傳真欄位的輸入檢核與濾除
@@ -2792,7 +2796,7 @@
          * @param {string} listType - 清單類別 ("phones", "faxes", "emails", "urls")
          * @returns {void}
          */
-        window.addListItem = (listType) => {
+        const addListItem = (listType) => {
             const valKey = 'value';
             if (!state.cardData[listType]) state.cardData[listType] = [];
             let newItem = { type: 'work', [valKey]: "" };
@@ -2807,7 +2811,7 @@
          * @param {number} idx - 要移除的項目索引
          * @returns {void}
          */
-        window.removeListItem = (listType, idx) => {
+        const removeListItem = (listType, idx) => {
             state.cardData[listType].splice(idx, 1);
             renderList(listType);
             debouncedUpdateVCardPreview();
@@ -2835,7 +2839,7 @@
                     const utf8EncodedVcf = unescape(encodeURIComponent(vcf));
 
                     // 建立 QR Code (0 表示自動偵測版本，L 為最低容錯率，以在名片容量大時維持較好的讀取度)
-                    const qr = qrcode(0, 'L');
+                    const qr = qrcode(0, 'M');
                     qr.addData(utf8EncodedVcf);
                     qr.make();
 
@@ -2878,6 +2882,11 @@
             }
         }
 
+        /** 
+         * @type {Function} 
+         * 經防抖 (Debounce) 包裝的 vCard 預覽更新函式。
+         * 避免使用者在快速連續輸入文字時，頻繁且重複重繪 QR Code，以節省不必要的計算資源與提高輸入流暢度。
+         */
         const debouncedUpdateVCardPreview = Utils.debounce(updateVCardPreview, DEFAULT_DEBOUNCE_DELAY);
     </script>
     <script>
