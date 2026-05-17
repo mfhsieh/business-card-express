@@ -4,6 +4,10 @@
 
 ## ✨ 核心特色
 
+- **🤖 自由自選 AI 模型**
+
+  支援在設定中一鍵切換多種最新的 Google Gemini/Gemma 系列模型（如預設的 `gemini-2.0-flash`、`gemini-2.5` 系列等），依速度與精度需求自由切換。
+
 - **📄 智慧 OCR 與結構化分析**
 
   上傳名片照片，自動辨識並分類至對應欄位（姓名、職稱、公司、電話、Email、地址等）；支援台灣地址格式的精細拆解。
@@ -16,13 +20,13 @@
 
   根據名片資訊與背景調查結果，自動草擬專業的拜訪後致謝郵件，可複製或手動編輯。
 
-- **📱 掃碼即存 (vCard QR Code)**
+- **📱 掃碼即存與下載 (SVG QR Code)**
 
-  自動產生符合 vCard 3.0 標準的 QR Code，用手機一掃即可快速加入通訊錄。
+  自動產生符合 vCard 3.0 標準的原生 SVG 響應式 QR Code，內嵌精緻的聯絡人識別圖示；支援「下載 QR Code」存為 SVG 向量圖檔，或用手機一掃快速加入通訊錄。
 
-- **📥 vCard 匯出與複製**
+- **📥 vCard 匯出與自訂分類**
 
-  支援下載 `.vcf` 檔案或直接複製 vCard 內容，並強制標註分類為「名片快手」，方便日後整理。使用行動裝置瀏覽器下載 `.vcf`，會自動觸發手機的「新增聯絡人」機制。
+  支援下載 `.vcf` 檔案或直接複製 vCard 內容；支援自訂分類標籤（Categories，預設為「名片快手」），可自由決定是否載入分類，方便日後整理。在手機瀏覽器下載 `.vcf` 時，會自動觸發系統原生的「新增聯絡人」流程。
 
 - **🗺️ 地址快速導航**
 
@@ -53,7 +57,7 @@
 | 元件 | 用途 |
 | ---- | ---- |
 | [Google Gemini API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
-| [QRious](https://github.com/neocotic/qrious) | vCard QR Code 產生 |
+| [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator/) | 原生 SVG vCard QR Code 產生 |
 | [Tailwind CSS](https://tailwindcss.com/) | 視覺排版與樣式 |
 | [Lucide Icons](https://lucide.dev/) | 介面圖示庫 |
 | [Google Fonts – Noto Sans TC](https://fonts.google.com/) | 中文字體 |
@@ -96,7 +100,7 @@
 5. 右側表單自動填入聯絡人資訊，可手動修正任意欄位。
 6. 查看「AI 洞察」區塊的公司與個人背景摘要、參考來源連結。
 7. 點擊「**後續追蹤**」讓 AI 自動撰寫感謝信草稿。
-8. 以 QR Code 掃描加入聯絡人、下載 `.vcf`，或複製 vCard 內容。
+8. 以 QR Code 掃描加入聯絡人、下載 QR Code (SVG)、下載 `.vcf` 檔案，或直接複製 vCard 內容。
 
 ## 🔒 隱私與安全性聲明
 
