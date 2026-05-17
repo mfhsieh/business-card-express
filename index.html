@@ -25,7 +25,7 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
         rel="stylesheet">
     <style>
@@ -267,9 +267,9 @@
                             class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
                             <i data-lucide="download"></i> 下載 vCard
                         </button>
-                        <button id="copyVcfBtn"
+                        <button id="downloadQrBtn"
                             class="flex-1 py-4 bg-white border-2 border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <i data-lucide="copy"></i> 複製內容
+                            <i data-lucide="image"></i> 下載 QR Code
                         </button>
                     </div>
                 </div>
@@ -1568,8 +1568,8 @@
                 const saveVcfBtn = document.getElementById("saveVcfBtn");
                 if (saveVcfBtn) saveVcfBtn.addEventListener("click", () => this.downloadVCard());
 
-                const copyVcfBtn = document.getElementById("copyVcfBtn");
-                if (copyVcfBtn) copyVcfBtn.addEventListener("click", () => this.copyVCardContent());
+                const downloadQrBtn = document.getElementById("downloadQrBtn");
+                if (downloadQrBtn) downloadQrBtn.addEventListener("click", () => this.downloadQRCode());
 
                 const clearFormBtn = document.getElementById("clearFormBtn");
                 if (clearFormBtn) clearFormBtn.addEventListener("click", () => this.clearForm());
@@ -1804,12 +1804,23 @@
             },
 
             /**
-             * [功能] 複製 vCard 文本內容至剪貼簿
+             * [功能] 下載 QR Code SVG 檔案 (.svg)
              * @returns {void}
              */
-            copyVCardContent() {
-                const vcf = vCardFormatter.generate(state.cardData);
-                if (ExportService.copyToClipboard(vcf)) this.toast("內容已複製");
+            downloadQRCode() {
+                const qrImage = document.getElementById('qrImage');
+                if (!qrImage || qrImage.classList.contains("hidden") || !qrImage.src) {
+                    this.toast("請先輸入資料以生成 QR Code");
+                    return;
+                }
+                const filename = `${state.cardData.fn || 'contact'}_qr.svg`;
+                const link = document.createElement("a");
+                link.href = qrImage.src;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                this.toast("QR Code 下載成功");
             },
 
             /**
@@ -2820,16 +2831,23 @@
 
             if (hasContent) {
                 try {
-                    // QRious 需要我們先將 UTF-8 中文手動轉成正確的 Latin-1 / Byte 序列才不會變成亂碼
+                    // 將 UTF-8 中文轉成 Latin-1 / Byte 序列以防止 QR Code 亂碼
                     const utf8EncodedVcf = unescape(encodeURIComponent(vcf));
 
-                    const qr = new QRious({
-                        value: utf8EncodedVcf,
-                        size: 600, // 給大一點的基礎大小以容納更多備註文字的細節度
-                        level: "L" // 稍微提高容錯或是降低，L=最低 M=中等 Q=高 H=極高
-                    });
+                    // 建立 QR Code (0 表示自動偵測版本，L 為最低容錯率，以在名片容量大時維持較好的讀取度)
+                    const qr = qrcode(0, 'L');
+                    qr.addData(utf8EncodedVcf);
+                    qr.make();
 
-                    qrImage.src = qr.toDataURL();
+                    // 產出 SVG 標籤並加上 viewBox 屬性以支援響應式尺寸
+                    let svgString = qr.createSvgTag({ cellSize: 4, margin: 4 });
+                    if (!svgString.includes("viewBox")) {
+                        const size = (qr.getModuleCount() + 8) * 4;
+                        svgString = svgString.replace("<svg ", `<svg viewBox="0 0 ${size} ${size}" `);
+                    }
+
+                    // 將 SVG 轉換成 Data URL 給 img.src 渲染
+                    qrImage.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString);
                     qrImage.classList.remove("hidden");
                     document.getElementById("qrCenterIcon")?.classList.remove("hidden");
                     document.getElementById("qrPlaceholder").classList.add("hidden");
