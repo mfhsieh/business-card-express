@@ -465,6 +465,20 @@
                                 <textarea id="field-note" rows="2" placeholder="名片備註..."
                                     class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none resize-y"></textarea>
                             </div>
+                            <div
+                                class="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-3 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100">
+                                <label class="flex items-center gap-2 cursor-pointer group shrink-0">
+                                    <input type="checkbox" id="field-useCategories" checked
+                                        class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500/20 focus:ring-offset-0 transition-all cursor-pointer">
+                                    <h3
+                                        class="text-sm font-black text-indigo-600 uppercase tracking-widest group-hover:text-slate-700 transition-colors">
+                                        加入分類 (Categories)</h3>
+                                </label>
+                                <div id="categoryInputWrapper" class="w-full sm:flex-1 flex items-center gap-1.5">
+                                    <input type="text" id="field-categories" placeholder="分類名稱..." value="名片快手"
+                                        class="w-full sm:flex-1 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-400 outline-none transition-all">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -475,11 +489,21 @@
                         <button id="toggleDebugBtn" data-toggle-debug="DebugPanel" data-toggle-text="debugToggleText"
                             data-toggle-phase="OCR與上網搜尋"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText">顯示 OCR與上網搜尋
-                                原始回應</span>
+                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText">顯示 OCR與上網搜尋 原始回應</span>
                         </button>
                         <pre id="DebugPanel"
                             class="hidden mt-4 bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono whitespace-pre-wrap break-all shadow-inner overflow-y-auto max-h-96"></pre>
+                    </div>
+
+                    <div>
+                        <button id="toggleVcfDebugBtn" data-toggle-debug="VcfDebugPanel"
+                            data-toggle-text="vcfDebugToggleText" data-toggle-phase="vCard (VCF) 內容"
+                            class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> <span id="vcfDebugToggleText">顯示 vCard (VCF)
+                                內容</span>
+                        </button>
+                        <pre id="VcfDebugPanel"
+                            class="hidden mt-4 bg-slate-800 text-blue-300 p-4 rounded-xl text-xs font-mono whitespace-pre-wrap break-all shadow-inner overflow-y-auto max-h-96"></pre>
                     </div>
                 </div>
             </div>
@@ -567,8 +591,8 @@
                         class="text-[12px] text-indigo-500 hover:text-indigo-700 mt-3 ml-1 flex items-center gap-1 font-bold">
                         <i data-lucide="external-link" class="w-3 h-3"></i> 取得 API Key (Google AI Studio)
                     </a>
-                    <p class="text-[12px] text-indigo-400 mt-1.5 ml-1 font-medium leading-relaxed">
-                        註：若選用 Gemma 4 系列模型，可至 Google AI Studio 申請免費額度的 API Key 進行測試。
+                    <p class="text-[12px] text-red-500 mt-1.5 ml-1 font-bold leading-relaxed">
+                        註：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API Key 進行測試。但該系列免費模型的反應較慢，不建議作為正式使用。
                     </p>
                 </div>
                 <button id="confirmApiKeyBtn"
@@ -747,6 +771,7 @@
             orgName: "", orgUnit: "", title: "",
             region: "", locality: "", streetAddress: "", extendedAddress: "", poBox: "", postalCode: "", country: "",
             note: "", companySummary: "", personalSummary: "", emailDraft: "",
+            useCategories: true, categories: "名片快手",
             phones: [], faxes: [], emails: [], urls: [],
             sources: []
         };
@@ -756,7 +781,7 @@
             "fn", "lastName", "firstName", "middleName", "prefix", "suffix",
             "orgName", "orgUnit", "title",
             "country", "postalCode", "region", "locality", "poBox", "extendedAddress", "streetAddress",
-            "note", "companySummary", "personalSummary", "emailDraft"
+            "note", "categories", "companySummary", "personalSummary", "emailDraft"
         ];
 
         /**
@@ -1249,8 +1274,10 @@
 
                 // 2. 初始化 vCard 陣列與 Header (遵循版本 3.0 規範)
                 const parts = ["BEGIN:VCARD", "VERSION:3.0", `REV:${this.formatREV()}`];
-                if (this.categoryName) {
-                    parts.push(`CATEGORIES${getUtf8(this.categoryName)}:${this.categoryName}`);
+
+                // 只有在勾選「加入分類」時才寫入 CATEGORIES 欄位
+                if (d.useCategories && Utils.isValid(d.categories)) {
+                    parts.push(`CATEGORIES${getUtf8(d.categories)}:${d.categories}`);
                 }
 
                 // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則嘗試組合姓氏與名字，皆無則顯示 "聯絡人"
@@ -1493,9 +1520,34 @@
                     toggleDebugBtn.addEventListener("click", () => {
                         this.toggleDebug(
                             toggleDebugBtn.getAttribute("data-toggle-debug"),
-                            toggleDebugBtn.getAttribute("data-toggle-text"),
-                            toggleDebugBtn.getAttribute("data-toggle-phase")
+                            toggleDebugBtn.getAttribute("data-toggle-text")
                         );
+                    });
+                }
+
+                const toggleVcfDebugBtn = document.getElementById("toggleVcfDebugBtn");
+                if (toggleVcfDebugBtn) {
+                    toggleVcfDebugBtn.addEventListener("click", () => {
+                        this.toggleDebug(
+                            toggleVcfDebugBtn.getAttribute("data-toggle-debug"),
+                            toggleVcfDebugBtn.getAttribute("data-toggle-text")
+                        );
+                    });
+                }
+
+                // 註冊分類標籤相關事件
+                const useCategoriesEl = document.getElementById("field-useCategories");
+                const categoriesEl = document.getElementById("field-categories");
+                if (useCategoriesEl) {
+                    useCategoriesEl.addEventListener("change", (e) => {
+                        state.cardData.useCategories = e.target.checked;
+                        updateVCardPreview();
+                    });
+                }
+                if (categoriesEl) {
+                    categoriesEl.addEventListener("input", (e) => {
+                        state.cardData.categories = e.target.value;
+                        updateVCardPreview();
                     });
                 }
             },
@@ -1729,20 +1781,20 @@
             },
 
             /** 
-             * 切換除錯面板顯示 
+             * 切換除錯面板顯示，僅替換按鈕前綴為 "顯示" 或 "隱藏"
              * @param {string} panelId - 面板 DOM ID
              * @param {string} textId - 按鈕文字 DOM ID
-             * @param {string} phaseName - 階段名稱 (用於按鈕文字顯示)
              * @returns {void}
              */
-            toggleDebug(panelId, textId, phaseName) {
+            toggleDebug(panelId, textId) {
                 const panel = document.getElementById(panelId);
                 if (!panel) return;
 
                 const isHidden = panel.classList.toggle("hidden");
                 const textEl = document.getElementById(textId);
                 if (textEl) {
-                    textEl.textContent = isHidden ? `顯示 ${phaseName} 原始回應` : `隱藏 ${phaseName} 原始回應`;
+                    let txt = textEl.textContent.trim();
+                    textEl.textContent = isHidden ? txt.replace("隱藏", "顯示") : txt.replace("顯示", "隱藏");
                 }
             },
 
@@ -2452,6 +2504,10 @@
             // 1. 同步全名、公司、職稱等靜態 Input/Textarea
             FormBinder.sync(d, STATIC_FIELDS);
 
+            // 同步分類標籤勾選狀態
+            const useCategoriesEl = document.getElementById("field-useCategories");
+            if (useCategoriesEl) useCategoriesEl.checked = !!d.useCategories;
+
             // 2. 處理摘要顯示邏輯
             const hasCompany = Utils.isValid(d.companySummary);
             const hasPersonal = Utils.isValid(d.personalSummary);
@@ -2686,6 +2742,10 @@
             const vcf = vCardFormatter.generate(d);
             const hasContent = Utils.isValid(d.fn) || Utils.isValid(d.lastName) || Utils.isValid(d.orgName);
             const qrImage = document.getElementById('qrImage');
+
+            // 同步更新 vCard 除錯面板
+            const vcfDebug = document.getElementById("VcfDebugPanel");
+            if (vcfDebug) vcfDebug.textContent = vcf;
 
             if (hasContent) {
                 try {
