@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="author" content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/)">
     <meta name="copyright"
         content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/), CC BY-NC-SA 4.0">
@@ -65,6 +65,20 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
+        /* 防止行動裝置雙指/雙擊縮放，並移除 click 300ms 延遲以達到 Native 級點擊響應速度 */
+        a, button, input, select, textarea {
+            touch-action: manipulation;
+        }
+
+        /* 手機版 (窄螢幕) 下，強制輸入框與選單字型大小為 16px，完美防止 iOS 點擊輸入框時自動 zoom-in 跑版 */
+        @media (max-width: 767px) {
+            input[type="text"],
+            select,
+            textarea {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 
@@ -86,7 +100,7 @@
             <h1
                 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-3">
                 <svg class="w-10 h-10 text-indigo-600">
-                    <use href="#logo-icon" />
+                    <use href="#logo-icon"></use>
                 </svg>
                 名片快手
             </h1>
@@ -98,10 +112,10 @@
             <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-8">
                 <!-- 上傳區 -->
                 <div
-                    class="bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-4 md:p-8">
+                    class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
-                            <i data-lucide="upload-cloud" class="text-indigo-600"></i> 上傳與辨識
+                            <i data-lucide="upload-cloud" class="text-indigo-600 w-5 h-5"></i> 上傳與辨識
                         </h2>
                         <button id="settingsBtn" class="p-2 -mr-2 rounded-full transition-all focus:outline-none"
                             title="設定 API Key">
@@ -119,8 +133,8 @@
                             <p class="font-bold text-slate-600">點擊或拖放名片照片</p>
                             <p class="text-xs text-slate-400 mt-2">支援 JPG, PNG 格式</p>
                         </div>
-                        <img id="previewImage" class="hidden w-full h-full object-contain p-2 bg-slate-100" />
-                        <input type="file" id="fileInput" class="hidden" accept="image/*" />
+                        <img id="previewImage" class="hidden w-full h-full object-contain p-2 bg-slate-100">
+                        <input type="file" id="fileInput" class="hidden" accept="image/*">
                     </div>
 
                     <button id="identifyBtn" disabled
@@ -137,11 +151,11 @@
 
                 <!-- AI 智慧摘要區塊 -->
                 <div id="summaryContainer"
-                    class="hidden bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
+                    class="hidden bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-xl font-bold flex items-center gap-2 text-indigo-600">
-                            <i data-lucide="sparkles" class="w-5 h-5"></i> AI 洞察
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
+                            <i data-lucide="sparkles" class="text-indigo-600 w-5 h-5"></i> AI 洞察
                         </h2>
                         <button id="generateEmailBtn"
                             class="text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors shadow-sm active:scale-95">
@@ -154,7 +168,7 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="companySummaryContent" data-toggle-icon="companySummaryIcon">
                                 <h3
-                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
                                     <i data-lucide="building" class="w-4 h-4"></i> 公司摘要
                                 </h3>
                                 <i data-lucide="chevron-up" id="companySummaryIcon"
@@ -172,7 +186,7 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="personalSummaryContent" data-toggle-icon="personalSummaryIcon">
                                 <h3
-                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                    class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
                                     <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要
                                 </h3>
                                 <i data-lucide="chevron-up" id="personalSummaryIcon"
@@ -191,11 +205,11 @@
                             <div class="flex justify-between items-center mb-2 cursor-pointer group"
                                 data-toggle-target="sourcesListWrapper" data-toggle-icon="sourcesIcon">
                                 <h3
-                                    class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-1 group-hover:text-slate-600 transition-colors">
-                                    <i data-lucide="link" class="w-3 h-3"></i> 參考來源
+                                    class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 group-hover:text-slate-600 transition-colors">
+                                    <i data-lucide="link" class="w-4 h-4"></i> 參考來源
                                 </h3>
                                 <i data-lucide="chevron-up" id="sourcesIcon"
-                                    class="w-3 h-3 text-slate-300 transition-transform duration-300"></i>
+                                    class="w-4 h-4 text-slate-300 transition-transform duration-300"></i>
                             </div>
                             <div id="sourcesListWrapper" class="transition-all">
                                 <div id="searchEntryPoint" class="mb-3 empty:hidden"></div>
@@ -209,7 +223,7 @@
                                 <div class="flex items-center gap-2 cursor-pointer flex-1 group"
                                     data-toggle-target="emailDraftContent" data-toggle-icon="emailDraftIcon">
                                     <h3
-                                        class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                                        class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
                                         <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
                                     </h3>
                                     <i data-lucide="chevron-up" id="emailDraftIcon"
@@ -236,9 +250,9 @@
                 </div>
 
                 <!-- 產出區 -->
-                <div class="bg-white p-6 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div class="bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
-                        <i data-lucide="qr-code" class="text-indigo-600"></i> 聯絡人 QR Code
+                        <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR Code
                     </h2>
                     <div
                         class="bg-gradient-to-br from-slate-50 to-indigo-50/30 p-6 rounded-3xl border border-slate-100 flex flex-col items-center">
@@ -248,13 +262,13 @@
                                 <i data-lucide="scan" class="w-16 h-16 text-slate-300"></i>
                             </div>
                             <!-- QR Code 圖片 -->
-                            <img id="qrImage" class="hidden w-48 h-48" alt="vCard QR Code" />
+                            <img id="qrImage" class="hidden w-48 h-48" alt="vCard QR Code">
                             <!-- 中間 Icon -->
                             <div id="qrCenterIcon"
                                 class="hidden absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div class="bg-white rounded-md shadow-sm p-1 flex items-center justify-center">
                                     <svg class="w-5 h-5 text-indigo-600">
-                                        <use href="#logo-icon" />
+                                        <use href="#logo-icon"></use>
                                     </svg>
                                 </div>
                             </div>
@@ -263,13 +277,13 @@
                         </p>
                     </div>
                     <div class="flex gap-3 mt-6">
+                        <button id="downloadQrBtn"
+                            class="flex-1 py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
+                            <i data-lucide="image"></i> 下載 QR Code
+                        </button>
                         <button id="saveVcfBtn"
                             class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
                             <i data-lucide="download"></i> 下載 vCard
-                        </button>
-                        <button id="downloadQrBtn"
-                            class="flex-1 py-4 bg-white border-2 border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <i data-lucide="image"></i> 下載 QR Code
                         </button>
                     </div>
                 </div>
@@ -277,10 +291,10 @@
 
             <!-- 右側：資料編輯區 -->
             <div class="lg:col-span-7 space-y-6">
-                <div class="bg-white p-6 md:p-8 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
-                            <i data-lucide="file-edit" class="text-indigo-600 w-6 h-6"></i> 編輯名片資料
+                            <i data-lucide="file-edit" class="text-indigo-600 w-5 h-5"></i> 編輯名片資料
                         </h2>
                         <button id="clearFormBtn"
                             class="text-sm font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
@@ -418,39 +432,39 @@
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">國家 (Country)</label>
                                     <input type="text" id="field-country" placeholder="如：台灣"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">郵遞區號 (Postal
                                         Code)</label>
                                     <input type="text" id="field-postalCode" placeholder="如：110204"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">縣市 (Region)</label>
                                     <input type="text" id="field-region" placeholder="如：台北市"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">鄉鎮市區 (Locality)</label>
                                     <input type="text" id="field-locality" placeholder="如：信義區"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">街道地址 (Street
                                         Address)</label>
                                     <input type="text" id="field-streetAddress" placeholder="如：市府路1號"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">延伸地址 (Extended)</label>
                                     <input type="text" id="field-extendedAddress" placeholder="如：市府大樓○樓○○區"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">郵政信箱 (PO Box)</label>
                                     <input type="text" id="field-poBox" placeholder="如：○○郵局第○○號信箱"
-                                        class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
                                 </div>
                             </div>
                         </div>
@@ -476,7 +490,7 @@
                                 </label>
                                 <div id="categoryInputWrapper" class="w-full sm:flex-1 flex items-center gap-1.5">
                                     <input type="text" id="field-categories" placeholder="分類名稱..." value="名片快手"
-                                        class="w-full sm:flex-1 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-400 outline-none transition-all">
+                                        class="w-full sm:flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
                                 </div>
                             </div>
                         </div>
@@ -546,22 +560,19 @@
     <!-- API Key 設定 Modal -->
     <div id="apiKeyModalOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-8 py-8 rounded-3xl shadow-2xl flex flex-col items-center gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw]"
+        <div class="bg-white px-5 py-6 md:px-8 md:py-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw]"
             id="apiKeyModal">
             <div class="w-full flex justify-between items-center mb-2">
-                <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                     <i data-lucide="key" class="text-indigo-600 w-5 h-5"></i> API 設定
-                </h3>
-                <button id="closeApiKeyModalBtn" class="p-1 text-slate-400 hover:text-slate-600 transition-colors">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
+                </h2>
             </div>
             <div class="w-full space-y-6">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">選擇 AI 模型</label>
                     <div class="relative">
                         <select id="modelSelect"
-                            class="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm appearance-none cursor-pointer pr-12">
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm appearance-none cursor-pointer pr-12">
                             <option value="gemini-2.0-flash">gemini-2.0-flash</option>
                             <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                             <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
@@ -580,7 +591,7 @@
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">Google Gemini API Key</label>
                     <div class="relative">
                         <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
-                            class="w-full px-6 py-5 rounded-2xl border-2 border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-sm">
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-sm">
                         <button id="toggleApiKeyVisibility"
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                             title="顯示/隱藏">
@@ -597,11 +608,11 @@
                 </div>
                 <div class="flex gap-4 w-full mt-4">
                     <button id="cancelApiKeyBtn"
-                        class="flex-1 py-5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-base rounded-2xl transition-all active:scale-95">
+                        class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-sm rounded-xl transition-all active:scale-95">
                         取消
                     </button>
                     <button id="confirmApiKeyBtn"
-                        class="flex-1 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-base rounded-2xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95">
+                        class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm rounded-xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95">
                         確認儲存
                     </button>
                 </div>
@@ -613,7 +624,7 @@
     <!-- 全域確認對話框 -->
     <div id="globalConfirmOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-6 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
+        <div class="bg-white px-5 py-6 md:px-6 md:py-6 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
             id="globalConfirmModal">
             <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
                 <i data-lucide="alert-circle" class="w-6 h-6"></i>
@@ -621,9 +632,9 @@
             <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
             <div class="flex gap-3 w-full mt-2">
                 <button id="globalConfirmCancelBtn"
-                    class="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">取消</button>
+                    class="flex-1 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-sm rounded-xl transition-all active:scale-95">取消</button>
                 <button id="globalConfirmOkBtn"
-                    class="flex-1 py-3 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all active:scale-95">確定</button>
+                    class="flex-1 py-2.5 px-4 bg-red-600 hover:bg-red-700 text-white font-black text-sm rounded-xl shadow-lg shadow-red-600/20 transition-all active:scale-95">確定</button>
             </div>
         </div>
     </div>
@@ -1455,7 +1466,6 @@
                 const settingsBtn = document.getElementById("settingsBtn");
                 const apiKeyModalOverlay = document.getElementById("apiKeyModalOverlay");
                 const apiKeyModal = document.getElementById("apiKeyModal");
-                const closeBtn = document.getElementById("closeApiKeyModalBtn");
                 const confirmBtn = document.getElementById("confirmApiKeyBtn");
 
                 const updateSettingsIconState = () => {
@@ -1520,14 +1530,8 @@
                 }
 
                 const cancelBtn = document.getElementById("cancelApiKeyBtn");
-                if (closeBtn) closeBtn.addEventListener("click", handleCancel);
                 if (cancelBtn) cancelBtn.addEventListener("click", handleCancel);
                 if (confirmBtn) confirmBtn.addEventListener("click", handleConfirm);
-                if (apiKeyModalOverlay) {
-                    apiKeyModalOverlay.addEventListener("click", (e) => {
-                        if (e.target === apiKeyModalOverlay) handleCancel();
-                    });
-                }
 
                 if (apiKeyInput) {
                     apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
