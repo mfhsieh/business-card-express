@@ -65,25 +65,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-
-        /* 防止行動裝置雙指/雙擊縮放，並移除 click 300ms 延遲以達到 Native 級點擊響應速度 */
-        a,
-        button,
-        input,
-        select,
-        textarea {
-            touch-action: manipulation;
-        }
-
-        /* 手機版 (窄螢幕) 下，強制輸入框與選單字型大小為 16px，完美防止 iOS 點擊輸入框時自動 zoom-in 跑版 */
-        @media (max-width: 767px) {
-
-            input[type="text"],
-            select,
-            textarea {
-                font-size: 16px !important;
-            }
-        }
     </style>
 </head>
 
@@ -325,27 +306,27 @@
                                 <div class="md:col-span-3">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">姓氏 (Last Name)</label>
                                     <input type="text" id="field-lastName"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div class="md:col-span-3">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">名字 (First Name)</label>
                                     <input type="text" id="field-firstName"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">中間名 (Middle Name)</label>
                                     <input type="text" id="field-middleName"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">稱謂 (Prefix)</label>
                                     <input type="text" id="field-prefix" placeholder="如：Dr., Mr., Mrs."
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">後綴 (Suffix)</label>
                                     <input type="text" id="field-suffix" placeholder="如：Ph.D., Jr., M.D."
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                             </div>
                         </div>
@@ -365,12 +346,12 @@
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">部門 (Unit)</label>
                                     <input type="text" id="field-orgUnit"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">職稱 (Title)</label>
                                     <input type="text" id="field-title"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                             </div>
                         </div>
@@ -439,39 +420,39 @@
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">國家 (Country)</label>
                                     <input type="text" id="field-country" placeholder="如：台灣"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">郵遞區號 (Postal
                                         Code)</label>
                                     <input type="text" id="field-postalCode" placeholder="如：110204"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">縣市 (Region)</label>
                                     <input type="text" id="field-region" placeholder="如：台北市"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">鄉鎮市區 (Locality)</label>
                                     <input type="text" id="field-locality" placeholder="如：信義區"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-slate-500 mb-1">街道地址 (Street
                                         Address)</label>
                                     <input type="text" id="field-streetAddress" placeholder="如：市府路1號"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">延伸地址 (Extended)</label>
                                     <input type="text" id="field-extendedAddress" placeholder="如：市府大樓○樓○○區"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-500 mb-1">郵政信箱 (PO Box)</label>
                                     <input type="text" id="field-poBox" placeholder="如：○○郵局第○○號信箱"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                                        class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none text-base">
                                 </div>
                             </div>
                         </div>
@@ -484,7 +465,7 @@
                             </h3>
                             <div>
                                 <textarea id="field-note" rows="2" placeholder="名片備註..."
-                                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-y"></textarea>
+                                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-base focus:ring-2 focus:ring-indigo-500 outline-none resize-y"></textarea>
                             </div>
                             <div
                                 class="mt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-3 bg-slate-50/50 p-2.5 rounded-xl border border-slate-100">
@@ -497,7 +478,7 @@
                                 </label>
                                 <div id="categoryInputWrapper" class="w-full sm:flex-1 flex items-center gap-1.5">
                                     <input type="text" id="field-categories" placeholder="分類名稱..." value="名片快手"
-                                        class="w-full sm:flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                                        class="w-full sm:flex-1 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-base font-bold text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
                                 </div>
                             </div>
                         </div>
@@ -579,7 +560,7 @@
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">選擇 AI 模型</label>
                     <div class="relative">
                         <select id="modelSelect"
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm appearance-none cursor-pointer pr-12">
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-base appearance-none cursor-pointer pr-12">
                             <option value="gemini-2.0-flash">gemini-2.0-flash</option>
                             <option value="gemini-2.5-flash">gemini-2.5-flash</option>
                             <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
@@ -598,7 +579,7 @@
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">Google Gemini API Key</label>
                     <div class="relative">
                         <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-sm">
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-base">
                         <button id="toggleApiKeyVisibility"
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                             title="顯示/隱藏">
@@ -704,7 +685,7 @@
 
     <script>
         /**
-         * 名片快手 1.35
+         * 名片快手 1.36
          */
 
         /**
@@ -1351,9 +1332,9 @@
                 // 2. 初始化 vCard 陣列與 Header (遵循版本 3.0 規範)
                 const parts = ["BEGIN:VCARD", "VERSION:3.0"];
 
-                // 只有在勾選「加入分類」時才寫入 CATEGORIES 欄位
+                // 只有在勾選「加入分類」時才寫入 CATEGORIES 欄位 (CATEGORIES 欄位中半形逗號作為多標籤分隔符號，依要求不予跳脫)
                 if (d.useCategories && Utils.isValid(d.categories)) {
-                    const escapedCat = this.escapeText(d.categories);
+                    const escapedCat = this.escapeText(d.categories).replace(/\\,/g, ",");
                     parts.push(`CATEGORIES${getUtf8(escapedCat)}:${escapedCat}`);
                 }
 
@@ -1415,10 +1396,10 @@
                     }
                 });
 
-                // 9. 處理多組電子郵件 (emails)
+                // 9. 處理多組電子郵件 (emails) (加註 INTERNET 協議類型以確保最佳的老舊系統與車用藍牙通訊錄相容性)
                 (d.emails || []).forEach(e => {
                     if (Utils.isValid(e.value)) {
-                        let type = e.type === "home" ? "HOME" : "WORK";
+                        let type = e.type === "home" ? "INTERNET,HOME" : "INTERNET,WORK";
                         parts.push(`EMAIL;TYPE=${type}:${e.value.trim()}`);
                     }
                 });
@@ -2734,8 +2715,8 @@
                 let validationMsg = "";
                 if (type === "phones" || type === "faxes") {
                     inputsHTML = `
-                <input type="text" value="${item[valKey] || ""}" placeholder="號碼" data-update-list="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
-                    <input type="text" value="${item.ext || ""}" placeholder="分機" data-update-list="${type},${idx},ext" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-sm outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
+                <input type="text" value="${item[valKey] || ""}" placeholder="號碼" data-update-list="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border border-slate-200 text-base outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+                    <input type="text" value="${item.ext || ""}" placeholder="分機" data-update-list="${type},${idx},ext" class="w-14 shrink-0 px-2 py-2 rounded-lg bg-white border border-slate-200 text-base outline-none text-center focus:ring-2 focus:ring-indigo-500 transition-all">
                         `;
                 } else {
                     let ph = type === "emails" ? "信箱地址" : "網址";
@@ -2745,7 +2726,7 @@
                     }
                     let errorClass = isValid ? "border-slate-200 focus:ring-indigo-500" : "border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50";
                     let msgHidden = isValid ? "hidden" : '';
-                    inputsHTML = `<input type="text" value="${item[valKey] || ""}" placeholder="${ph}" data-update-list-validate="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-sm outline-none focus:ring-2 transition-all">`;
+                    inputsHTML = `<input type="text" value="${item[valKey] || ""}" placeholder="${ph}" data-update-list-validate="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-base outline-none focus:ring-2 transition-all">`;
                     validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[10px] text-red-500 font-bold ml-1 flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> 格式似乎有誤</div>`;
                 }
 

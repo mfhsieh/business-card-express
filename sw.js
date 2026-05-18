@@ -1,4 +1,4 @@
-const CACHE_VERSION = '1.35'; // 修改此版本號以強制更新用戶端的快取
+const CACHE_VERSION = '1.36'; // 修改此版本號以強制更新用戶端的快取
 const CACHE_NAME = `business-card-express-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
