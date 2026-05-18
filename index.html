@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="author" content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/)">
     <meta name="copyright"
         content="mfhsieh at github (https://github.com/mfhsieh/business-card-express/), CC BY-NC-SA 4.0">
@@ -67,12 +67,17 @@
         }
 
         /* 防止行動裝置雙指/雙擊縮放，並移除 click 300ms 延遲以達到 Native 級點擊響應速度 */
-        a, button, input, select, textarea {
+        a,
+        button,
+        input,
+        select,
+        textarea {
             touch-action: manipulation;
         }
 
         /* 手機版 (窄螢幕) 下，強制輸入框與選單字型大小為 16px，完美防止 iOS 點擊輸入框時自動 zoom-in 跑版 */
         @media (max-width: 767px) {
+
             input[type="text"],
             select,
             textarea {
@@ -250,7 +255,8 @@
                 </div>
 
                 <!-- 產出區 -->
-                <div class="bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div
+                    class="bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
                         <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR Code
                     </h2>
@@ -291,7 +297,8 @@
 
             <!-- 右側：資料編輯區 -->
             <div class="lg:col-span-7 space-y-6">
-                <div class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div
+                    class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
                             <i data-lucide="file-edit" class="text-indigo-600 w-5 h-5"></i> 編輯名片資料
