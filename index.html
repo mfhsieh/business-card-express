@@ -126,11 +126,12 @@
                     class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
-                            <i data-lucide="upload-cloud" class="text-indigo-600 w-5 h-5"></i> 上傳與辨識
+                            <!-- Lucide: upload-cloud --> <i data-lucide="upload-cloud"
+                                class="text-indigo-600 w-5 h-5"></i> 上傳與辨識
                         </h2>
                         <button id="settingsBtn" class="p-2 -mr-2 rounded-full transition-all focus:outline-none"
                             title="設定 API Key">
-                            <i data-lucide="settings" id="settingsIcon" class="w-5 h-5"></i>
+                            <!-- Lucide: settings --> <i data-lucide="settings" id="settingsIcon" class="w-5 h-5"></i>
                         </button>
                     </div>
 
@@ -139,7 +140,7 @@
                     <div id="dropZone"
                         class="group border-2 border-dashed rounded-2xl aspect-[1.6/1] flex flex-col items-center justify-center transition-all overflow-hidden border-slate-200 hover:border-indigo-400 cursor-pointer hover:bg-slate-50 relative">
                         <div id="uploadPlaceholder" class="text-center p-6 transition-transform group-hover:scale-105">
-                            <i data-lucide="image-plus"
+                            <!-- Lucide: image-plus --> <i data-lucide="image-plus"
                                 class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300 shadow-sm border border-slate-100"></i>
                             <p class="font-bold text-slate-600">點擊或拖放名片照片</p>
                             <p class="text-xs text-slate-400 mt-2">支援 JPG, PNG 格式</p>
@@ -150,12 +151,12 @@
 
                     <button id="identifyBtn" disabled
                         class="w-full mt-6 py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all bg-slate-100 text-slate-400 shadow-indigo-600/10">
-                        <i data-lucide="sparkles" class="w-5 h-5"></i> AI 智慧辨識
+                        <!-- Lucide: sparkles --> <i data-lucide="sparkles" class="w-5 h-5"></i> AI 智慧辨識
                     </button>
 
                     <div id="errorMessage"
                         class="hidden mt-4 p-4 bg-red-50 text-red-700 rounded-xl flex items-start gap-3 text-sm font-bold border border-red-100">
-                        <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0"></i>
+                        <!-- Lucide: alert-triangle --> <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0"></i>
                         <span id="errorText"></span>
                     </div>
                 </div>
@@ -166,11 +167,12 @@
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
-                            <i data-lucide="sparkles" class="text-indigo-600 w-5 h-5"></i> AI 洞察
+                            <!-- Lucide: sparkles --> <i data-lucide="sparkles" class="text-indigo-600 w-5 h-5"></i> AI
+                            洞察
                         </h2>
                         <button id="generateEmailBtn"
                             class="text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors shadow-sm active:scale-95">
-                            <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
+                            <!-- Lucide: mail --> <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
                         </button>
                     </div>
                     <div class="space-y-4">
@@ -180,9 +182,9 @@
                                 data-toggle-target="companySummaryContent" data-toggle-icon="companySummaryIcon">
                                 <h3
                                     class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
-                                    <i data-lucide="building" class="w-4 h-4"></i> 公司摘要
+                                    <!-- Lucide: building --> <i data-lucide="building" class="w-4 h-4"></i> 公司摘要
                                 </h3>
-                                <i data-lucide="chevron-up" id="companySummaryIcon"
+                                <!-- Lucide: chevron-up --> <i data-lucide="chevron-up" id="companySummaryIcon"
                                     class="w-4 h-4 text-indigo-400 transition-transform duration-300"></i>
                             </div>
                             <div id="companySummaryContent"
@@ -198,9 +200,9 @@
                                 data-toggle-target="personalSummaryContent" data-toggle-icon="personalSummaryIcon">
                                 <h3
                                     class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要
+                                    <!-- Lucide: user-check --> <i data-lucide="user-check" class="w-4 h-4"></i> 個人摘要
                                 </h3>
-                                <i data-lucide="chevron-up" id="personalSummaryIcon"
+                                <!-- Lucide: chevron-up --> <i data-lucide="chevron-up" id="personalSummaryIcon"
                                     class="w-4 h-4 text-purple-400 transition-transform duration-300"></i>
                             </div>
                             <div id="personalSummaryContent"
@@ -217,9 +219,9 @@
                                 data-toggle-target="sourcesListWrapper" data-toggle-icon="sourcesIcon">
                                 <h3
                                     class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 group-hover:text-slate-600 transition-colors">
-                                    <i data-lucide="link" class="w-4 h-4"></i> 參考來源
+                                    <!-- Lucide: link --> <i data-lucide="link" class="w-4 h-4"></i> 參考來源
                                 </h3>
-                                <i data-lucide="chevron-up" id="sourcesIcon"
+                                <!-- Lucide: chevron-up --> <i data-lucide="chevron-up" id="sourcesIcon"
                                     class="w-4 h-4 text-slate-300 transition-transform duration-300"></i>
                             </div>
                             <div id="sourcesListWrapper" class="transition-all">
@@ -235,21 +237,22 @@
                                     data-toggle-target="emailDraftContent" data-toggle-icon="emailDraftIcon">
                                     <h3
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 group-hover:text-indigo-800 transition-colors">
-                                        <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
+                                        <!-- Lucide: mail --> <i data-lucide="mail" class="w-4 h-4"></i> 後續追蹤
                                     </h3>
-                                    <i data-lucide="chevron-up" id="emailDraftIcon"
+                                    <!-- Lucide: chevron-up --> <i data-lucide="chevron-up" id="emailDraftIcon"
                                         class="w-4 h-4 text-indigo-400 transition-transform duration-300"></i>
                                 </div>
                                 <button id="copyEmailDraftBtn"
                                     class="text-xs text-indigo-500 hover:text-indigo-700 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded transition-colors ml-2 shrink-0">
-                                    <i data-lucide="copy" class="w-3 h-3"></i> 複製
+                                    <!-- Lucide: copy --> <i data-lucide="copy" class="w-3 h-3"></i> 複製
                                 </button>
                             </div>
                             <div id="emailDraftContent"
                                 class="bg-white p-4 rounded-xl border border-indigo-100 relative shadow-inner transition-all">
                                 <div id="emailLoading"
                                     class="hidden absolute inset-0 bg-white/90 flex flex-col items-center justify-center rounded-xl z-10 backdrop-blur-sm">
-                                    <i data-lucide="loader-2" class="w-6 h-6 text-indigo-600 animate-spin mb-2"></i>
+                                    <!-- Lucide: loader-2 --> <i data-lucide="loader-2"
+                                        class="w-6 h-6 text-indigo-600 animate-spin mb-2"></i>
                                     <span class="text-sm font-bold text-indigo-600">AI 撰寫中...</span>
                                 </div>
                                 <textarea id="field-emailDraft" rows="1"
@@ -264,14 +267,15 @@
                 <div
                     class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
-                        <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR Code
+                        <!-- Lucide: qr-code --> <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR
+                        Code
                     </h2>
                     <div
                         class="bg-gradient-to-br from-slate-50 to-indigo-50/30 px-3 py-5 sm:p-6 rounded-3xl border border-slate-100 flex flex-col items-center">
                         <div class="bg-white p-4 rounded-2xl shadow-md mb-4 border border-slate-50 relative group">
                             <div id="qrPlaceholder"
                                 class="w-48 h-48 flex items-center justify-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
-                                <i data-lucide="scan" class="w-16 h-16 text-slate-300"></i>
+                                <!-- Lucide: scan --> <i data-lucide="scan" class="w-16 h-16 text-slate-300"></i>
                             </div>
                             <!-- QR Code 圖片 -->
                             <img id="qrImage" class="hidden w-48 h-48" alt="vCard QR Code">
@@ -288,14 +292,18 @@
                         <p id="qrStatus" class="text-sm font-black text-slate-400 uppercase tracking-widest">等待資料輸入...
                         </p>
                     </div>
-                    <div class="flex gap-3 mt-6">
+                    <div class="grid grid-cols-2 gap-3 mt-6">
                         <button id="downloadQrBtn"
-                            class="flex-1 py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <i data-lucide="download" class="w-5 h-5"></i> QR Code
+                            class="py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
+                            <!-- Lucide: download --> <i data-lucide="download" class="w-5 h-5"></i> QR Code
                         </button>
                         <button id="saveVcfBtn"
-                            class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
-                            <i data-lucide="download" class="w-5 h-5"></i> vCard
+                            class="py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
+                            <!-- Lucide: download --> <i data-lucide="download" class="w-5 h-5"></i> vCard
+                        </button>
+                        <button id="shareCardBtn"
+                            class="col-span-2 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
+                            <!-- Lucide: link --> <i data-lucide="link" class="w-5 h-5"></i> 分享此名片
                         </button>
                     </div>
                 </div>
@@ -307,11 +315,12 @@
                     class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
-                            <i data-lucide="file-edit" class="text-indigo-600 w-5 h-5"></i> 編輯名片資料
+                            <!-- Lucide: file-edit --> <i data-lucide="file-edit" class="text-indigo-600 w-5 h-5"></i>
+                            編輯名片資料
                         </h2>
                         <button id="clearFormBtn"
                             class="text-sm font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i> 清空
+                            <!-- Lucide: trash-2 --> <i data-lucide="trash-2" class="w-4 h-4"></i> 清空
                         </button>
                     </div>
 
@@ -320,7 +329,7 @@
                         <div class="space-y-4">
                             <h3
                                 class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 border-b border-slate-100 pb-2">
-                                <i data-lucide="user" class="w-4 h-4"></i> 姓名 (Name)
+                                <!-- Lucide: user --> <i data-lucide="user" class="w-4 h-4"></i> 姓名 (Name)
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
                                 <div class="md:col-span-6">
@@ -360,7 +369,8 @@
                         <div class="space-y-4">
                             <h3
                                 class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 border-b border-slate-100 pb-2">
-                                <i data-lucide="building-2" class="w-4 h-4"></i> 組織職稱 (ORG & Title)
+                                <!-- Lucide: building-2 --> <i data-lucide="building-2" class="w-4 h-4"></i> 組織職稱 (ORG &
+                                Title)
                             </h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="md:col-span-2">
@@ -387,7 +397,7 @@
                                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                     <h3
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                        <i data-lucide="phone" class="w-4 h-4"></i> 電話 (Phone)
+                                        <!-- Lucide: phone --> <i data-lucide="phone" class="w-4 h-4"></i> 電話 (Phone)
                                     </h3>
                                     <button data-add-item="phones" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
@@ -398,7 +408,7 @@
                                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                     <h3
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                        <i data-lucide="printer" class="w-4 h-4"></i> 傳真 (Fax)
+                                        <!-- Lucide: printer --> <i data-lucide="printer" class="w-4 h-4"></i> 傳真 (Fax)
                                     </h3>
                                     <button data-add-item="faxes" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
@@ -409,7 +419,7 @@
                                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                     <h3
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                        <i data-lucide="mail" class="w-4 h-4"></i> 信箱 (Email)
+                                        <!-- Lucide: mail --> <i data-lucide="mail" class="w-4 h-4"></i> 信箱 (Email)
                                     </h3>
                                     <button data-add-item="emails" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
@@ -420,7 +430,7 @@
                                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                     <h3
                                         class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                        <i data-lucide="globe" class="w-4 h-4"></i> 網站 (Website)
+                                        <!-- Lucide: globe --> <i data-lucide="globe" class="w-4 h-4"></i> 網站 (Website)
                                     </h3>
                                     <button data-add-item="urls" class="text-indigo-600 text-xs font-black">+
                                         新增</button>
@@ -434,11 +444,11 @@
                             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                                 <h3
                                     class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                    <i data-lucide="map-pin" class="w-4 h-4"></i> 地址 (Address)
+                                    <!-- Lucide: map-pin --> <i data-lucide="map-pin" class="w-4 h-4"></i> 地址 (Address)
                                 </h3>
                                 <button id="openMapsBtn"
                                     class="text-xs font-bold text-slate-500 hover:text-indigo-600 flex items-center gap-1 hidden">
-                                    <i data-lucide="map" class="w-3 h-3"></i> Google Maps
+                                    <!-- Lucide: map --> <i data-lucide="map" class="w-3 h-3"></i> Google Maps
                                 </button>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -486,7 +496,7 @@
                         <div class="space-y-4">
                             <h3
                                 class="text-sm font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 border-b border-slate-100 pb-2">
-                                <i data-lucide="sticky-note" class="w-4 h-4"></i> 備註 (Note)
+                                <!-- Lucide: sticky-note --> <i data-lucide="sticky-note" class="w-4 h-4"></i> 備註 (Note)
                             </h3>
                             <div>
                                 <textarea id="field-note" rows="2" placeholder="名片備註..."
@@ -516,7 +526,8 @@
                         <button id="toggleDebugBtn" data-toggle-debug="DebugPanel" data-toggle-text="debugToggleText"
                             data-toggle-phase="OCR與上網搜尋"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText">顯示 OCR與上網搜尋 原始回應</span>
+                            <!-- Lucide: bug --> <i data-lucide="bug" class="w-4 h-4"></i> <span id="debugToggleText">顯示
+                                OCR與上網搜尋 原始回應</span>
                         </button>
                         <pre id="DebugPanel"
                             class="hidden mt-4 bg-slate-900 text-green-400 p-4 rounded-xl text-xs font-mono whitespace-pre-wrap break-all shadow-inner overflow-y-auto max-h-96"></pre>
@@ -526,7 +537,8 @@
                         <button id="toggleVcfDebugBtn" data-toggle-debug="VcfDebugPanel"
                             data-toggle-text="vcfDebugToggleText" data-toggle-phase="vCard (VCF) 內容"
                             class="text-xs font-bold text-slate-400 hover:text-slate-700 transition-colors flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
-                            <i data-lucide="file-text" class="w-4 h-4"></i> <span id="vcfDebugToggleText">顯示 vCard (VCF)
+                            <!-- Lucide: file-text --> <i data-lucide="file-text" class="w-4 h-4"></i> <span
+                                id="vcfDebugToggleText">顯示 vCard (VCF)
                                 內容</span>
                         </button>
                         <pre id="VcfDebugPanel"
@@ -543,7 +555,7 @@
                     class="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-slate-500 text-sm font-medium">
                     <a href="https://github.com/mfhsieh/business-card-express/" target="_blank"
                         class="flex items-center gap-1 hover:text-indigo-600 transition-colors group">
-                        <i data-lucide="github"
+                        <!-- Lucide: github --> <i data-lucide="github"
                             class="w-4 h-4 text-indigo-400 mx-1 group-hover:text-indigo-600 transition-colors"></i>
                         mfhsieh at github
                     </a>
@@ -552,10 +564,10 @@
                 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" target="_blank"
                     class="mt-1 flex items-center gap-3 bg-white px-5 py-2 rounded-full border border-slate-200 shadow-sm hover:border-indigo-200 hover:shadow-md transition-all group">
                     <div class="flex items-center gap-1 text-indigo-600 group-hover:text-indigo-700 transition-colors">
-                        <i data-lucide="creative-commons" class="w-5 h-5"></i>
-                        <i data-lucide="user" class="w-4 h-4"></i>
-                        <i data-lucide="circle-slash" class="w-4 h-4"></i>
-                        <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
+                        <!-- Lucide: creative-commons --> <i data-lucide="creative-commons" class="w-5 h-5"></i>
+                        <!-- Lucide: user --> <i data-lucide="user" class="w-4 h-4"></i>
+                        <!-- Lucide: circle-slash --> <i data-lucide="circle-slash" class="w-4 h-4"></i>
+                        <!-- Lucide: refresh-ccw --> <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
                     </div>
                     <span
                         class="text-xs font-black text-slate-600 group-hover:text-indigo-600 transition-colors tracking-wide">
@@ -577,78 +589,187 @@
             id="apiKeyModal">
             <div class="w-full flex justify-between items-center mb-1 shrink-0">
                 <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="settings" class="text-indigo-600 w-5 h-5"></i> 系統與 API 設定
+                    <!-- Lucide: settings --> <i data-lucide="settings" class="text-indigo-600 w-5 h-5"></i> 系統設定
                 </h2>
             </div>
 
             <!-- 可滾動的設定內容區域 -->
-            <div class="w-full space-y-6 flex-1 overflow-y-auto pr-1 py-1 min-h-0">
-                <div>
-                    <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600 w-4 h-4"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg> 全域文字大小
-                    </label>
-                    <div class="grid grid-cols-5 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
-                        <button type="button" data-scale="90" style="font-size: 14.4px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最小</button>
-                        <button type="button" data-scale="95" style="font-size: 15.2px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較小</button>
-                        <button type="button" data-scale="100" style="font-size: 16px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">標準</button>
-                        <button type="button" data-scale="110" style="font-size: 17.6px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較大</button>
-                        <button type="button" data-scale="120" style="font-size: 19.2px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最大</button>
+            <div class="w-full space-y-5 flex-1 overflow-y-auto pr-1 py-1 min-h-0">
+
+                <!-- [區塊 1] AI 引擎與 API 設定 -->
+                <div class="bg-indigo-50/40 rounded-2xl p-4 md:p-5 border border-indigo-100/50 space-y-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div
+                            class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 shadow-sm">
+                            <!-- Lucide: sparkles --> <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-[15px] font-black text-indigo-900 tracking-wide">AI 引擎與 API 設定</h3>
+                    </div>
+
+                    <!-- 選擇 AI 模型 -->
+                    <div>
+                        <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-indigo-600 w-4 h-4">
+                                <rect width="16" height="16" x="4" y="4" rx="2" />
+                                <rect width="6" height="6" x="9" y="9" rx="1" />
+                                <path d="M9 1v3" />
+                                <path d="M15 1v3" />
+                                <path d="M9 20v3" />
+                                <path d="M15 20v3" />
+                                <path d="M20 9h3" />
+                                <path d="M20 15h3" />
+                                <path d="M1 9h3" />
+                                <path d="M1 15h3" />
+                            </svg> 選擇 AI 模型
+                        </label>
+                        <div class="relative">
+                            <select id="modelSelect"
+                                class="w-full px-4 py-2.5 rounded-xl border border-white/80 font-bold bg-white/60 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-base appearance-none cursor-pointer pr-12 shadow-sm">
+                                <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+                                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+                                <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
+                                <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+                                <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+                                <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
+                                <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
+                                <option value="gemma-4-31b-it">gemma-4-31b-it</option>
+                            </select>
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                <!-- Lucide: chevron-down --> <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gemini/Gemma API Key -->
+                    <div>
+                        <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-indigo-600 w-4 h-4">
+                                <path
+                                    d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                            </svg> Gemini/Gemma API Key
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
+                                class="w-full px-4 py-2.5 rounded-xl border border-white/80 font-bold bg-white/60 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-base shadow-sm">
+                            <button id="toggleApiKeyVisibility"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                title="顯示/隱藏">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="w-5 h-5">
+                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank"
+                            class="text-xs text-indigo-500 hover:text-indigo-700 mt-3 ml-1 font-bold leading-relaxed flex items-start gap-1.5 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5">
+                                <path d="M15 3h6v6" />
+                                <path d="M10 14 21 3" />
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            </svg>
+                            <span>取得 API Key (Google AI Studio)</span>
+                        </a>
+                        <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5">
+                                <path
+                                    d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z" />
+                                <path d="m9 12 2 2 4-4" />
+                            </svg>
+                            <span>安全聲明：您的 API Key 僅儲存於您個人瀏覽器的本地端，且僅用於您個人用途。</span>
+                        </p>
+                        <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-4 h-4 text-amber-500 shrink-0 mt-0.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" x2="12" y1="8" y2="12" />
+                                <line x1="12" x2="12.01" y1="16" y2="16" />
+                            </svg>
+                            <span>注意事項：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API
+                                Key。但該系列免費模型的反應較慢且可能不穩定，請自行評估是否適用。</span>
+                        </p>
                     </div>
                 </div>
-                <div>
-                    <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600 w-4 h-4"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 15h3"/><path d="M1 9h3"/><path d="M1 15h3"/></svg> 選擇 AI 模型
-                    </label>
-                    <div class="relative">
-                        <select id="modelSelect"
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-base appearance-none cursor-pointer pr-12">
-                            <option value="gemini-2.0-flash">gemini-2.0-flash</option>
-                            <option value="gemini-2.5-flash">gemini-2.5-flash</option>
-                            <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
-                            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
-                            <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
-                            <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
-                            <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
-                            <option value="gemma-4-31b-it">gemma-4-31b-it</option>
-                        </select>
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+
+                <!-- [區塊 2] 介面與顯示設定 -->
+                <div class="bg-emerald-50/40 rounded-2xl p-4 md:p-5 border border-emerald-100/50 space-y-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div
+                            class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm">
+                            <!-- Lucide: scan --> <i data-lucide="scan" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-[15px] font-black text-emerald-900 tracking-wide">介面與顯示設定</h3>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="text-emerald-600 w-4 h-4">
+                                <polyline points="4 7 4 4 20 4 20 7" />
+                                <line x1="9" x2="15" y1="20" y2="20" />
+                                <line x1="12" x2="12" y1="4" y2="20" />
+                            </svg> 全域文字大小
+                        </label>
+                        <div class="grid grid-cols-5 gap-2 bg-white/60 border border-white/80 shadow-sm p-1.5 rounded-xl"
+                            id="textScaleContainer">
+                            <button type="button" data-scale="90" style="font-size: 14.4px;"
+                                class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white transition-all">最小</button>
+                            <button type="button" data-scale="95" style="font-size: 15.2px;"
+                                class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white transition-all">較小</button>
+                            <button type="button" data-scale="100" style="font-size: 16px;"
+                                class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white transition-all">標準</button>
+                            <button type="button" data-scale="110" style="font-size: 17.6px;"
+                                class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white transition-all">較大</button>
+                            <button type="button" data-scale="120" style="font-size: 19.2px;"
+                                class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white transition-all">最大</button>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mb-2 ml-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600 w-4 h-4"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Gemini/Gemma API Key
-                    </label>
-                    <div class="relative">
-                        <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-base">
-                        <button id="toggleApiKeyVisibility"
-                            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                            title="顯示/隱藏">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                        </button>
+
+                <!-- [區塊 3] 資料與儲存空間 -->
+                <div class="bg-amber-50/40 rounded-2xl p-4 md:p-5 border border-amber-100/50 space-y-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div
+                            class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0 shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-4 h-4">
+                                <rect width="20" height="8" x="2" y="3" rx="2" ry="2" />
+                                <rect width="20" height="8" x="2" y="13" rx="2" ry="2" />
+                                <line x1="6" x2="6.01" y1="7" y2="7" />
+                                <line x1="6" x2="6.01" y1="17" y2="17" />
+                            </svg>
+                        </div>
+                        <h3 class="text-[15px] font-black text-amber-900 tracking-wide">資料與儲存空間</h3>
                     </div>
-                     <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                        class="text-xs text-indigo-500 hover:text-indigo-700 mt-3 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                        <span>取得 API Key (Google AI Studio)</span>
-                    </a>
-                    <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6z"/><path d="m9 12 2 2 4-4"/></svg>
-                        <span>安全聲明：您的 API Key 僅儲存於您個人瀏覽器的本地端，且僅用於您個人用途。</span>
-                    </p>
-                    <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                        <span>注意事項：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API
-                            Key。但該系列免費模型的反應較慢且可能不穩定，請自行評估是否適用。</span>
-                    </p>
+
+                    <div>
+                        <div
+                            class="bg-white/60 p-2.5 pl-3.5 rounded-xl border border-white/80 shadow-sm flex items-center justify-between">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] font-bold text-slate-500 mb-0.5">歷史庫大小</span>
+                                <span id="dbStorageUsage" class="text-slate-800 font-black text-[15px]">計算中...</span>
+                            </div>
+                            <button type="button" id="slimHistoryBtn"
+                                class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-black text-xs rounded-lg shadow-sm shadow-amber-500/20 transition-all active:scale-95 flex items-center gap-1.5">
+                                <!-- Lucide: circle-slash --> <i data-lucide="circle-slash" class="w-3.5 h-3.5"></i>
+                                一鍵瘦身
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             <!-- 固定的操作按鈕區域 -->
@@ -672,7 +793,7 @@
         <div class="bg-white px-5 py-6 md:px-6 md:py-6 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
             id="globalConfirmModal">
             <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
-                <i data-lucide="alert-circle" class="w-6 h-6"></i>
+                <!-- Lucide: alert-circle --> <i data-lucide="alert-circle" class="w-6 h-6"></i>
             </div>
             <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
             <div class="flex gap-3 w-full mt-2">
@@ -690,9 +811,11 @@
         <div class="bg-white px-8 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-300 scale-95"
             id="globalLoadingModal">
             <div class="relative w-12 h-12 flex items-center justify-center">
-                <i data-lucide="loader-2" class="absolute inset-0 w-12 h-12 text-indigo-200 animate-spin"></i>
-                <i data-lucide="loader-2" class="absolute inset-0 w-12 h-12 text-indigo-600 animate-spin-slow"></i>
-                <i data-lucide="sparkles" class="w-5 h-5 text-indigo-600 animate-pulse"></i>
+                <!-- Lucide: loader-2 --> <i data-lucide="loader-2"
+                    class="absolute inset-0 w-12 h-12 text-indigo-200 animate-spin"></i>
+                <!-- Lucide: loader-2 --> <i data-lucide="loader-2"
+                    class="absolute inset-0 w-12 h-12 text-indigo-600 animate-spin-slow"></i>
+                <!-- Lucide: sparkles --> <i data-lucide="sparkles" class="w-5 h-5 text-indigo-600 animate-pulse"></i>
             </div>
             <span id="globalLoadingText" class="text-slate-800 font-black tracking-widest text-lg">處理中...</span>
             <span class="text-slate-400 text-xs font-medium mt-1">請稍候，這可能需要幾秒鐘的時間</span>
@@ -702,7 +825,8 @@
     <!-- 歷史紀錄按鈕 (FAB) -->
     <button id="toggleHistoryBtn"
         class="fixed top-6 right-6 bg-white shrink-0 p-3 rounded-full shadow-lg border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-300 hover:shadow-xl transition-all z-40 group">
-        <i data-lucide="history" class="w-6 h-6 group-hover:-rotate-12 transition-transform"></i>
+        <!-- Lucide: history --> <i data-lucide="history"
+            class="w-6 h-6 group-hover:-rotate-12 transition-transform"></i>
     </button>
 
     <!-- 歷史紀錄側邊面板 -->
@@ -713,26 +837,26 @@
         class="fixed top-0 right-0 h-full w-80 bg-slate-50 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
         <div class="p-4 border-b border-slate-200 bg-white flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2 text-indigo-900">
-                <i data-lucide="history" class="w-5 h-5"></i>
+                <!-- Lucide: history --> <i data-lucide="history" class="w-5 h-5"></i>
                 <h3 class="font-bold">歷史紀錄</h3>
             </div>
             <div class="flex items-center gap-1">
                 <input type="file" id="importHistoryInput" class="hidden" accept=".json">
                 <button id="importHistoryBtn" title="匯入歷史紀錄"
                     class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors">
-                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    <!-- Lucide: upload --> <i data-lucide="upload" class="w-4 h-4"></i>
                 </button>
                 <button id="exportHistoryBtn" title="匯出歷史紀錄"
                     class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors">
-                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <!-- Lucide: download --> <i data-lucide="download" class="w-4 h-4"></i>
                 </button>
                 <button id="clearAllHistoryBtn" title="清空全部"
                     class="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-lg transition-colors">
-                    <i data-lucide="trash" class="w-4 h-4"></i>
+                    <!-- Lucide: trash --> <i data-lucide="trash" class="w-4 h-4"></i>
                 </button>
                 <button id="closeHistoryBtn"
                     class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+                    <!-- Lucide: x --> <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
         </div>
@@ -740,7 +864,7 @@
         <!-- 歷史紀錄列表區 -->
         <div class="flex-1 overflow-y-auto p-4 space-y-3">
             <div id="historyEmptyState" class="hidden h-full flex flex-col items-center justify-center text-slate-400">
-                <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
+                <!-- Lucide: inbox --> <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
                 <p class="text-sm">尚無任何紀錄</p>
             </div>
             <div id="historyListContent" class="space-y-3">
@@ -751,7 +875,7 @@
 
     <script>
         /**
-         * 名片快手 1.38
+         * 名片快手 1.40
          */
 
         /**
@@ -1274,12 +1398,12 @@
              * @param {number} [maxSide=1200] - 壓縮後允許的最大邊長 (寬度或高度的像素值)
              * @returns {Promise<string>} 成功壓縮後的純 Base64 字串 (已去除 `data:image/...` 等頭部標記)
              */
-            async compress(file, maxSide = 1200) {
+            async compress(file, maxSide = 1200, quality = 0.85) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = (event) => {
-                        this.compressDataURL(event.target.result, maxSide).then(resolve).catch(reject);
+                        this.compressDataURL(event.target.result, maxSide, quality).then(resolve).catch(reject);
                     };
                     reader.onerror = () => reject(new Error("檔案讀取失敗"));
                 });
@@ -1289,13 +1413,14 @@
              * 將 Data URL 字串載入為 Image 物件後進行壓縮
              * @param {string} dataUrl - 原始資料的 Base64 Data URL (包含頭部標記)
              * @param {number} [maxSide=1200] - 允許的最大邊長
+             * @param {number} [quality=0.85] - 壓縮品質 (0.0 到 1.0)
              * @returns {Promise<string>} 壓縮後的 Base64 字串 (不含頭部標記)
              */
-            async compressDataURL(dataUrl, maxSide = 1200) {
+            async compressDataURL(dataUrl, maxSide = 1200, quality = 0.85) {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
                     img.src = dataUrl;
-                    img.onload = () => resolve(this.compressImage(img, maxSide));
+                    img.onload = () => resolve(this.compressImage(img, maxSide, quality));
                     img.onerror = () => reject(new Error("影像載入失敗"));
                 });
             },
@@ -1306,9 +1431,10 @@
              * 
              * @param {HTMLImageElement} img - 載入完成的圖片 DOM 實體
              * @param {number} [maxSide=1200] - 允許的最大邊長
-             * @returns {string} 壓縮並轉換成 PNG 格式的純 Base64 字串
+             * @param {number} [quality=0.85] - 壓縮品質 (0.0 到 1.0)
+             * @returns {string} 壓縮並轉換成 JPEG 格式的純 Base64 字串
              */
-            compressImage(img, maxSide = 1200) {
+            compressImage(img, maxSide = 1200, quality = 0.85) {
                 let { width, height } = img;
 
                 // 等比例縮放計算：如果原圖大於最大邊長限制，則進行縮小
@@ -1334,8 +1460,8 @@
                 ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // 轉出 JPEG (0.85 品質)，相較於 PNG 能節省約 80% 的 Base64 體積與網路傳輸流量，且 OCR 辨識率依然完美！
-                return this.canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
+                // 轉出 JPEG，相較於 PNG 能節省大量 Base64 體積與網路傳輸流量，且 OCR 辨識率依然完美！
+                return this.canvas.toDataURL("image/jpeg", quality).split(",")[1];
             }
         };
 
@@ -1634,6 +1760,7 @@
                             apiKeyModal.classList.remove("scale-95");
                             if (apiKeyInput) apiKeyInput.focus();
                         }, 10);
+                        this.updateStorageInfo();
                     } else {
                         apiKeyModal.classList.add("scale-95");
                         apiKeyModalOverlay.classList.add("opacity-0");
@@ -1729,6 +1856,11 @@
                                 : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>';
                         });
                     }
+
+                    const slimHistoryBtn = document.getElementById("slimHistoryBtn");
+                    if (slimHistoryBtn) {
+                        slimHistoryBtn.addEventListener("click", () => this.slimHistory());
+                    }
                 }
                 // 暴露方法給其他模組使用
                 this.toggleApiKeyModal = toggleModal;
@@ -1776,6 +1908,9 @@
 
                 const downloadQrBtn = document.getElementById("downloadQrBtn");
                 if (downloadQrBtn) downloadQrBtn.addEventListener("click", () => this.downloadQRCode());
+
+                const shareCardBtn = document.getElementById("shareCardBtn");
+                if (shareCardBtn) shareCardBtn.addEventListener("click", () => this.shareCard());
 
                 const clearFormBtn = document.getElementById("clearFormBtn");
                 if (clearFormBtn) clearFormBtn.addEventListener("click", () => this.clearForm());
@@ -2038,6 +2173,230 @@
                 link.click();
                 document.body.removeChild(link);
                 this.toast("QR Code 下載成功");
+            },
+
+            /**
+             * [功能] 分享名片資料 (整合 Web Share API)
+             * - 優先嘗試分享實體 .vcf 檔案 (行動裝置體驗極佳，可直接新增聯絡人)
+             * - 若瀏覽器不支援檔案分享，改用系統分享文字
+             * - 若不支援 Web Share API (如桌面端)，自動降級複製整齊的名片文字至剪貼簿
+             * @returns {Promise<void>}
+             */
+            async shareCard() {
+                if (!state.cardData || !state.cardData.fn) {
+                    this.toast("請先輸入資料以生成名片");
+                    return;
+                }
+
+                const vcf = vCardFormatter.generate(state.cardData);
+                const name = state.cardData.fn;
+                const filename = `${name}.vcf`;
+
+                // 檢查是否支援原生 Web Share API
+                if (navigator.share) {
+                    try {
+                        const file = new File([vcf], filename, { type: "text/vcard" });
+
+                        // 1. 優先嘗試以「檔案」形式分享 vCard (iOS Safari & Android Chrome 完美支援)
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            await navigator.share({
+                                files: [file],
+                                title: `${name} 的名片`,
+                                text: `這是 ${name} 的電子名片 (vCard)`
+                            });
+                            this.toast("已開啟分享選單");
+                            return;
+                        }
+
+                        // 2. 檔案分享不受支援時，退回「純文字」方式分享
+                        let textContent = `【聯絡人資訊】\n姓名: ${name}`;
+                        if (state.cardData.org) textContent += `\n公司: ${state.cardData.org}`;
+                        if (state.cardData.title) textContent += `\n職稱: ${state.cardData.title}`;
+                        if (state.cardData.tel && state.cardData.tel.length > 0) {
+                            textContent += `\n電話: ${state.cardData.tel[0].value}`;
+                        }
+                        if (state.cardData.email && state.cardData.email.length > 0) {
+                            textContent += `\nEmail: ${state.cardData.email[0].value}`;
+                        }
+
+                        await navigator.share({
+                            title: `${name} 的名片`,
+                            text: textContent
+                        });
+                        this.toast("已開啟分享選單");
+                    } catch (err) {
+                        // 使用者取消分享不跳錯誤 Toast
+                        if (err.name !== "AbortError") {
+                            console.error("分享失敗:", err);
+                            this.toast("分享失敗，已自動複製文字");
+                            this.copyCardTextToClipboard();
+                        }
+                    }
+                } else {
+                    // 3. 桌面端或不支援瀏覽器：完美降級複製到剪貼簿
+                    this.copyCardTextToClipboard();
+                }
+            },
+
+            /**
+             * [功能] 複製整齊的名片文字到剪貼簿 (Web Share 降級方案)
+             */
+            copyCardTextToClipboard() {
+                const name = state.cardData.fn;
+                let textContent = `【名片資訊】\n姓名: ${name}`;
+                if (state.cardData.org) textContent += `\n公司: ${state.cardData.org}`;
+                if (state.cardData.title) textContent += `\n職稱: ${state.cardData.title}`;
+
+                if (state.cardData.tel && state.cardData.tel.length > 0) {
+                    textContent += `\n電話: ${state.cardData.tel.map(t => `${t.type || ''}: ${t.value}`).join(', ')}`;
+                }
+                if (state.cardData.email && state.cardData.email.length > 0) {
+                    textContent += `\nEmail: ${state.cardData.email.map(e => e.value).join(', ')}`;
+                }
+                if (state.cardData.url && state.cardData.url.length > 0) {
+                    textContent += `\n網址: ${state.cardData.url.map(u => u.value).join(', ')}`;
+                }
+                if (state.cardData.adr && state.cardData.adr.length > 0) {
+                    const adr = state.cardData.adr[0];
+                    const fullAdr = [adr.country, adr.region, adr.locality, adr.street].filter(Boolean).join('');
+                    if (fullAdr) textContent += `\n地址: ${fullAdr}`;
+                }
+
+                navigator.clipboard.writeText(textContent).then(() => {
+                    this.toast("已將名片文字複製到剪貼簿");
+                }).catch(err => {
+                    console.error("複製失敗:", err);
+                    this.toast("複製失敗，請手動複製");
+                });
+            },
+
+            /**
+             * [功能] 格式化位元組為易讀格式
+             * @param {number} bytes 
+             * @returns {string}
+             */
+            formatBytes(bytes) {
+                if (bytes === 0) return "0 Bytes";
+                const k = 1024;
+                const sizes = ["Bytes", "KB", "MB", "GB"];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+            },
+
+            /**
+             * [功能] 計算名片歷史紀錄 IndexedDB 的實際佔用長度
+             * @returns {Promise<number>} 位元組大小
+             */
+            async calculateDatabaseSize() {
+                if (!DatabaseService.db) return 0;
+                try {
+                    const store = DatabaseService.db.transaction([DatabaseService.storeName], "readonly").objectStore(DatabaseService.storeName);
+                    const records = await DatabaseService._req(store.getAll()) || [];
+                    let totalBytes = 0;
+                    records.forEach(r => {
+                        if (r.base64Image) {
+                            totalBytes += r.base64Image.length;
+                        }
+                        if (r.cardData) {
+                            totalBytes += JSON.stringify(r.cardData).length;
+                        }
+                    });
+                    return totalBytes;
+                } catch (err) {
+                    console.error("計算資料庫大小失敗:", err);
+                    return 0;
+                }
+            },
+
+            /**
+             * [功能] 獲取並更新本地儲存與瀏覽器配額資訊
+             * @returns {Promise<void>}
+             */
+            async updateStorageInfo() {
+                const dbSizeEl = document.getElementById("dbStorageUsage");
+                const quotaEl = document.getElementById("browserStorageQuota");
+
+                try {
+                    // 1. 計算名片歷史紀錄大小
+                    const dbBytes = await this.calculateDatabaseSize();
+                    if (dbSizeEl) dbSizeEl.textContent = this.formatBytes(dbBytes);
+
+                    // 2. 獲取瀏覽器剩餘可用配額
+                    if (navigator.storage && navigator.storage.estimate) {
+                        const estimate = await navigator.storage.estimate();
+                        const remaining = estimate.quota - estimate.usage;
+                        if (quotaEl) quotaEl.textContent = this.formatBytes(Math.max(0, remaining));
+                    } else {
+                        if (quotaEl) quotaEl.textContent = "不支援估算";
+                    }
+                } catch (err) {
+                    console.error("更新儲存資訊失敗:", err);
+                }
+            },
+
+            /**
+             * [功能] 一鍵清除所有歷史紀錄中的原始圖片 (保留文字)
+             * @returns {Promise<void>}
+             */
+            async slimHistory() {
+                if (!DatabaseService.db) return;
+
+                const confirmed = await this.confirm(
+                    "確定要將歷史紀錄中的名片圖片「深度瘦身」為超低解析度縮圖嗎？\n\n這能保留名片大略的視覺外框預覽，同時為您釋放 95% 以上的本機儲存空間！"
+                );
+                if (!confirmed) return;
+
+                this.setLoading(true, "正在壓縮歷史名片圖片...");
+
+                try {
+                    // 1. 先從唯讀交易中獲取所有歷史紀錄
+                    const records = await DatabaseService.getAllCards();
+
+                    // 2. 先在外部進行非同步的圖片壓縮，避免佔用與關閉資料庫交易
+                    const updates = [];
+                    for (const r of records) {
+                        if (r.base64Image && r.base64Image.length > 7000) {
+                            try {
+                                const dataUrl = `data:image/jpeg;base64,${r.base64Image}`;
+                                // 深度壓縮為最大邊長 800 像素、品質 0.5 的 JPEG 縮圖 (保留極佳清晰度與配色，體積依然極小)
+                                const slimmedBase64 = await ImageProcessor.compressDataURL(dataUrl, 800, 0.5);
+                                updates.push({
+                                    id: r.id,
+                                    timestamp: r.timestamp,
+                                    cardData: r.cardData,
+                                    base64Image: slimmedBase64
+                                });
+                            } catch (imgErr) {
+                                console.error(`非同步壓縮圖片失敗 (ID: ${r.id}):`, imgErr);
+                            }
+                        }
+                    }
+
+                    // 3. 開啟全新的寫入交易，進行純同步的批次寫入 (此處 100% 不會發生交易過期錯誤)
+                    let affectedCount = 0;
+                    if (updates.length > 0) {
+                        const store = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite").objectStore(DatabaseService.storeName);
+                        for (const up of updates) {
+                            await DatabaseService._req(store.put(up));
+                            affectedCount++;
+                        }
+                    }
+
+                    if (affectedCount > 0) {
+                        this.toast(`成功瘦身！已完成 ${affectedCount} 筆歷史紀錄圖片的深度壓縮`);
+                    } else {
+                        this.toast("歷史紀錄中目前沒有需要瘦身的原始大圖檔案喔！");
+                    }
+
+                    // 重新更新設定畫面與歷史清單
+                    await this.updateStorageInfo();
+                    HistoryManager.render();
+                } catch (err) {
+                    console.error("瘦身歷史紀錄失敗:", err);
+                    this.toast("清理失敗，請重試");
+                } finally {
+                    this.setLoading(false);
+                }
             },
 
             /**
