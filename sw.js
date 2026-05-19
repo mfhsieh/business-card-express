@@ -1,4 +1,4 @@
-const CACHE_VERSION = '1.38'; // 修改此版本號以強制更新用戶端的快取
+const CACHE_VERSION = '1.39'; // 修改此版本號以強制更新用戶端的快取
 const CACHE_NAME = `business-card-express-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -7,6 +7,14 @@ const ASSETS_TO_CACHE = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon.svg',
+];
+
+const ALLOWED_CDN_ORIGINS = [
+  'https://cdn.tailwindcss.com',
+  'https://unpkg.com',
+  'https://cdnjs.cloudflare.com',
+  'https://fonts.googleapis.com',
+  'https://fonts.gstatic.com'
 ];
 
 self.addEventListener('install', (event) => {
@@ -58,12 +66,15 @@ self.addEventListener('fetch', (event) => {
       }
       return fetch(event.request).then((networkResponse) => {
         // 檢查是否為有效的回應
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+        if (!networkResponse || networkResponse.status !== 200) {
           return networkResponse;
         }
-        // 如果是本地資源，則快取
+        
         const url = new URL(event.request.url);
-        if (url.origin === location.origin) {
+        const isAllowedCDN = ALLOWED_CDN_ORIGINS.some(origin => url.href.startsWith(origin));
+        
+        // 允許同源資源或特定的安全 CDN 資源
+        if (url.origin === location.origin || isAllowedCDN) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseToCache);
