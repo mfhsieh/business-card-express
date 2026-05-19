@@ -163,7 +163,7 @@
 
                 <!-- AI 智慧摘要區塊 -->
                 <div id="summaryContainer"
-                    class="hidden bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
+                    class="hidden bg-white pt-5 pb-2 px-2 sm:pt-6 sm:pb-4 sm:px-4 md:pt-8 md:pb-6 md:px-6 lg:pt-10 lg:pb-8 lg:px-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
@@ -626,7 +626,7 @@
                         <button id="toggleApiKeyVisibility"
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                             title="顯示/隱藏">
-                            <i data-lucide="eye" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
                     <a href="https://aistudio.google.com/app/apikey" target="_blank"
@@ -1643,12 +1643,8 @@
                             const type = apiKeyInput.getAttribute("type") === "password" ? "text" : "password";
                             apiKeyInput.setAttribute("type", type);
                             toggleBtn.innerHTML = type === "password"
-                                ? '<i data-lucide="eye" class="w-5 h-5"></i>'
-                                : '<i data-lucide="eye-off" class="w-5 h-5"></i>';
-                            // 重新渲染 Lucide 圖標
-                            if (window.lucide) window.lucide.createIcons({
-                                root: toggleBtn
-                            });
+                                ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>'
+                                : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>';
                         });
                     }
                 }
@@ -2421,7 +2417,7 @@
                         const date = new Date(c.timestamp).toLocaleString("zh-TW", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
                         const name = c.cardData.fn || "未命名聯絡人";
                         const org = c.cardData.orgName || "無公司資訊";
-                        const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><i data-lucide="image" class="w-4 h-4 text-slate-400"></i></div>`;
+                        const imgPreview = c.base64Image ? `<img src="data:image/png;base64,${c.base64Image}" class="w-10 h-10 object-cover rounded-lg border border-slate-200 shrink-0">` : `<div class="w-10 h-10 bg-slate-100 rounded-lg border border-slate-200 shrink-0 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-400"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>`;
 
                         return `
                         <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all group flex items-center gap-3 cursor-pointer" onclick="HistoryManager.loadItem(${c.id})">
@@ -2429,15 +2425,14 @@
                             <div class="flex-1 min-w-0">
                                 <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
                                 <p class="text-xs text-slate-500 truncate">${org}</p>
-                                <p class="text-[0.625rem] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
+                                <p class="text-[0.625rem] text-slate-400 mt-1 flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${date}</p>
                             </div>
                             <button onclick="event.stopPropagation(); HistoryManager.deleteItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
                             </button>
                         </div>
                     `;
                     }).join("");
-                    lucide.createIcons({ root: listEl });
                 } catch (err) {
                     console.error("讀取歷史紀錄失敗:", err);
                 }
@@ -2876,11 +2871,10 @@
                 if (sourcesList) {
                     sourcesList.innerHTML = (d.sources || []).map(s => `
                     <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[0.625rem] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
-                        <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> ${s.title || "來源"}
                     </a >
                     `).join("");
                 }
-                lucide.createIcons();
             } else {
                 sourcesBlock.classList.add("hidden");
                 if (searchEntryPoint) searchEntryPoint.innerHTML = "";
@@ -2943,14 +2937,14 @@
                     let errorClass = isValid ? "border-slate-200 focus:ring-indigo-500" : "border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50";
                     let msgHidden = isValid ? "hidden" : '';
                     inputsHTML = `<input type="text" value="${item[valKey] || ""}" placeholder="${ph}" data-update-list-validate="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-base outline-none focus:ring-2 transition-all">`;
-                    validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[0.625rem] text-red-500 font-bold ml-1 flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> 格式似乎有誤</div>`;
+                    validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[0.625rem] text-red-500 font-bold ml-1 flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> 格式似乎有誤</div>`;
                 }
 
                 div.innerHTML = `
                 <div class="flex items-center gap-2 w-full">
                     <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold rounded-lg px-1 py-2 outline-none cursor-pointer">${optionsHTML}</select>
                     ${inputsHTML}
-                    <button data-remove-item="${type},${idx}" class="shrink-0 p-0.5 -mr-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                    <button data-remove-item="${type},${idx}" class="shrink-0 p-0.5 -mr-1 text-slate-300 hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
                 </div>
                 ${validationMsg}`;
                 fragment.appendChild(div);
@@ -2958,7 +2952,6 @@
 
             container.innerHTML = "";
             container.appendChild(fragment);
-            lucide.createIcons({ root: container });
         }
 
         /**
