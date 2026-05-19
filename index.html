@@ -17,6 +17,16 @@
     <meta name="apple-mobile-web-app-title" content="名片快手">
     <title>名片快手</title>
     <script>
+        // 優先讀取並套用全域文字大小，防止畫面閃爍
+        (function () {
+            let savedScale = localStorage.getItem("globalTextScale") || "100";
+            if (savedScale === "115") savedScale = "110";
+            else if (savedScale === "130") savedScale = "125";
+            if (savedScale !== "100") {
+                document.documentElement.style.fontSize = savedScale + "%";
+            }
+        })();
+
         // 單一來源的 Logo SVG 路徑定義 (用於 Favicon 與樣式)
         const LOGO_SVG_PATH = `<path d='M4 7V5a2 2 0 0 1 2-2h2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 3h2a2 2 0 0 1 2 2v2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M20 17v2a2 2 0 0 1-2 2h-2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M8 21H6a2 2 0 0 1-2-2v-2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><circle cx='12' cy='10' r='3' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2' stroke='currentColor' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>`;
         const LOGO_FAVICON_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>${LOGO_SVG_PATH.replaceAll('currentColor', '%234f46e5')}</svg>`;
@@ -68,7 +78,7 @@
     </style>
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-900 p-2 md:p-6 lg:p-8">
+<body class="min-h-screen bg-slate-50 text-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
 
     <!-- 可複用的 SVG 圖示定義 -->
     <script>
@@ -98,7 +108,7 @@
             <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-8">
                 <!-- 上傳區 -->
                 <div
-                    class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
                             <i data-lucide="upload-cloud" class="text-indigo-600 w-5 h-5"></i> 上傳與辨識
@@ -137,7 +147,7 @@
 
                 <!-- AI 智慧摘要區塊 -->
                 <div id="summaryContainer"
-                    class="hidden bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
+                    class="hidden bg-white p-2 sm:p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
@@ -237,12 +247,12 @@
 
                 <!-- 產出區 -->
                 <div
-                    class="bg-white p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    class="bg-white p-2 sm:p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
                         <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR Code
                     </h2>
                     <div
-                        class="bg-gradient-to-br from-slate-50 to-indigo-50/30 p-6 rounded-3xl border border-slate-100 flex flex-col items-center">
+                        class="bg-gradient-to-br from-slate-50 to-indigo-50/30 px-3 py-5 sm:p-6 rounded-3xl border border-slate-100 flex flex-col items-center">
                         <div class="bg-white p-4 rounded-2xl shadow-md mb-4 border border-slate-50 relative group">
                             <div id="qrPlaceholder"
                                 class="w-48 h-48 flex items-center justify-center bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">
@@ -279,7 +289,7 @@
             <!-- 右側：資料編輯區 -->
             <div class="lg:col-span-7 space-y-6">
                 <div
-                    class="bg-white p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
                             <i data-lucide="file-edit" class="text-indigo-600 w-5 h-5"></i> 編輯名片資料
@@ -545,17 +555,30 @@
         class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-50 text-sm font-bold opacity-0 pointer-events-none transition-opacity duration-300 w-max max-w-[90vw] text-center">
     </div>
 
-    <!-- API Key 設定 Modal -->
+    <!-- 系統設定 Modal -->
     <div id="apiKeyModalOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
         <div class="bg-white px-5 py-6 md:px-8 md:py-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw]"
             id="apiKeyModal">
             <div class="w-full flex justify-between items-center mb-2">
                 <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="key" class="text-indigo-600 w-5 h-5"></i> API 設定
+                    <i data-lucide="settings" class="text-indigo-600 w-5 h-5"></i> 系統與 API 設定
                 </h2>
             </div>
             <div class="w-full space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">全域文字大小</label>
+                    <div class="grid grid-cols-4 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
+                        <button type="button" data-scale="90"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較小</button>
+                        <button type="button" data-scale="100"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">標準</button>
+                        <button type="button" data-scale="110"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較大</button>
+                        <button type="button" data-scale="125"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">超大</button>
+                    </div>
+                </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">選擇 AI 模型</label>
                     <div class="relative">
@@ -691,7 +714,7 @@
 
     <script>
         /**
-         * 名片快手 1.36
+         * 名片快手 1.37
          */
 
         /**
@@ -1505,9 +1528,35 @@
                     }
                 };
 
+                let currentScale = localStorage.getItem("globalTextScale") || "100";
+                if (currentScale === "115") currentScale = "110";
+                else if (currentScale === "130") currentScale = "125";
+
+                const applyTextScale = (scale) => {
+                    document.documentElement.style.fontSize = scale === "100" ? "" : `${scale}%`;
+                    const container = document.getElementById("textScaleContainer");
+                    if (container) {
+                        container.querySelectorAll("button").forEach(btn => {
+                            const btnScale = btn.getAttribute("data-scale");
+                            if (btnScale === scale) {
+                                btn.className = "py-1.5 text-xs font-black text-indigo-600 bg-white rounded-lg shadow-sm transition-all";
+                            } else {
+                                btn.className = "py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all";
+                            }
+                        });
+                    }
+                };
+
+                // 初始化字體大小與按鈕樣式
+                applyTextScale(currentScale);
+
                 const handleCancel = () => {
                     if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
                     if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
+                    let savedScale = localStorage.getItem("globalTextScale") || "100";
+                    if (savedScale === "115") savedScale = "110";
+                    else if (savedScale === "130") savedScale = "125";
+                    applyTextScale(savedScale);
                     toggleModal(false);
                 };
 
@@ -1518,6 +1567,7 @@
                     if (modelSelect) {
                         localStorage.setItem("geminiModel", modelSelect.value);
                     }
+                    localStorage.setItem("globalTextScale", currentScale);
                     updateSettingsIconState();
                     toggleModal(false);
                 };
@@ -1526,7 +1576,22 @@
                     settingsBtn.addEventListener("click", () => {
                         if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
                         if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
+                        currentScale = localStorage.getItem("globalTextScale") || "100";
+                        if (currentScale === "115") currentScale = "110";
+                        else if (currentScale === "130") currentScale = "125";
+                        applyTextScale(currentScale);
                         toggleModal(true);
+                    });
+                }
+
+                const scaleContainer = document.getElementById("textScaleContainer");
+                if (scaleContainer) {
+                    scaleContainer.querySelectorAll("button").forEach(btn => {
+                        btn.addEventListener("click", (e) => {
+                            const targetScale = e.target.closest("button").getAttribute("data-scale");
+                            currentScale = targetScale;
+                            applyTextScale(targetScale);
+                        });
                     });
                 }
 
@@ -2755,9 +2820,9 @@
 
                 div.innerHTML = `
                 <div class="flex items-center gap-2 w-full">
-                    <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-600 text-[10px] rounded-lg px-1.5 py-2 outline-none">${optionsHTML}</select>
+                    <select data-update-list-type="${type},${idx}" class="shrink-0 bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold rounded-lg px-1 py-2 outline-none cursor-pointer">${optionsHTML}</select>
                     ${inputsHTML}
-                    <button data-remove-item="${type},${idx}" class="shrink-0 p-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    <button data-remove-item="${type},${idx}" class="shrink-0 p-0.5 -mr-1 text-slate-300 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
                 </div>
                 ${validationMsg}`;
                 fragment.appendChild(div);
