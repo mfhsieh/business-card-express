@@ -597,7 +597,7 @@
                     <p class="text-[12px] text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
                         <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
                         <span>注意事項：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API
-                            Key。但該系列免費模型的反應較慢，請自行評估是否適用。</span>
+                            Key。但該系列免費模型的反應較慢且可能不穩定，請自行評估是否適用。</span>
                     </p>
                 </div>
                 <div class="flex gap-4 w-full mt-4">
@@ -1340,8 +1340,16 @@
 
                 // 只有在勾選「加入分類」時才寫入 CATEGORIES 欄位 (CATEGORIES 欄位中半形逗號作為多標籤分隔符號，依要求不予跳脫)
                 if (d.useCategories && Utils.isValid(d.categories)) {
-                    const escapedCat = this.escapeText(d.categories).replace(/\\,/g, ",");
-                    parts.push(`CATEGORIES${getUtf8(escapedCat)}:${escapedCat}`);
+                    const categoryList = d.categories
+                        .split(",")
+                        .map(cat => cat.trim())
+                        .filter(cat => cat !== "");
+                    const processedCats = categoryList
+                        .map(cat => this.escapeText(cat).replace(/\\,/g, ","))
+                        .join(",");
+                    if (processedCats) {
+                        parts.push(`CATEGORIES${getUtf8(processedCats)}:${processedCats}`);
+                    }
                 }
 
                 // 3. 處理全名 (FN): 優先使用 fn 欄位，若無則嘗試組合姓氏與名字，皆無則顯示 "聯絡人"
@@ -1632,6 +1640,16 @@
                 if (categoriesEl) {
                     categoriesEl.addEventListener("input", (e) => {
                         state.cardData.categories = e.target.value;
+                        updateVCardPreview();
+                    });
+                    categoriesEl.addEventListener("change", (e) => {
+                        const normalized = e.target.value
+                            .split(",")
+                            .map(cat => cat.trim())
+                            .filter(cat => cat !== "")
+                            .join(", ");
+                        e.target.value = normalized;
+                        state.cardData.categories = normalized;
                         updateVCardPreview();
                     });
                 }
