@@ -1023,7 +1023,6 @@
                 let parsed = null;
                 try {
                     // 1. 優先嘗試擷取 Markdown 程式碼區塊中的 JSON (```json ... ```)
-                    // 1. 優先嘗試擷取 Markdown 程式碼區塊中的 JSON (```json ... ```)
                     // 支援未閉合的程式碼區塊 (處理被截斷的情況)
                     const codeBlockRegex = /```(?:json)?\s*([\s\S]*?)(?:```|$)/gi;
                     let match;
