@@ -78,7 +78,7 @@
     </style>
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
+<body class="min-h-screen bg-slate-50 text-slate-900 px-2 py-4 sm:p-4 md:p-6 lg:p-8">
 
     <!-- 可複用的 SVG 圖示定義 -->
     <script>
@@ -522,7 +522,7 @@
         </div>
 
         <!-- 頁尾 -->
-        <footer class="mt-16 pt-8 pb-12 border-t border-slate-200 text-center">
+        <footer class="mt-8 pt-8 pb-8 border-t border-slate-200 text-center">
             <div class="inline-flex flex-col items-center gap-2">
                 <div
                     class="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-slate-500 text-sm font-medium">
@@ -558,24 +558,26 @@
     <!-- 系統設定 Modal -->
     <div id="apiKeyModalOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-5 py-6 md:px-8 md:py-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw]"
+        <div class="bg-white px-5 py-6 md:px-8 md:py-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col gap-4 md:gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw] max-h-[calc(100dvh-2rem)] md:max-h-[90dvh]"
             id="apiKeyModal">
-            <div class="w-full flex justify-between items-center mb-2">
+            <div class="w-full flex justify-between items-center mb-1 shrink-0">
                 <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                     <i data-lucide="settings" class="text-indigo-600 w-5 h-5"></i> 系統與 API 設定
                 </h2>
             </div>
-            <div class="w-full space-y-6">
+            
+            <!-- 可滾動的設定內容區域 -->
+            <div class="w-full space-y-6 flex-1 overflow-y-auto pr-1 py-1 min-h-0">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">全域文字大小</label>
                     <div class="grid grid-cols-4 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
-                        <button type="button" data-scale="90"
+                        <button type="button" data-scale="90" style="font-size: 14.4px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較小</button>
-                        <button type="button" data-scale="100"
+                        <button type="button" data-scale="100" style="font-size: 16px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">標準</button>
-                        <button type="button" data-scale="110"
+                        <button type="button" data-scale="110" style="font-size: 17.6px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較大</button>
-                        <button type="button" data-scale="125"
+                        <button type="button" data-scale="125" style="font-size: 20px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">超大</button>
                     </div>
                 </div>
@@ -623,16 +625,18 @@
                             Key。但該系列免費模型的反應較慢且可能不穩定，請自行評估是否適用。</span>
                     </p>
                 </div>
-                <div class="flex gap-4 w-full mt-4">
-                    <button id="cancelApiKeyBtn"
-                        class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-sm rounded-xl transition-all active:scale-95">
-                        取消
-                    </button>
-                    <button id="confirmApiKeyBtn"
-                        class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm rounded-xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95">
-                        確認
-                    </button>
-                </div>
+            </div>
+            
+            <!-- 固定的操作按鈕區域 -->
+            <div class="flex gap-4 w-full shrink-0">
+                <button id="cancelApiKeyBtn"
+                    class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-sm rounded-xl transition-all active:scale-95">
+                    取消
+                </button>
+                <button id="confirmApiKeyBtn"
+                    class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm rounded-xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95">
+                    確認
+                </button>
             </div>
         </div>
     </div>
@@ -3072,14 +3076,14 @@
                         ctx.fillStyle = '#ffffff';
                         ctx.fillRect(0, 0, size, size);
                         ctx.drawImage(img, 0, 0, size, size);
-                        
+
                         qrImage.src = canvas.toDataURL('image/png');
-                        
+
                         // 動態設定 alt 與 title 屬性，暗示瀏覽器儲存 Data URL 圖片時的預設檔名，使其與下載的 SVG 主檔名一致
                         const filenameBase = `${d.fn || 'contact'}_qr`;
                         qrImage.alt = filenameBase;
                         qrImage.title = filenameBase;
-                        
+
                         qrImage.classList.remove("hidden");
                     };
                     img.src = svgDataUrl;
