@@ -1656,6 +1656,14 @@
                 this.elFileInput = document.getElementById("fileInput");
                 this.elDebugPanel = document.getElementById("DebugPanel");
 
+                // 系統效能優化：一次性快取高頻使用的 DOM 元素
+                this.elGlobalLoadingOverlay = document.getElementById("globalLoadingOverlay");
+                this.elGlobalLoadingModal = document.getElementById("globalLoadingModal");
+                this.elGlobalLoadingText = document.getElementById("globalLoadingText");
+                this.elToast = document.getElementById("toast");
+                this.elErrorMessage = document.getElementById("errorMessage");
+                this.elErrorText = document.getElementById("errorText");
+
                 // 1. 綁定 textarea 自動調整高度
                 const textareas = ["field-companySummary", "field-personalSummary", "field-emailDraft", "field-note"];
                 textareas.forEach(id => {
@@ -2020,9 +2028,9 @@
                 const btn = this.elIdentifyBtn;
                 if (btn) btn.disabled = isLoading;
 
-                const overlay = document.getElementById("globalLoadingOverlay");
-                const modal = document.getElementById("globalLoadingModal");
-                const textEl = document.getElementById("globalLoadingText");
+                const overlay = this.elGlobalLoadingOverlay;
+                const modal = this.elGlobalLoadingModal;
+                const textEl = this.elGlobalLoadingText;
 
                 if (overlay && modal && textEl) {
                     if (isLoading) {
@@ -2032,7 +2040,6 @@
                     } else {
                         modal.classList.add("scale-95");
                         overlay.classList.add("opacity-0", "pointer-events-none");
-                        // 隱藏時可延遲清空或保持原文字，避免消失動畫過程中文字突然變更
                     }
                 }
             },
@@ -2076,7 +2083,7 @@
              * @returns {void}
              */
             toast(msg, duration = 3000) {
-                const toast = document.getElementById("toast");
+                const toast = this.elToast;
                 if (!toast) return;
 
                 toast.textContent = msg;
@@ -2096,8 +2103,8 @@
              * @returns {void}
              */
             showError(msg) {
-                const err = document.getElementById("errorMessage");
-                const text = document.getElementById("errorText");
+                const err = this.elErrorMessage;
+                const text = this.elErrorText;
 
                 if (text) text.textContent = msg;
                 if (err) err.classList.remove("hidden");
@@ -2109,7 +2116,7 @@
              * @returns {void}
              */
             hideError() {
-                const err = document.getElementById("errorMessage");
+                const err = this.elErrorMessage;
                 if (err) err.classList.add("hidden");
                 if (this.elDebugPanel) this.elDebugPanel.classList.add("hidden");
             },
