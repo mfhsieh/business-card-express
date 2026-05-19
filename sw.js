@@ -1,4 +1,4 @@
-const CACHE_VERSION = '1.39'; // 修改此版本號以強制更新用戶端的快取
+const CACHE_VERSION = '1.40'; // 修改此版本號以強制更新用戶端的快取
 const CACHE_NAME = `business-card-express-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -11,7 +11,6 @@ const ASSETS_TO_CACHE = [
 
 const ALLOWED_CDN_ORIGINS = [
   'https://cdn.tailwindcss.com',
-  'https://unpkg.com',
   'https://cdnjs.cloudflare.com',
   'https://fonts.googleapis.com',
   'https://fonts.gstatic.com'

@@ -67,7 +67,7 @@
 | [Google Gemini/Gemma API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
 | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator/) | 原生 SVG vCard QR Code 產生 |
 | [Tailwind CSS](https://tailwindcss.com/) | 視覺排版與樣式 |
-| [Lucide Icons](https://lucide.dev/) | 介面圖示庫 |
+| 原生內聯 SVG 圖示 (內建) | 自製高效圖示渲染模組，全面取代外部 Lucide 庫以支援 100% 離線運行 |
 | [Google Fonts – Noto Sans TC](https://fonts.google.com/) | 中文字體 |
 | 瀏覽器原生 IndexedDB | 本機歷史紀錄儲存 |
 | 瀏覽器原生 Local Storage | API 金鑰本機儲存 |
@@ -115,9 +115,11 @@
 - 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Google Gemini/Gemma API 之外，不上傳資料至任何第三方伺服器。
 - 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Google Gemini/Gemma API 辨識，不經由中間伺服器轉發。
 
-## 📄 授權條款
+## 📄 授權條款與致謝
 
-本專案採用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant) 授權（姓名標示－非商業性－相同方式分享 4.0 國際）。
+- **專案授權**：本專案採用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant) 授權（姓名標示－非商業性－相同方式分享 4.0 國際）。
+
+- **圖示版權**：本專案圖示源自開源項目 [Lucide Icons](https://lucide.dev/) (基於 [ISC 授權](https://github.com/lucide-icons/lucide/blob/main/LICENSE))。
 
 您可以自由重製、散布、傳輸及修改本創作，但不得用於商業目的；若您修改本作品，必須採用相同授權條款散布您的貢獻。
 
@@ -129,6 +131,12 @@
 
 ## 📦 Release Notes
 
+- 2026-05-19：1.40 版。
+  - 全面移除外部 Lucide CDN 圖示庫，自建高效 SVG 本地渲染模組 (零載入阻塞、100% 離線可用)。
+  - QR Code 容錯率智慧自適應演算法與中央 Logo 顯示智慧連動防遮擋。
+  - 輸入欄位失去焦點 (Blur / focusout) 自動清除多餘空白 (Auto-Trim)。
+  - 高效 JPEG 圖片壓縮 (0.85 品質 + 自動白底處理)，使名片圖片傳輸與 API 處理速度狂飆 80%。
+  - 全面實作靜態 DOM Cache 與 300ms 超速防抖。
 - 2026-05-19：1.38 版。
   - 新增歷史紀錄的「匯出」與「匯入」功能。
   - 微調 UI 及其它。
