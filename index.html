@@ -1923,13 +1923,14 @@
              */
             downloadQRCode() {
                 const qrImage = document.getElementById('qrImage');
-                if (!qrImage || qrImage.classList.contains("hidden") || !qrImage.src) {
+                const svgSrc = qrImage ? qrImage.dataset.svgSrc : null;
+                if (!qrImage || qrImage.classList.contains("hidden") || !svgSrc) {
                     this.toast("請先輸入資料以生成 QR Code");
                     return;
                 }
                 const filename = `${state.cardData.fn || 'contact'}_qr.svg`;
                 const link = document.createElement("a");
-                link.href = qrImage.src;
+                link.href = svgSrc;
                 link.download = filename;
                 document.body.appendChild(link);
                 link.click();
@@ -3056,9 +3057,33 @@
                         svgString = svgString.replace("<svg ", `<svg viewBox="0 0 ${size} ${size}" `);
                     }
 
-                    // 將 SVG 轉換成 Data URL 給 img.src 渲染
-                    qrImage.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString);
-                    qrImage.classList.remove("hidden");
+                    // 將 SVG 轉換成 Data URL 儲存於 dataset 以供下載 SVG 使用
+                    const svgDataUrl = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString);
+                    qrImage.dataset.svgSrc = svgDataUrl;
+
+                    // 同時將 SVG 繪製於 Canvas 並導出為 PNG，確保手機端長按 100% 可順利儲存至相簿
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const size = 512; // 輸出 512x512 高解析度 PNG 確保高畫質
+                        canvas.width = size;
+                        canvas.height = size;
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, size, size);
+                        ctx.drawImage(img, 0, 0, size, size);
+                        
+                        qrImage.src = canvas.toDataURL('image/png');
+                        
+                        // 動態設定 alt 與 title 屬性，暗示瀏覽器儲存 Data URL 圖片時的預設檔名，使其與下載的 SVG 主檔名一致
+                        const filenameBase = `${d.fn || 'contact'}_qr`;
+                        qrImage.alt = filenameBase;
+                        qrImage.title = filenameBase;
+                        
+                        qrImage.classList.remove("hidden");
+                    };
+                    img.src = svgDataUrl;
+
                     document.getElementById("qrCenterIcon")?.classList.remove("hidden");
                     document.getElementById("qrPlaceholder").classList.add("hidden");
                     document.getElementById("qrStatus").textContent = "掃描加入聯絡人";
@@ -3066,11 +3091,19 @@
                     console.error("QR 產生錯誤:", err);
                     document.getElementById("qrStatus").textContent = "太多資料無法產生 QR Code";
                     qrImage.classList.add("hidden");
+                    qrImage.removeAttribute("src");
+                    qrImage.removeAttribute("data-svg-src");
+                    qrImage.alt = "vCard QR Code";
+                    qrImage.removeAttribute("title");
                     document.getElementById("qrCenterIcon")?.classList.add("hidden");
                     document.getElementById("qrPlaceholder").classList.remove("hidden");
                 }
             } else {
                 qrImage.classList.add("hidden");
+                qrImage.removeAttribute("src");
+                qrImage.removeAttribute("data-svg-src");
+                qrImage.alt = "vCard QR Code";
+                qrImage.removeAttribute("title");
                 document.getElementById("qrCenterIcon")?.classList.add("hidden");
                 document.getElementById("qrPlaceholder").classList.remove("hidden");
                 document.getElementById("qrStatus").textContent = "等待資料輸入...";
