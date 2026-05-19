@@ -2207,6 +2207,15 @@
                             state.cardData[key] = e.target.value;
                             if (onUpdate) onUpdate();
                         });
+                        // 系統優化與資料淨化：失去焦點時自動修剪前後多餘空白
+                        el.addEventListener("blur", (e) => {
+                            const trimmed = e.target.value.trim();
+                            if (e.target.value !== trimmed) {
+                                e.target.value = trimmed;
+                                state.cardData[key] = trimmed;
+                                if (onUpdate) onUpdate();
+                            }
+                        });
                     }
                 });
             }
@@ -2683,6 +2692,20 @@
                             const normalized = vCardFormatter.normalizePhone(e.target.value);
                             state.cardData[type][idx][key] = normalized;
                             e.target.value = normalized;
+                            debouncedUpdateVCardPreview();
+                        }
+                    }
+                });
+
+                // 系統優化與資料淨化：動態列表輸入框失去焦點時自動修剪前後多餘空白
+                rightPanel.addEventListener("focusout", (e) => {
+                    const attr = e.target.getAttribute("data-update-list") || e.target.getAttribute("data-update-list-validate");
+                    if (attr) {
+                        const [type, idx, key] = attr.split(",");
+                        const trimmed = e.target.value.trim();
+                        if (e.target.value !== trimmed) {
+                            e.target.value = trimmed;
+                            state.cardData[type][idx][key] = trimmed;
                             debouncedUpdateVCardPreview();
                         }
                     }
