@@ -565,12 +565,14 @@
                     <i data-lucide="settings" class="text-indigo-600 w-5 h-5"></i> 系統與 API 設定
                 </h2>
             </div>
-            
+
             <!-- 可滾動的設定內容區域 -->
             <div class="w-full space-y-6 flex-1 overflow-y-auto pr-1 py-1 min-h-0">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">全域文字大小</label>
-                    <div class="grid grid-cols-4 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
+                    <div class="grid grid-cols-5 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
+                        <button type="button" data-scale="80" style="font-size: 12.8px;"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最小</button>
                         <button type="button" data-scale="90" style="font-size: 14.4px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較小</button>
                         <button type="button" data-scale="100" style="font-size: 16px;"
@@ -601,7 +603,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">Google Gemini API Key</label>
+                    <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">Gemini/Gemma API Key</label>
                     <div class="relative">
                         <input type="password" id="apiKeyInput" placeholder="請輸入 API Key"
                             class="w-full px-4 py-2.5 rounded-xl border border-slate-200 font-bold bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all pr-12 text-base">
@@ -626,7 +628,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <!-- 固定的操作按鈕區域 -->
             <div class="flex gap-4 w-full shrink-0">
                 <button id="cancelApiKeyBtn"
