@@ -18,10 +18,26 @@
     <title>名片快手</title>
     <script>
         // 優先讀取並套用全域文字大小，防止畫面閃爍
+        // 將任意文字大小比例規格化為最接近的合法值：90, 95, 100, 110, 120
+        function normalizeTextScale(scale) {
+            const num = parseFloat(scale);
+            if (isNaN(num)) return "100";
+            const validScales = [90, 95, 100, 110, 120];
+            let closest = validScales[0];
+            let minDiff = Math.abs(num - closest);
+            for (let i = 1; i < validScales.length; i++) {
+                const diff = Math.abs(num - validScales[i]);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = validScales[i];
+                }
+            }
+            return String(closest);
+        }
+
+        // 優先讀取並套用全域文字大小，防止畫面閃爍
         (function () {
-            let savedScale = localStorage.getItem("globalTextScale") || "100";
-            if (savedScale === "115") savedScale = "110";
-            else if (savedScale === "130") savedScale = "125";
+            const savedScale = normalizeTextScale(localStorage.getItem("globalTextScale") || "100");
             if (savedScale !== "100") {
                 document.documentElement.style.fontSize = savedScale + "%";
             }
@@ -147,7 +163,7 @@
 
                 <!-- AI 智慧摘要區塊 -->
                 <div id="summaryContainer"
-                    class="hidden bg-white p-2 sm:p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
+                    class="hidden bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-indigo-100 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-slate-800">
@@ -247,7 +263,7 @@
 
                 <!-- 產出區 -->
                 <div
-                    class="bg-white p-2 sm:p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    class="bg-white p-2 sm:p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                     <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-slate-800">
                         <i data-lucide="qr-code" class="text-indigo-600 w-5 h-5"></i> 聯絡人 QR Code
                     </h2>
@@ -276,11 +292,11 @@
                     <div class="flex gap-3 mt-6">
                         <button id="downloadQrBtn"
                             class="flex-1 py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <i data-lucide="download"></i> QR Code
+                            <i data-lucide="download" class="w-5 h-5"></i> QR Code
                         </button>
                         <button id="saveVcfBtn"
                             class="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
-                            <i data-lucide="download"></i> vCard
+                            <i data-lucide="download" class="w-5 h-5"></i> vCard
                         </button>
                     </div>
                 </div>
@@ -571,16 +587,16 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-500 mb-2 ml-1">全域文字大小</label>
                     <div class="grid grid-cols-5 gap-2 bg-slate-100 p-1 rounded-xl" id="textScaleContainer">
-                        <button type="button" data-scale="80" style="font-size: 12.8px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最小</button>
                         <button type="button" data-scale="90" style="font-size: 14.4px;"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最小</button>
+                        <button type="button" data-scale="95" style="font-size: 15.2px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較小</button>
                         <button type="button" data-scale="100" style="font-size: 16px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">標準</button>
                         <button type="button" data-scale="110" style="font-size: 17.6px;"
                             class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">較大</button>
-                        <button type="button" data-scale="125" style="font-size: 20px;"
-                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">超大</button>
+                        <button type="button" data-scale="120" style="font-size: 19.2px;"
+                            class="py-1.5 text-xs font-bold text-slate-600 rounded-lg hover:bg-white/50 transition-all">最大</button>
                     </div>
                 </div>
                 <div>
@@ -614,14 +630,14 @@
                         </button>
                     </div>
                     <a href="https://aistudio.google.com/app/apikey" target="_blank"
-                        class="text-[12px] text-indigo-500 hover:text-indigo-700 mt-3 ml-1 flex items-center gap-1 font-bold">
+                        class="text-xs text-indigo-500 hover:text-indigo-700 mt-3 ml-1 flex items-center gap-1 font-bold">
                         <i data-lucide="external-link" class="w-3 h-3"></i> 取得 API Key (Google AI Studio)
                     </a>
-                    <p class="text-[12px] text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
+                    <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
                         <span>安全聲明：您的 API Key 僅儲存於您個人瀏覽器的本地端，且僅用於您個人用途。</span>
                     </p>
-                    <p class="text-[12px] text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
+                    <p class="text-xs text-slate-500 mt-2 ml-1 font-bold leading-relaxed flex items-start gap-1.5">
                         <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
                         <span>注意事項：若選用 Gemma 4 系列模型，可至個人的 Google AI Studio 申請免費額度的 API
                             Key。但該系列免費模型的反應較慢且可能不穩定，請自行評估是否適用。</span>
@@ -1543,9 +1559,7 @@
                     }
                 };
 
-                let currentScale = localStorage.getItem("globalTextScale") || "100";
-                if (currentScale === "115") currentScale = "110";
-                else if (currentScale === "130") currentScale = "125";
+                let currentScale = normalizeTextScale(localStorage.getItem("globalTextScale") || "100");
 
                 const applyTextScale = (scale) => {
                     document.documentElement.style.fontSize = scale === "100" ? "" : `${scale}%`;
@@ -1568,9 +1582,7 @@
                 const handleCancel = () => {
                     if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
                     if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
-                    let savedScale = localStorage.getItem("globalTextScale") || "100";
-                    if (savedScale === "115") savedScale = "110";
-                    else if (savedScale === "130") savedScale = "125";
+                    const savedScale = normalizeTextScale(localStorage.getItem("globalTextScale") || "100");
                     applyTextScale(savedScale);
                     toggleModal(false);
                 };
@@ -1591,9 +1603,7 @@
                     settingsBtn.addEventListener("click", () => {
                         if (apiKeyInput) apiKeyInput.value = localStorage.getItem("geminiApiKey") || "";
                         if (modelSelect) modelSelect.value = localStorage.getItem("geminiModel") || MODEL_NAME;
-                        currentScale = localStorage.getItem("globalTextScale") || "100";
-                        if (currentScale === "115") currentScale = "110";
-                        else if (currentScale === "130") currentScale = "125";
+                        currentScale = normalizeTextScale(localStorage.getItem("globalTextScale") || "100");
                         applyTextScale(currentScale);
                         toggleModal(true);
                     });
@@ -2419,7 +2429,7 @@
                             <div class="flex-1 min-w-0">
                                 <h4 class="text-sm font-bold text-slate-800 truncate">${name}</h4>
                                 <p class="text-xs text-slate-500 truncate">${org}</p>
-                                <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
+                                <p class="text-[0.625rem] text-slate-400 mt-1 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> ${date}</p>
                             </div>
                             <button onclick="event.stopPropagation(); HistoryManager.deleteItem(${c.id})" class="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -2859,7 +2869,7 @@
                 // 渲染傳統連結
                 if (sourcesList) {
                     sourcesList.innerHTML = (d.sources || []).map(s => `
-                    <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
+                    <a href="${s.uri}" target="_blank" class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[0.625rem] text-indigo-500 hover:bg-indigo-50 font-bold transition-all shadow-sm">
                         <i data-lucide="globe" class="w-3 h-3"></i> ${s.title || "來源"}
                     </a >
                     `).join("");
@@ -2927,7 +2937,7 @@
                     let errorClass = isValid ? "border-slate-200 focus:ring-indigo-500" : "border-red-400 focus:ring-red-500 text-red-600 bg-red-50/50";
                     let msgHidden = isValid ? "hidden" : '';
                     inputsHTML = `<input type="text" value="${item[valKey] || ""}" placeholder="${ph}" data-update-list-validate="${type},${idx},${valKey}" class="flex-1 min-w-0 px-2.5 py-2 rounded-lg bg-white border ${errorClass} text-base outline-none focus:ring-2 transition-all">`;
-                    validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[10px] text-red-500 font-bold ml-1 flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> 格式似乎有誤</div>`;
+                    validationMsg = `<div class="validation-msg ${msgHidden} w-full text-[0.625rem] text-red-500 font-bold ml-1 flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> 格式似乎有誤</div>`;
                 }
 
                 div.innerHTML = `
