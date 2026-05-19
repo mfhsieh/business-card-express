@@ -3075,8 +3075,15 @@
                     // 將 UTF-8 中文轉成 Latin-1 / Byte 序列以防止 QR Code 亂碼
                     const utf8EncodedVcf = unescape(encodeURIComponent(vcf));
 
-                    // 建立 QR Code (0 表示自動偵測版本，L 為最低容錯率，以在名片容量大時維持較好的讀取度)
-                    const qr = qrcode(0, 'M');
+                    // 智慧選擇 QR Code 容錯率：資訊量少時調高容錯率（H/30%）以利極速掃描，資訊量大時調低容錯率（L/7%）防範點陣過密
+                    let errorCorrectionLevel = 'M';
+                    if (utf8EncodedVcf.length < 200) {
+                        errorCorrectionLevel = 'H';
+                    } else if (utf8EncodedVcf.length > 420) {
+                        errorCorrectionLevel = 'L';
+                    }
+
+                    const qr = qrcode(0, errorCorrectionLevel);
                     qr.addData(utf8EncodedVcf);
                     qr.make();
 
@@ -3114,7 +3121,11 @@
                     };
                     img.src = svgDataUrl;
 
-                    document.getElementById("qrCenterIcon")?.classList.remove("hidden");
+                    if (errorCorrectionLevel === 'L') {
+                        document.getElementById("qrCenterIcon")?.classList.add("hidden");
+                    } else {
+                        document.getElementById("qrCenterIcon")?.classList.remove("hidden");
+                    }
                     document.getElementById("qrPlaceholder").classList.add("hidden");
                     document.getElementById("qrStatus").textContent = "掃描加入聯絡人";
                 } catch (err) {
