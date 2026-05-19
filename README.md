@@ -1,6 +1,6 @@
 # 名片快手 (Business Card Express)
 
-[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件草稿。
+[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini/Gemma API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件草稿。
 
 ## ✨ 核心特色
 
@@ -26,7 +26,7 @@
 
 - **📥 vCard 匯出與分類**
 
-  支援下載 `.vcf` 檔案或複製內容，並可自訂分類標籤。
+  支援下載 `.vcf` 檔案（行動裝置點擊下載即可直接觸發系統新增聯絡人），並可自訂分類標籤。
 
 - **🗺️ 地圖導航**
 
@@ -38,11 +38,11 @@
 
 - **🎚️ 字型大小縮放**
 
-  支援全網頁文字等比例縮放（90%, 100%, 110%, 125%），提供即時預覽與防閃爍載入。
+  支援全網頁文字等比例縮放（80%, 90%, 100%, 110%, 125%），提供即時預覽與防閃爍載入。
 
 - **🔐 本機隱私保護**
 
-  API 金鑰僅儲存於瀏覽器 Local Storage，名片影像經前端壓縮後直傳 Gemini API。
+  API 金鑰僅儲存於瀏覽器 Local Storage，名片影像經前端壓縮後直傳 Gemini/Gemma API。
 
 - **📲 PWA 離線與安裝支援**
 
@@ -54,7 +54,7 @@
 
 | 方式 | 說明 |
 | ---- | ---- |
-| 點擊上傳 | 點擊上傳區域，選擇本機圖片檔案 |
+| 點擊上傳 | 點擊上傳區域選擇圖片檔案（**行動裝置可直接觸發系統相機拍照**） |
 | 拖放上傳 | 將圖片拖放至上傳區 |
 | 剪貼簿貼上 | 在非輸入框狀態下按 `Ctrl+V` / `Cmd+V` |
 
@@ -64,7 +64,7 @@
 
 | 元件 | 用途 |
 | ---- | ---- |
-| [Google Gemini API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
+| [Google Gemini/Gemma API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
 | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator/) | 原生 SVG vCard QR Code 產生 |
 | [Tailwind CSS](https://tailwindcss.com/) | 視覺排版與樣式 |
 | [Lucide Icons](https://lucide.dev/) | 介面圖示庫 |
@@ -93,7 +93,7 @@
 無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `index.html`，接著：
 
 1. 點擊畫面上方的 **設定圖示 (⚙️)** 展開設定區塊。
-2. 填入您的 [Google Gemini API 金鑰](https://aistudio.google.com/app/apikey)。
+2. 填入您的 [Google Gemini/Gemma API 金鑰](https://aistudio.google.com/app/apikey)。
 
 > 🔒 **安全性說明**
 >
@@ -101,19 +101,19 @@
 
 ## 💡 使用說明
 
-1. 確保已於設定區域輸入正確的 Gemini API 金鑰。
+1. 確保已於設定區域輸入正確的 Gemini/Gemma API 金鑰。
 2. 以任一方式（點擊 / 拖放 / 貼上）上傳名片圖片（支援 JPG、PNG 等常見格式）。
 3. 點擊「**AI 智慧辨識**」按鈕。
 4. 等候 AI 辨識與上網搜尋完成（通常約 5–20 秒）。
 5. 右側表單自動填入聯絡人資訊，可手動修正任意欄位。
 6. 查看「AI 洞察」區塊的公司與個人背景摘要、參考來源連結。
 7. 點擊「**後續追蹤**」讓 AI 自動撰寫感謝信草稿。
-8. 以 QR Code 掃描加入聯絡人、下載 QR Code (SVG)、下載 `.vcf` 檔案，或直接複製 vCard 內容。
+8. 以 QR Code 掃描加入聯絡人、下載 QR Code (SVG) 與下載 `.vcf` 檔案（手機端點擊即可直接觸發新增聯絡人）。
 
 ## 🔒 隱私與安全性聲明
 
-- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Google Gemini API 之外，不上傳資料至任何第三方伺服器。
-- 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Google Gemini API 辨識，不經由中間伺服器轉發。
+- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Google Gemini/Gemma API 之外，不上傳資料至任何第三方伺服器。
+- 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Google Gemini/Gemma API 辨識，不經由中間伺服器轉發。
 
 ## 📄 授權條款
 
