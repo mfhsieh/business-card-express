@@ -13,8 +13,21 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('PWA: Caching assets');
-      cache.addAll(ASSETS_TO_CACHE).catch(err => console.warn('PWA Cache error:', err));
-      return self.skipWaiting();
+      // 使用 Promise.allSettled 個別快取資源，防止單一檔案缺失（如 index.prod.html 或 index.html）導致整個預載入快取失敗
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) =>
+          fetch(url)
+            .then((response) => {
+              if (response.ok) {
+                return cache.put(url, response);
+              }
+              throw new Error(`Fetch failed for ${url}: ${response.status}`);
+            })
+            .catch((err) => {
+              console.warn('PWA Pre-cache warning:', err.message);
+            })
+        )
+      ).then(() => self.skipWaiting());
     })
   );
 });

@@ -2559,7 +2559,7 @@
                                 const id = item.id || Date.now() + i;
                                 const timestamp = item.timestamp || id;
                                 const base64Image = item.base64Image || "";
-                                
+
                                 // 寫入資料庫
                                 if (DatabaseService.db) {
                                     const store = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite").objectStore(DatabaseService.storeName);
