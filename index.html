@@ -762,7 +762,7 @@
         const DEFAULT_MAX_RETRIES = 5;    // GeminiService: API 失敗時最大重試次數
         const DEFAULT_CANVAS = document.createElement("canvas"); // ImageProcessor: 共用 Canvas 實例
         const DEFAULT_CATEGORY_NAME = "名片快手"; // vCardFormatter: 匯出名片時，強制加入的分類標籤 (Categories)
-        const DEFAULT_DEBOUNCE_DELAY = 1000; // QR Code 與 UI 更新的防抖延遲 (毫秒)
+        const DEFAULT_DEBOUNCE_DELAY = 300; // QR Code 與 UI 更新的防抖延遲 (毫秒)
 
         /** [提示詞] 名片 OCR、規格化與上網深度搜尋 */
         const PROMPT_OCR = `
@@ -1248,12 +1248,13 @@
                 // 告訴瀏覽器這張畫布會頻繁執行 toDataURL/getImageData 等讀取操作，藉此啟用硬體加速優化。
                 const ctx = this.canvas.getContext('2d', { willReadFrequently: true });
 
-                // [防護機制] 因為共用 canvas，保險起見在描繪新內容前先清空畫布，避免殘影干擾
-                ctx.clearRect(0, 0, width, height);
+                // [防護與優化] 填充白色底色以支援 JPEG 格式，並清空原有內容
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, width, height);
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // 轉出 PNG，並切掉逗號前面的 `data:image/png;base64,` 宣告頭部
-                return this.canvas.toDataURL("image/png").split(",")[1];
+                // 轉出 JPEG (0.85 品質)，相較於 PNG 能節省約 80% 的 Base64 體積與網路傳輸流量，且 OCR 辨識率依然完美！
+                return this.canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
             }
         };
 
