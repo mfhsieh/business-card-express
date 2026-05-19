@@ -689,6 +689,15 @@
                 <h3 class="font-bold">歷史紀錄</h3>
             </div>
             <div class="flex items-center gap-1">
+                <input type="file" id="importHistoryInput" class="hidden" accept=".json">
+                <button id="importHistoryBtn" title="匯入歷史紀錄"
+                    class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors">
+                    <i data-lucide="upload" class="w-4 h-4"></i>
+                </button>
+                <button id="exportHistoryBtn" title="匯出歷史紀錄"
+                    class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                </button>
                 <button id="clearAllHistoryBtn" title="清空全部"
                     class="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-100 rounded-lg transition-colors">
                     <i data-lucide="trash" class="w-4 h-4"></i>
@@ -714,7 +723,7 @@
 
     <script>
         /**
-         * 名片快手 1.37
+         * 名片快手 1.38
          */
 
         /**
@@ -2333,6 +2342,9 @@
                 const historyOverlay = document.getElementById("historyOverlay");
                 const historyPanel = document.getElementById("historyPanel");
                 const clearAllHistoryBtn = document.getElementById("clearAllHistoryBtn");
+                const exportHistoryBtn = document.getElementById("exportHistoryBtn");
+                const importHistoryBtn = document.getElementById("importHistoryBtn");
+                const importHistoryInput = document.getElementById("importHistoryInput");
 
                 this.toggleHistoryPanel = () => {
                     const isHidden = historyOverlay.classList.contains("hidden");
@@ -2354,6 +2366,17 @@
                 if (closeHistoryBtn) closeHistoryBtn.addEventListener("click", () => this.toggleHistoryPanel());
                 if (historyOverlay) historyOverlay.addEventListener("click", () => this.toggleHistoryPanel());
                 if (clearAllHistoryBtn) clearAllHistoryBtn.addEventListener("click", () => HistoryManager.clearAll());
+                if (exportHistoryBtn) exportHistoryBtn.addEventListener("click", () => HistoryManager.exportHistory());
+                if (importHistoryBtn && importHistoryInput) {
+                    importHistoryBtn.addEventListener("click", () => importHistoryInput.click());
+                    importHistoryInput.addEventListener("change", (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            HistoryManager.importHistory(file);
+                            importHistoryInput.value = ""; // 重設 value 讓使用者可以重選同一個檔案
+                        }
+                    });
+                }
             },
 
             /**
@@ -2484,6 +2507,88 @@
                 } catch (err) {
                     UXManager.toast("清空失敗: " + err.message);
                 }
+            },
+
+            /**
+             * 匯出所有歷史紀錄為 JSON 檔案
+             * @returns {Promise<void>}
+             */
+            async exportHistory() {
+                try {
+                    const cards = await DatabaseService.getAllCards();
+                    if (cards.length === 0) {
+                        UXManager.toast("目前無歷史紀錄可供匯出");
+                        return;
+                    }
+                    const dataStr = JSON.stringify(cards, null, 2);
+                    const blob = new Blob([dataStr], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+                    a.href = url;
+                    a.download = `business_cards_history_${dateStr}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    UXManager.toast("歷史紀錄匯出成功");
+                } catch (err) {
+                    UXManager.toast("匯出失敗: " + err.message);
+                }
+            },
+
+            /**
+             * 從 JSON 檔案匯入歷史紀錄
+             * @param {File} file - 匯入的 JSON 檔案
+             * @returns {Promise<void>}
+             */
+            async importHistory(file) {
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        if (!Array.isArray(importedData)) {
+                            throw new Error("匯入的資料格式必須為 JSON 陣列");
+                        }
+
+                        let importCount = 0;
+                        for (let i = 0; i < importedData.length; i++) {
+                            const item = importedData[i];
+                            // 防禦性檢查是否為有效記錄
+                            if (item && item.cardData) {
+                                // 若無 id，自動給予 id 與 timestamp
+                                const id = item.id || Date.now() + i;
+                                const timestamp = item.timestamp || id;
+                                const base64Image = item.base64Image || "";
+                                
+                                // 寫入資料庫
+                                if (DatabaseService.db) {
+                                    const store = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite").objectStore(DatabaseService.storeName);
+                                    const record = {
+                                        id: id,
+                                        timestamp: timestamp,
+                                        cardData: JSON.parse(JSON.stringify(item.cardData)),
+                                        base64Image: base64Image
+                                    };
+                                    await DatabaseService._req(store.put(record));
+                                    importCount++;
+                                }
+                            }
+                        }
+
+                        if (importCount > 0) {
+                            HistoryManager.render();
+                            UXManager.toast(`成功匯入 ${importCount} 筆歷史紀錄`);
+                        } else {
+                            UXManager.toast("未偵測到任何有效的名片歷史紀錄");
+                        }
+                    } catch (err) {
+                        UXManager.toast("匯入失敗: " + err.message);
+                    }
+                };
+                reader.onerror = () => {
+                    UXManager.toast("讀取檔案失敗");
+                };
+                reader.readAsText(file);
             }
         };
 
