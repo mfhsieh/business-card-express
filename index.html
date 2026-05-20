@@ -1719,7 +1719,7 @@
                         setTimeout(() => {
                             apiKeyModalOverlay.classList.remove("opacity-0");
                             apiKeyModal.classList.remove("scale-95");
-                            if (apiKeyInput) apiKeyInput.focus();
+                            if (apiKeyInput) apiKeyInput.focus({ preventScroll: true });
                         }, 10);
                         this.updateStorageInfo();
                     } else {
