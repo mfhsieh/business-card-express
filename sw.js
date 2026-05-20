@@ -1,4 +1,4 @@
-const CACHE_VERSION = '1.40'; // 修改此版本號以強制更新用戶端的快取
+const CACHE_VERSION = '1.41'; // 修改此版本號以強制更新用戶端的快取
 const CACHE_NAME = `business-card-express-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -59,29 +59,24 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cacheResponse) => {
-      if (cacheResponse) {
-        return cacheResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
-        // 檢查是否為有效的回應
-        if (!networkResponse || networkResponse.status !== 200) {
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((cacheResponse) => {
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const url = new URL(event.request.url);
+            const isAllowedCDN = ALLOWED_CDN_ORIGINS.some(origin => url.href.startsWith(origin));
+            if (url.origin === location.origin || isAllowedCDN) {
+              cache.put(event.request, networkResponse.clone());
+            }
+          }
           return networkResponse;
-        }
+        }).catch((err) => {
+          console.warn('Network fetch failed, serving offline if available', err);
+          throw err;
+        });
         
-        const url = new URL(event.request.url);
-        const isAllowedCDN = ALLOWED_CDN_ORIGINS.some(origin => url.href.startsWith(origin));
-        
-        // 允許同源資源或特定的安全 CDN 資源
-        if (url.origin === location.origin || isAllowedCDN) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        // 離線且無快取時的處理（可選）
+        // Stale-While-Revalidate：有快取先給快取，同時背景更新；無快取則等待網路
+        return cacheResponse || fetchPromise;
       });
     })
   );

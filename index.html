@@ -292,18 +292,18 @@
                         <p id="qrStatus" class="text-sm font-black text-slate-400 uppercase tracking-widest">等待資料輸入...
                         </p>
                     </div>
-                    <div class="grid grid-cols-2 gap-3 mt-6">
+                    <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-6">
                         <button id="downloadQrBtn"
-                            class="py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <!-- Lucide: download --> <i data-lucide="download" class="w-5 h-5"></i> QR Code
+                            class="py-3 sm:py-4 px-1 bg-white border border-indigo-200 text-indigo-600 rounded-xl sm:rounded-2xl font-black text-base tracking-tight flex items-center justify-center gap-1 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
+                            <!-- Lucide: qr-code --> <i data-lucide="qr-code" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0"></i> <span class="truncate min-w-0">QR Code</span>
                         </button>
                         <button id="saveVcfBtn"
-                            class="py-4 bg-white border border-indigo-200 text-indigo-600 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
-                            <!-- Lucide: download --> <i data-lucide="download" class="w-5 h-5"></i> vCard
+                            class="py-3 sm:py-4 px-1 bg-white border border-indigo-200 text-indigo-600 rounded-xl sm:rounded-2xl font-black text-base tracking-tight flex items-center justify-center gap-1 hover:bg-indigo-50 hover:border-indigo-300 active:scale-95 shadow-sm transition-all">
+                            <!-- Lucide: user-plus --> <i data-lucide="user-plus" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0"></i> <span class="truncate min-w-0">vCard</span>
                         </button>
                         <button id="shareCardBtn"
-                            class="col-span-2 py-4 bg-indigo-600 text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
-                            <!-- Lucide: link --> <i data-lucide="link" class="w-5 h-5"></i> 分享此名片
+                            class="py-3 sm:py-4 px-1 bg-indigo-600 border border-transparent text-white rounded-xl sm:rounded-2xl font-black text-base tracking-tight flex items-center justify-center gap-1 hover:bg-indigo-700 active:scale-95 shadow-lg shadow-indigo-600/30 transition-all">
+                            <!-- Lucide: share-2 --> <i data-lucide="share-2" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0"></i> <span class="truncate min-w-0">分享</span>
                         </button>
                     </div>
                 </div>
@@ -585,7 +585,7 @@
     <!-- 系統設定 Modal -->
     <div id="apiKeyModalOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-5 py-6 md:px-8 md:py-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col gap-4 md:gap-6 transition-transform duration-200 scale-95 max-w-md w-[90vw] max-h-[calc(100dvh-2rem)] md:max-h-[90dvh]"
+        <div class="bg-white p-3 sm:p-4 md:p-5 rounded-xl md:rounded-2xl shadow-2xl flex flex-col gap-3 md:gap-4 transition-transform duration-200 scale-95 max-w-md w-[95vw] sm:w-[90vw] max-h-[calc(100dvh-1rem)] md:max-h-[90dvh]"
             id="apiKeyModal">
             <div class="w-full flex justify-between items-center mb-1 shrink-0">
                 <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -594,16 +594,16 @@
             </div>
 
             <!-- 可滾動的設定內容區域 -->
-            <div class="w-full space-y-5 flex-1 overflow-y-auto pr-1 py-1 min-h-0">
+            <div class="w-full space-y-5 flex-1 overflow-y-auto overscroll-contain pr-1 py-1 min-h-0">
 
-                <!-- [區塊 1] AI 引擎與 API 設定 -->
-                <div class="bg-indigo-50/40 rounded-2xl p-4 md:p-5 border border-indigo-100/50 space-y-4">
+                <!-- [區塊 1] AI 模型與 API 設定 -->
+                <div class="bg-indigo-50/40 rounded-2xl px-3 py-4 md:p-4 border border-indigo-100/50 space-y-4">
                     <div class="flex items-center gap-2 mb-2">
                         <div
                             class="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 shadow-sm">
                             <!-- Lucide: sparkles --> <i data-lucide="sparkles" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-[15px] font-black text-indigo-900 tracking-wide">AI 引擎與 API 設定</h3>
+                        <h3 class="text-[15px] font-black text-indigo-900 tracking-wide">AI 模型與 API 設定</h3>
                     </div>
 
                     <!-- 選擇 AI 模型 -->
@@ -702,7 +702,7 @@
                 </div>
 
                 <!-- [區塊 2] 介面與顯示設定 -->
-                <div class="bg-emerald-50/40 rounded-2xl p-4 md:p-5 border border-emerald-100/50 space-y-4">
+                <div class="bg-emerald-50/40 rounded-2xl px-3 py-4 md:p-4 border border-emerald-100/50 space-y-4">
                     <div class="flex items-center gap-2 mb-2">
                         <div
                             class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm">
@@ -738,7 +738,7 @@
                 </div>
 
                 <!-- [區塊 3] 資料與儲存空間 -->
-                <div class="bg-amber-50/40 rounded-2xl p-4 md:p-5 border border-amber-100/50 space-y-4">
+                <div class="bg-amber-50/40 rounded-2xl px-3 py-4 md:p-4 border border-amber-100/50 space-y-4">
                     <div class="flex items-center gap-2 mb-2">
                         <div
                             class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 shrink-0 shadow-sm">
@@ -758,7 +758,7 @@
                         <div
                             class="bg-white/60 p-2.5 pl-3.5 rounded-xl border border-white/80 shadow-sm flex items-center justify-between">
                             <div class="flex flex-col">
-                                <span class="text-[11px] font-bold text-slate-500 mb-0.5">歷史庫大小</span>
+                                <span class="text-[11px] font-bold text-slate-500 mb-0.5">歷史紀錄大小</span>
                                 <span id="dbStorageUsage" class="text-slate-800 font-black text-[15px]">計算中...</span>
                             </div>
                             <button type="button" id="slimHistoryBtn"
@@ -790,12 +790,12 @@
     <!-- 全域確認對話框 -->
     <div id="globalConfirmOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-200">
-        <div class="bg-white px-5 py-6 md:px-6 md:py-6 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
+        <div class="bg-white p-4 sm:p-5 md:p-6 rounded-xl md:rounded-2xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-200 scale-95 max-w-sm w-[90vw] text-center"
             id="globalConfirmModal">
             <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-2">
                 <!-- Lucide: alert-circle --> <i data-lucide="alert-circle" class="w-6 h-6"></i>
             </div>
-            <span id="globalConfirmText" class="text-slate-800 font-bold text-lg mb-2">確定執行此操作？</span>
+            <span id="globalConfirmText" class="text-slate-800 font-medium text-base whitespace-pre-wrap mb-2">確定執行此操作？</span>
             <div class="flex gap-3 w-full mt-2">
                 <button id="globalConfirmCancelBtn"
                     class="flex-1 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-sm rounded-xl transition-all active:scale-95">取消</button>
@@ -808,7 +808,7 @@
     <!-- 全域載入遮罩 -->
     <div id="globalLoadingOverlay"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white px-8 py-6 rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-300 scale-95"
+        <div class="bg-white px-6 py-5 md:px-8 md:py-6 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center gap-4 transition-transform duration-300 scale-95"
             id="globalLoadingModal">
             <div class="relative w-12 h-12 flex items-center justify-center">
                 <!-- Lucide: loader-2 --> <i data-lucide="loader-2"
@@ -834,7 +834,7 @@
         class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300">
     </div>
     <div id="historyPanel"
-        class="fixed top-0 right-0 h-full w-80 bg-slate-50 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
+        class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-slate-50 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-200">
         <div class="p-4 border-b border-slate-200 bg-white flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2 text-indigo-900">
                 <!-- Lucide: history --> <i data-lucide="history" class="w-5 h-5"></i>
@@ -862,7 +862,7 @@
         </div>
 
         <!-- 歷史紀錄列表區 -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-3">
+        <div class="flex-1 overflow-y-auto overscroll-contain p-4 space-y-3">
             <div id="historyEmptyState" class="hidden h-full flex flex-col items-center justify-center text-slate-400">
                 <!-- Lucide: inbox --> <i data-lucide="inbox" class="w-12 h-12 mb-3 opacity-50"></i>
                 <p class="text-sm">尚無任何紀錄</p>
@@ -875,7 +875,7 @@
 
     <script>
         /**
-         * 名片快手 1.40
+         * 名片快手 1.41
          */
 
         /**
@@ -929,6 +929,9 @@
             "history": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>`,
             "upload": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>`,
             "trash": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
+            "share-2": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>`,
+            "image": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`,
+            "user-plus": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>`,
         };
 
         /** 原生圖示渲染器：徹底取代 Lucide CDN，無任何外部網路依賴且執行速度小於 1ms */
@@ -1064,13 +1067,15 @@
          * @property {string} rawResponse - AI 原始回傳內容 (Debug 用)
          * @property {boolean} isLoading - 是否正在執行非同步任務
          * @property {number|null} currentHistoryId - 目前載入的歷史紀錄 ID；null 表示尚未辨識或未從歷史載入
+         * @property {boolean} isSlimmed - 標記當前載入的影像是否已為瘦身版本
          */
         let state = {
-            cardData: JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)),
+            cardData: structuredClone(DEFAULT_CARD_DATA),
             base64Image: null,
             rawResponse: "",
             isLoading: false,
-            currentHistoryId: null
+            currentHistoryId: null,
+            isSlimmed: false
         };
 
         /**
@@ -1158,7 +1163,7 @@
 
         /**
          * 模組 1：AI 核心通訊模組 (AI Service Module)
-         * 封裝 Google Gemini API 的通訊邏輯、提問處理、JSON 解析與重試機制。
+         * 封裝 Gemini/Gemma API 的通訊邏輯、提問處理、JSON 解析與重試機制。
          */
         const GeminiService = {
             /** @property {number} baseDelay - 重試機制發生時的初始延遲毫秒數 */
@@ -1206,7 +1211,7 @@
                 for (let i = 0; i < retries; i++) {
                     try {
                         // 建立深拷貝，避免修改原始 payload
-                        let currentPayload = JSON.parse(JSON.stringify(payload));
+                        let currentPayload = structuredClone(payload);
                         if (retryWithNoTools && currentPayload.tools) {
                             delete currentPayload.tools; // 若 API 不支援聯網搜尋，則移除該欄位
                         }
@@ -1755,6 +1760,7 @@
                     if (!apiKeyModalOverlay || !apiKeyModal) return;
                     if (show) {
                         apiKeyModalOverlay.classList.remove("hidden");
+                        document.body.classList.add("overflow-hidden");
                         setTimeout(() => {
                             apiKeyModalOverlay.classList.remove("opacity-0");
                             apiKeyModal.classList.remove("scale-95");
@@ -1764,7 +1770,10 @@
                     } else {
                         apiKeyModal.classList.add("scale-95");
                         apiKeyModalOverlay.classList.add("opacity-0");
-                        setTimeout(() => apiKeyModalOverlay.classList.add("hidden"), 200);
+                        setTimeout(() => {
+                            apiKeyModalOverlay.classList.add("hidden");
+                            document.body.classList.remove("overflow-hidden");
+                        }, 200);
                     }
                 };
 
@@ -1998,7 +2007,7 @@
             async identifyCard() {
                 if (!localStorage.getItem("geminiApiKey")) {
                     this.toggleApiKeyModal(true);
-                    this.showError("請先輸入 Google Gemini API Key 以啟用人工智慧服務。");
+                    this.showError("請先輸入 Gemini/Gemma API Key 以啟用人工智慧服務。");
                     return;
                 }
                 if (!state.base64Image) return;
@@ -2044,7 +2053,7 @@
                     if (parsedData.faxes.length > 0) parsedData.faxes = parsedData.faxes.map(f => ({ ...f, value: vCardFormatter.normalizePhone(f.value) }));
 
                     // 更新狀態並同步 UI
-                    state.cardData = { ...JSON.parse(JSON.stringify(DEFAULT_CARD_DATA)), ...parsedData };
+                    state.cardData = { ...structuredClone(DEFAULT_CARD_DATA), ...parsedData };
 
                     // [保險機制] 針對 gemini-3.1-flash-lite 的搜尋晶片進行強制渲染
                     const sep = document.getElementById("searchEntryPoint");
@@ -2060,7 +2069,7 @@
                     syncDataToUI();
 
                     // 成功載入與渲染後，非同步儲存到 IndexedDB
-                    DatabaseService.saveCard(state.cardData, state.base64Image)
+                    DatabaseService.saveCard(state.cardData, state.base64Image, null, state.isSlimmed)
                         .then(id => {
                             state.currentHistoryId = id;
                             HistoryManager.render();
@@ -2121,7 +2130,7 @@
 
                     // 自動儲存信件草稿到歷史紀錄中
                     if (state.currentHistoryId) {
-                        DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
+                        DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId, state.isSlimmed)
                             .then(() => HistoryManager.render())
                             .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
                     }
@@ -2210,13 +2219,13 @@
 
                         // 2. 檔案分享不受支援時，退回「純文字」方式分享
                         let textContent = `【聯絡人資訊】\n姓名: ${name}`;
-                        if (state.cardData.org) textContent += `\n公司: ${state.cardData.org}`;
+                        if (state.cardData.orgName) textContent += `\n公司: ${state.cardData.orgName}`;
                         if (state.cardData.title) textContent += `\n職稱: ${state.cardData.title}`;
-                        if (state.cardData.tel && state.cardData.tel.length > 0) {
-                            textContent += `\n電話: ${state.cardData.tel[0].value}`;
+                        if (state.cardData.phones && state.cardData.phones.length > 0) {
+                            textContent += `\n電話: ${state.cardData.phones[0].value}`;
                         }
-                        if (state.cardData.email && state.cardData.email.length > 0) {
-                            textContent += `\nEmail: ${state.cardData.email[0].value}`;
+                        if (state.cardData.emails && state.cardData.emails.length > 0) {
+                            textContent += `\nEmail: ${state.cardData.emails[0].value}`;
                         }
 
                         await navigator.share({
@@ -2228,7 +2237,7 @@
                         // 使用者取消分享不跳錯誤 Toast
                         if (err.name !== "AbortError") {
                             console.error("分享失敗:", err);
-                            this.toast("分享失敗，已自動複製文字");
+                            this.toast("分享失敗，已自動複製 vCard 內容");
                             this.copyCardTextToClipboard();
                         }
                     }
@@ -2239,31 +2248,13 @@
             },
 
             /**
-             * [功能] 複製整齊的名片文字到剪貼簿 (Web Share 降級方案)
+             * [功能] 複製 vCard 內容到剪貼簿 (Web Share 降級方案)
              */
             copyCardTextToClipboard() {
-                const name = state.cardData.fn;
-                let textContent = `【名片資訊】\n姓名: ${name}`;
-                if (state.cardData.org) textContent += `\n公司: ${state.cardData.org}`;
-                if (state.cardData.title) textContent += `\n職稱: ${state.cardData.title}`;
+                const vcfContent = vCardFormatter.generate(state.cardData);
 
-                if (state.cardData.tel && state.cardData.tel.length > 0) {
-                    textContent += `\n電話: ${state.cardData.tel.map(t => `${t.type || ''}: ${t.value}`).join(', ')}`;
-                }
-                if (state.cardData.email && state.cardData.email.length > 0) {
-                    textContent += `\nEmail: ${state.cardData.email.map(e => e.value).join(', ')}`;
-                }
-                if (state.cardData.url && state.cardData.url.length > 0) {
-                    textContent += `\n網址: ${state.cardData.url.map(u => u.value).join(', ')}`;
-                }
-                if (state.cardData.adr && state.cardData.adr.length > 0) {
-                    const adr = state.cardData.adr[0];
-                    const fullAdr = [adr.country, adr.region, adr.locality, adr.street].filter(Boolean).join('');
-                    if (fullAdr) textContent += `\n地址: ${fullAdr}`;
-                }
-
-                navigator.clipboard.writeText(textContent).then(() => {
-                    this.toast("已將名片文字複製到剪貼簿");
+                navigator.clipboard.writeText(vcfContent).then(() => {
+                    this.toast("已將 vCard 內容複製到剪貼簿");
                 }).catch(err => {
                     console.error("複製失敗:", err);
                     this.toast("複製失敗，請手動複製");
@@ -2342,7 +2333,7 @@
                 if (!DatabaseService.db) return;
 
                 const confirmed = await this.confirm(
-                    "確定要將歷史紀錄中的名片圖片「深度瘦身」為超低解析度縮圖嗎？\n\n這能保留名片大略的視覺外框預覽，同時為您釋放 95% 以上的本機儲存空間！"
+                    "確定要將歷史紀錄中的名片圖片「深度瘦身」為低解析度縮圖嗎？\n\n這能保留名片大略的視覺外框預覽，同時為您釋放本機儲存空間！"
                 );
                 if (!confirmed) return;
 
@@ -2355,16 +2346,17 @@
                     // 2. 先在外部進行非同步的圖片壓縮，避免佔用與關閉資料庫交易
                     const updates = [];
                     for (const r of records) {
-                        if (r.base64Image && r.base64Image.length > 7000) {
+                        if (r.base64Image && !r.isSlimmed && r.base64Image.length > 7000) {
                             try {
                                 const dataUrl = `data:image/jpeg;base64,${r.base64Image}`;
-                                // 深度壓縮為最大邊長 800 像素、品質 0.5 的 JPEG 縮圖 (保留極佳清晰度與配色，體積依然極小)
-                                const slimmedBase64 = await ImageProcessor.compressDataURL(dataUrl, 800, 0.5);
+                                // 深度壓縮為最大邊長 600 像素、品質 0.5 的 JPEG 縮圖 (保留極佳清晰度與配色，體積依然極小)
+                                const slimmedBase64 = await ImageProcessor.compressDataURL(dataUrl, 600, 0.5);
                                 updates.push({
                                     id: r.id,
                                     timestamp: r.timestamp,
                                     cardData: r.cardData,
-                                    base64Image: slimmedBase64
+                                    base64Image: slimmedBase64,
+                                    isSlimmed: true
                                 });
                             } catch (imgErr) {
                                 console.error(`非同步壓縮圖片失敗 (ID: ${r.id}):`, imgErr);
@@ -2375,11 +2367,26 @@
                     // 3. 開啟全新的寫入交易，進行純同步的批次寫入 (此處 100% 不會發生交易過期錯誤)
                     let affectedCount = 0;
                     if (updates.length > 0) {
-                        const store = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite").objectStore(DatabaseService.storeName);
+                        const tx = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite");
+                        const store = tx.objectStore(DatabaseService.storeName);
                         for (const up of updates) {
-                            await DatabaseService._req(store.put(up));
+                            store.put(up);
                             affectedCount++;
+
+                            // 若恰好為當前正在編輯的圖片，即時更新其狀態
+                            if (state.currentHistoryId === up.id) {
+                                state.base64Image = up.base64Image;
+                                state.isSlimmed = true;
+                                if (UXManager.elPreviewImage && !UXManager.elPreviewImage.classList.contains("hidden")) {
+                                    UXManager.elPreviewImage.src = `data:image/jpeg;base64,${up.base64Image}`;
+                                }
+                            }
                         }
+                        
+                        await new Promise((resolve, reject) => {
+                            tx.oncomplete = resolve;
+                            tx.onerror = () => reject(tx.error);
+                        });
                     }
 
                     if (affectedCount > 0) {
@@ -2408,9 +2415,10 @@
              */
             async clearForm() {
                 if (!(await this.confirm("確定要清空嗎？"))) return;
-                state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
+                state.cardData = structuredClone(DEFAULT_CARD_DATA);
                 state.base64Image = null;
                 state.currentHistoryId = null;
+                state.isSlimmed = false;
                 this.elPreviewImage.classList.add("hidden");
                 this.elUploadPlaceholder.classList.remove("hidden");
                 this.elFileInput.value = "";
@@ -2744,15 +2752,16 @@
             /**
              * 儲存單筆名片紀錄 (支援更新既有紀錄)
              */
-            async saveCard(cardData, base64Image, existingId = null) {
+            async saveCard(cardData, base64Image, existingId = null, isSlimmed = false) {
                 if (!this.db) return null;
                 const store = this.db.transaction([this.storeName], "readwrite").objectStore(this.storeName);
                 const now = Date.now();
                 const record = {
                     id: existingId || now,
                     timestamp: existingId || now,
-                    cardData: JSON.parse(JSON.stringify(cardData)),
-                    base64Image: base64Image
+                    cardData: structuredClone(cardData),
+                    base64Image: base64Image,
+                    isSlimmed: isSlimmed
                 };
                 await this._req(store.put(record));
                 return record.id;
@@ -2820,6 +2829,7 @@
                     const isHidden = historyOverlay.classList.contains("hidden");
                     if (isHidden) {
                         historyOverlay.classList.remove("hidden");
+                        document.body.classList.add("overflow-hidden");
                         // 確保 display block生效後才觸發動畫
                         setTimeout(() => {
                             historyOverlay.classList.remove("opacity-0");
@@ -2828,7 +2838,10 @@
                     } else {
                         historyOverlay.classList.add("opacity-0");
                         historyPanel.classList.add("translate-x-full");
-                        setTimeout(() => historyOverlay.classList.add("hidden"), 300);
+                        setTimeout(() => {
+                            historyOverlay.classList.add("hidden");
+                            document.body.classList.remove("overflow-hidden");
+                        }, 300);
                     }
                 };
 
@@ -2904,9 +2917,10 @@
                 try {
                     const target = await DatabaseService.getCard(id);
                     if (target) {
-                        state.cardData = JSON.parse(JSON.stringify(target.cardData));
+                        state.cardData = structuredClone(target.cardData);
                         state.base64Image = target.base64Image;
                         state.currentHistoryId = id;
+                        state.isSlimmed = target.isSlimmed || false;
 
                         UXManager.hideError();
 
@@ -3020,28 +3034,35 @@
                         }
 
                         let importCount = 0;
-                        for (let i = 0; i < importedData.length; i++) {
-                            const item = importedData[i];
-                            // 防禦性檢查是否為有效記錄
-                            if (item && item.cardData) {
-                                // 若無 id，自動給予 id 與 timestamp
-                                const id = item.id || Date.now() + i;
-                                const timestamp = item.timestamp || id;
-                                const base64Image = item.base64Image || "";
+                        if (DatabaseService.db && importedData.length > 0) {
+                            const tx = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite");
+                            const store = tx.objectStore(DatabaseService.storeName);
+                            
+                            for (let i = 0; i < importedData.length; i++) {
+                                const item = importedData[i];
+                                // 防禦性檢查是否為有效記錄
+                                if (item && item.cardData) {
+                                    // 若無 id，自動給予 id 與 timestamp
+                                    const id = item.id || Date.now() + i;
+                                    const timestamp = item.timestamp || id;
+                                    const base64Image = item.base64Image || "";
 
-                                // 寫入資料庫
-                                if (DatabaseService.db) {
-                                    const store = DatabaseService.db.transaction([DatabaseService.storeName], "readwrite").objectStore(DatabaseService.storeName);
                                     const record = {
                                         id: id,
                                         timestamp: timestamp,
-                                        cardData: JSON.parse(JSON.stringify(item.cardData)),
-                                        base64Image: base64Image
+                                        cardData: structuredClone(item.cardData),
+                                        base64Image: base64Image,
+                                        isSlimmed: item.isSlimmed || false
                                     };
-                                    await DatabaseService._req(store.put(record));
+                                    store.put(record);
                                     importCount++;
                                 }
                             }
+                            
+                            await new Promise((resolve, reject) => {
+                                tx.oncomplete = resolve;
+                                tx.onerror = () => reject(tx.error);
+                            });
                         }
 
                         if (importCount > 0) {
@@ -3170,7 +3191,8 @@
             };
 
             // 點擊上傳區域觸發隱藏的 file input
-            dropZone.addEventListener("click", () => {
+            dropZone.addEventListener("click", (e) => {
+                if (e.target === fileInput) return; // 避免事件冒泡導致無窮迴圈
                 if (!checkApiKey()) return;
                 fileInput.click();
             });
@@ -3240,7 +3262,7 @@
             // 若已有辨識資料或歷史紀錄，先重置以維持介面一致性
             const hasExistingData = state.base64Image || Utils.isValid(state.cardData.fn) || Utils.isValid(state.cardData.orgName);
             if (hasExistingData) {
-                state.cardData = JSON.parse(JSON.stringify(DEFAULT_CARD_DATA));
+                state.cardData = structuredClone(DEFAULT_CARD_DATA);
                 state.currentHistoryId = null;
                 UXManager.resetEmailDraft();
                 document.getElementById("summaryContainer").classList.add("hidden");
@@ -3253,6 +3275,7 @@
                 // 1. 影像壓縮與 Base64 轉換
                 const base64 = await ImageProcessor.compress(file, 1200);
                 state.base64Image = base64;
+                state.isSlimmed = false;
 
                 // 2. 更新預覽 UI
                 UXManager.elPreviewImage.src = `data:image/png;base64,${base64}`;
@@ -3606,7 +3629,7 @@
 
             // 若目前有載入歷史紀錄，自動儲存使用者的手動修改
             if (state.currentHistoryId) {
-                DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId)
+                DatabaseService.saveCard(state.cardData, state.base64Image, state.currentHistoryId, state.isSlimmed)
                     .then(() => HistoryManager.render())
                     .catch(err => console.warn("自動寫入歷史紀錄失敗", err));
             }
