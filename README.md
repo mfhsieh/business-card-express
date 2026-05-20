@@ -1,12 +1,12 @@
 # 名片快手 (Business Card Express)
 
-[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Google Gemini/Gemma API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件草稿。
+[**名片快手**](https://mfhsieh.github.io/business-card-express/) 是一個輕量級的單頁式應用程式（Single Page Application, SPA），利用 Gemini/Gemma API 的視覺辨識與自然語言處理能力，將實體名片轉換為數位聯絡人，並提供深度的背景調查與後續追蹤郵件草稿。
 
 ## ✨ 核心特色
 
 - **🤖 AI 模型切換**
 
-  支援切換 Google Gemini/Gemma 系列各式模型，依速度與精度需求靈活調整。
+  支援切換 Gemini/Gemma 系列各式模型，依速度與精度需求靈活調整。
 
 - **📄 名片 OCR 識別**
 
@@ -64,10 +64,9 @@
 
 | 元件 | 用途 |
 | ---- | ---- |
-| [Google Gemini/Gemma API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
+| [Gemini/Gemma API](https://ai.google.dev/) | OCR、資料正規化、Google 搜尋與郵件生成 |
 | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator/) | 原生 SVG vCard QR Code 產生 |
 | [Tailwind CSS](https://tailwindcss.com/) | 視覺排版與樣式 |
-| 原生內聯 SVG 圖示 (內建) | 自製高效圖示渲染模組，全面取代外部 Lucide 庫以支援 100% 離線運行 |
 | [Google Fonts – Noto Sans TC](https://fonts.google.com/) | 中文字體 |
 | 瀏覽器原生 IndexedDB | 本機歷史紀錄儲存 |
 | 瀏覽器原生 Local Storage | API 金鑰本機儲存 |
@@ -93,7 +92,7 @@
 無須安裝 Node.js 模組或打包。直接在瀏覽器開啟 `index.html`，接著：
 
 1. 點擊畫面上方的 **設定圖示 (⚙️)** 展開設定區塊。
-2. 填入您的 [Google Gemini/Gemma API 金鑰](https://aistudio.google.com/app/apikey)。
+2. 填入您的 [Gemini/Gemma API 金鑰](https://aistudio.google.com/app/apikey)。
 
 > 🔒 **安全性說明**
 >
@@ -112,14 +111,14 @@
 
 ## 🔒 隱私與安全性聲明
 
-- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Google Gemini/Gemma API 之外，不上傳資料至任何第三方伺服器。
-- 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Google Gemini/Gemma API 辨識，不經由中間伺服器轉發。
+- 核心處理邏輯皆在前端執行，歷史紀錄儲存於您瀏覽器的 IndexedDB，API 金鑰儲存於 Local Storage。除 Gemini/Gemma API 之外，不上傳資料至任何第三方伺服器。
+- 名片圖片在瀏覽器端先進行壓縮（最大邊長 1200px），再以 Base64 格式傳送至 Gemini/Gemma API 辨識，不經由中間伺服器轉發。
 
 ## 📄 授權條款與致謝
 
 - **專案授權**：本專案採用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant) 授權（姓名標示－非商業性－相同方式分享 4.0 國際）。
 
-- **圖示版權**：本專案圖示源自開源項目 [Lucide Icons](https://lucide.dev/) (基於 [ISC 授權](https://github.com/lucide-icons/lucide/blob/main/LICENSE))。
+- **圖示版權**：本專案多數圖示源自開源項目 [Lucide Icons](https://lucide.dev/) (基於 [ISC 授權](https://github.com/lucide-icons/lucide/blob/main/LICENSE))。
 
 您可以自由重製、散布、傳輸及修改本創作，但不得用於商業目的；若您修改本作品，必須採用相同授權條款散布您的貢獻。
 
