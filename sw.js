@@ -1,4 +1,4 @@
-const CACHE_VERSION = '1.46'; // 修改此版本號以強制更新用戶端的快取
+const CACHE_VERSION = '1.47'; // 修改此版本號以強制更新用戶端的快取
 const CACHE_NAME = `business-card-express-v${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   './',
@@ -7,6 +7,11 @@ const ASSETS_TO_CACHE = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon.svg',
+  './icons/github.svg',
+  './icons/creative-commons.svg',
+  './icons/cc-by.svg',
+  './icons/cc-nc.svg',
+  './icons/cc-sa.svg',
 ];
 
 const ALLOWED_CDN_ORIGINS = [
